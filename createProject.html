@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>新建工程项目</title> 
+  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/common.css" rel="stylesheet" /> 
+  <script src="js/jquery.min-1.9.1.js"></script> 
+  
+
+	<style>
+	.form-group{
+		
+	}
+	.input-group{
+		border-bottom:1px solid #ccc;
+	}
+	.input-group-addon{
+		font-size:1em;
+	}
+	.input-group-addon{
+		color:#797979 !important;
+		
+	}
+	.input-group-addon{
+		background-color:#fff;
+		color:#000;
+		border:none;
+	}
+	.form-control{
+		background-color:#fff;
+		color:#000;
+		border:none;
+		border-radius: 0px;
+		outline:none;
+  -webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+          box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);	
+	}
+	.form-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+	}
+	.form-group{
+		margin-bottom:0px;
+	}
+	table tbody tr td{
+		vertical-align: middle;
+		border:1px solid #ccc !important;
+		text-align: center; 
+		padding:0px !important;
+		color:#797979;
+	}
+	.td-input{
+		width:100%;
+		border:none;
+		height:30px;
+		color:#000;
+	}
+	.container-fluid{
+		padding-left:60px;
+		padding-right:60px;
+		padding-bottom:10px;
+	}
+	</style>
+ </head> 
+ <body style="background-color:#999999;font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;"> 
+ 	<div class="container-fluid text-center">
+		<form id="mainForm">
+		<div class="row" style="border-bottom:1px solid #ccc;">
+			<div class="col-lg-12 text-left">
+				<h3>项目注册</h3>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">项目名称</div>
+				  <input type="text" class="form-control" id="xiang_mu_ming_chen_" name="xiang_mu_ming_chen_" autofocus="autofocus" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">项目用途</div>
+				  <input type="text" class="form-control" id="xiang_mu_yong_tu_" name="xiang_mu_yong_tu_" >
+				</div>
+			  </div> 			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">工程地点</div>
+				  <input type="text" class="form-control" id="gong_cheng_di_dian_" name="gong_cheng_di_dian_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">投资性质</div>
+				  <input type="text" class="form-control" id="tou_zi_xing_zhi_" name="tou_zi_xing_zhi_"  placeholder="">
+				</div>
+			  </div> 			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">建设单位</div>
+				  <input type="text" class="form-control" id="jian_she_dan_wei_" name="jian_she_dan_wei_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">驻工地代表</div>
+				  <input type="text" class="form-control" id="jian_she_dan_wei_zhu_gong_di_dai_biao_" name="jian_she_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
+				</div>
+			  </div> 			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">设计单位</div>
+				  <input type="text" class="form-control" id="she_ji_dan_wei_" name="she_ji_dan_wei_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">驻工地代表</div>
+				  <input type="text" class="form-control" id="she_ji_dan_wei_zhu_gong_di_dai_biao_" name="she_ji_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
+				</div>
+			  </div> 			
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-7 col-md-7 col-sm-7">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">监理单位</div>
+				  <input type="text" class="form-control" id="jian_li_dan_wei_" name="jian_li_dan_wei_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">监理代表</div>
+				  <input type="text" class="form-control" id="jian_li_dai_biao_" name="jian_li_dai_biao_" placeholder="">
+				</div>
+			  </div> 			
+			</div>
+		</div>	
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">开工日期</div>
+				  <input type="text" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">竣工日期</div>
+				  <input type="text" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
+				</div>
+			  </div>			
+			</div>	
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">工期天数</div>
+				  <input type="text" class="form-control" id="gong_qi_tian_shu_" name="gong_qi_tian_shu_" placeholder="" >
+				</div>
+			  </div>			
+			</div>				
+		</div>
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">质量目标</div>
+				  <input type="text" class="form-control" id="zhi_liang_mu_biao_" name="zhi_liang_mu_biao_" placeholder="" >
+				</div>
+			  </div>			
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group has-feedback">
+				<div class="input-group">
+				  <div class="input-group-addon">合同价款</div>
+				  <input type="text" class="form-control" id="he_tong_jia_kuan_" name="he_tong_jia_kuan_" placeholder="" >
+				  <span class="form-control-feedback" aria-hidden="true" style="color:#999999;">万元</span>
+				</div>
+			  </div>			
+			</div>	
+			<div class="col-lg-4 col-md-4 col-sm-4">
+			  <div class="form-group">
+				<div class="input-group">
+				  <div class="input-group-addon">承包方式</div>
+				  <input type="text" class="form-control" id="cheng_bao_fang_shi_" name="cheng_bao_fang_shi_" placeholder="" >
+				</div>
+			  </div>			
+			</div>				
+		</div>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h4>工程项目一览表</h4>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="col-lg-12 text-center">
+				<table id="project_info_tab" class="table table-bordered">
+					<tr>
+						<td rowspan="2">单项工程<br />(简称) </td>
+						<td colspan="3">规模</td>
+						<td rowspan="2">檐高<br />(m)</td>
+						<td rowspan="2">总高<br />(m)</td>
+						<td rowspan="2">地上/地下<br />层数</td>
+						<td rowspan="2">工程类别</td>
+						<td rowspan="2">结构类型</td>
+						<td rowspan="2">基础结构</td>
+					</tr>
+					<tr>
+						<td width="100">面积（m²）</td>
+						<td width="100">长度（m）</td>
+						<td width="100"></td>
+					</tr>	
+					<tr class="can-operate">
+						<td><input class="td-input" name="dan_xiang_gong_cheng_[]" /></td>
+						<td><input class="td-input" name="gui_mo_mian_ji_[]" /></td>
+						<td><input class="td-input" name="gui_mo_chang_du_[]" /></td>
+						<td><input class="td-input" name="gui_mo_qi_ta_[]" /></td>
+						<td><input class="td-input" name="yan_gao_[]" /></td>
+						<td><input class="td-input" name="zong_gao_[]" /></td>
+						<td><input class="td-input" name="di_shang_di_xia_ceng_shu_[]" /></td>
+						<td><input class="td-input" name="gong_cheng_lei_bie_[]" /></td>
+						<td><input class="td-input" name="jie_gou_lei_xing_[]" /></td>
+						<td><input class="td-input" name="ji_chu_jie_gou_[]" /></td>
+					</tr>
+					
+				</table>
+			</div>
+		</div>
+		<div class="oepration-bar center-block text-left">
+			<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+			<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+			<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>
+		</div>
+			<!--<input type="button" class="btn btn-default btn-sm" onclick="add_tr('project_info_tab')" value="添加行">
+			<input type="submit" name="submit" class="btn btn-primary btn-sm" value="注册项目"/>
+			<input type="reset" name="reset" class="btn btn-danger btn-sm" value="重置"/>-->
+		</form>
+	</div>
+	<!--右键菜单-->
+	<div id="youjicaidan" class="right-click-list" style="border:1px solid #ccc;"> 
+		<ul> 
+			<li id="deltr" class="one-class"> <img src="./images/icon/delete.png" />删除当前行</li> 
+			<li id="addtr" class="one-class"><img src="./images/icon/copy.png" />尾部插入行</li> 
+		</ul> 
+	</div> 
+
+<script>
+var SERVER_ROOT = 'http://localhost:80';
+$(function(){
+
+	$(document).bind("contextmenu", function (e) {
+		return false;
+	});
+	$('body').on('mousedown', '.can-operate', function (e) {
+		var row_num=this.rowIndex;
+		if (3 == e.which) {
+			var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+			var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+			$('#youjicaidan').css({
+				"position" : 'fixed',
+				"left" : xx,
+				"top" : yy - 3
+			});
+			$("#deltr").attr("target",row_num);
+			$("#addtr").attr("target",row_num);
+			$('#youjicaidan').show();
+		}
+	})
+	$(document).click(function () {
+		$('#youjicaidan').hide();
+	});
+	$("#youjicaidan ul li").click(function(){
+		var id=this.id;
+		var op=$(this).attr('target');
+		var items_num=$(".can-operate").length;
+
+		if(id=="addtr"){
+			add_tr("project_info_tab");
+		}else if(id=="deltr"){
+			if(items_num>1){
+				del_tr("project_info_tab",op);
+			}	
+		}
+	});
+	
+	function del_tr(tab_id,index){  
+		var table = document.getElementById(tab_id);  
+		table.deleteRow(index);  
+	}
+	function add_tr(tab_id){
+		var str='<tr class="can-operate"><td><input class="td-input" name="dan_xiang_gong_cheng_[]" /></td><td><input class="td-input" name="gui_mo_mian_ji_[]" /></td><td><input class="td-input" name="gui_mo_chang_du_[]" /></td><td><input class="td-input" name="gui_mo_qi_ta_[]" /></td><td><input class="td-input" name="yan_gao_[]" /></td><td><input class="td-input" name="zong_gao_[]" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_[]" /></td><td><input class="td-input" name="gong_cheng_lei_bie_[]" /></td><td><input class="td-input" name="jie_gou_lei_xing_[]" /></td><td><input class="td-input" name="ji_chu_jie_gou_[]" /></td></tr>';
+		$("#"+tab_id).append(str);
+	}	
+	$("#reset").click(function(){
+		$("#mainForm")[0].reset();
+	});
+	$("#addtr").click(function(){
+		add_tr("project_info_tab");
+	});
+	$("#submit").click(function(){
+		var form=new FormData($("#mainForm")[0]);
+		var xiang_mu_ming_chen_=$("#xiang_mu_ming_chen_").val();
+		if(xiang_mu_ming_chen_==""){
+			return false;
+		}
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/get_tab_data.php?rec=new_project",
+			data : form,
+			cache: false,
+			processData: false,
+			contentType: false,			
+			success : function (data) {
+				if(data=='0'){
+					window.close();
+				}else{
+					alert(data);
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});		
+	});
+});
+	
+
+	/*function subchk(){
+		var form=new FormData($("#mainForm")[0]);
+		var xiang_mu_ming_chen_=$("#xiang_mu_ming_chen_").val();
+		if(xiang_mu_ming_chen_==""){
+			return false;
+		}
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/get_tab_data.php?rec=new_project",
+			data : form,
+			cache: false,
+			processData: false,
+			contentType: false,			
+			success : function (data) {
+				if(data=='0'){
+					window.close();
+				}else{
+					alert(data);
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});				
+		return false;
+	}*/
+
+
+</script>	
+ </body>
+</html>

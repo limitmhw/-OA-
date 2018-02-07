@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>项目管理平台</title> 
+  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <!-- Custom CSS --> 
+  <link href="css/common.css" rel="stylesheet" /> 
+  <link rel="stylesheet" type="text/css" href="css/easyui.css" />
+  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
+  <script type="text/javascript" src="js/comm.js"></script> 
+  <script type="text/javascript" src="js/handletable.js"></script> 
+
+  <!--[if IE]>
+    <script src="js/html5shiv.js"></script>
+    <![endif]--> 
+  <style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+  .west{
+    width:200px;
+    padding:10px;
+  }
+  .north{
+    height:30px;
+  }
+  iframe{
+  overflow-y:hidden;
+  }
+ .menu_pic{
+	cursor:pointer;
+	height:100%;
+	width:31px;
+	float:left;
+	background-image: url(./images/menu_pic.png);
+	background-repeat: no-repeat;
+} 
+ .float-menu-pic{
+	cursor:pointer;
+	height:100%;
+	width:31px;
+	float:left;
+	background-image: url(./images/float_menu.png);
+	background-repeat: no-repeat;
+} 
+  
+  
+  
+.nav_ul {
+	padding:0;
+	text-align:center;
+	list-style-type:none;
+}
+.nav_li{
+	 width: 98px;
+	 height: 50px;
+	 background-color:#ccc;
+	 margin-top:2px;
+	 line-height:50px;
+	 font-size:16px;
+	 background-image: url(./images/left_menu_bg2.png);
+
+}
+</style> 
+ </head> 
+ <body> 
+  <div layout="1" style="height:35px;overflow: hidden; border-top:1px;padding:0;margin:0;"> 
+   <!-- 工具栏 --> 
+   <div style="background-image: url(./images/menu_bg.png);border-bottom:1px solid #000;border-top:1px solid #000;height:35px;background-color:#e6e6e6;padding-left:1em;"> 
+    <!--第一组+33最好--> 
+    <div class="menu_pic" style="width:100px;background-position: 0px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -102px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -135px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -168px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -201px 0px;"></div> 
+    <div class="menu_pic" id="save_tab" style="background-position: -235px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -267px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -303px 0px;"></div> 
+    <!--分割栏--> 
+    <div class="menu_pic" style="background-position: -335px 0px;width:10px;"></div> 
+    <!--第二组--> 
+    <div class="menu_pic" id="scroll_up" style="background-position: -347px 0px;"></div> 
+    <div class="menu_pic" id="scroll_down" style="background-position: -380px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -413px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -446px 0px;"></div> 
+    <!--第三组--> 
+    <div class="menu_pic" style="background-position: -480px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -512px 0px;"></div> 
+    <div class="menu_pic" id="zoom_select" style="background-position: -549px 0px;width:77px;"> 
+     <select class="scale-option" > 
+		 <option value="1.5">150%</option>
+		 <option value="1.2">120%</option>
+		 <option value="1" >100%</option> 
+		 <option value="0.8">80%</option> 
+		 <option value="0.5">50%</option> 
+		 <option value="-1" selected="selected">自适应</option> 
+	 </select> 
+    </div> 
+    <!--分割栏--> 
+    <div class="menu_pic" style="background-position: -629px 0px;width:10px;"></div> 
+    <!--第四组--> 
+    <div class="menu_pic" style="background-position: -642px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -673px 0px;"></div> 
+    <!--分割栏--> 
+    <div class="menu_pic" style="background-position: -704px 0px;width:10px;"></div> 
+    <!--第五组--> 
+    <div class="menu_pic" style="background-position: -718px 0px;"></div> 
+    <div class="menu_pic" style="background-position: -750px 0px;"></div> 
+    <!--分割栏--> 
+    <div class="menu_pic" style="background-position: -789px 0px;width:10px;"></div> 
+    <!--第六组--> 
+    <div class="menu_pic" id="full_screen" style="background-position: -800px 0px;"></div> 
+   </div> 
+  </div> 
+  <div layout="2" style="position:absolute;left:0px;top:35px;right:0px;bottom:0px; background-color:#e6e6e6;"> 
+   <div layout="2.1" class="function-bar-list"> 
+    <div id="o_p" class="btn-list start-btn btn-list-select">
+      组织
+     <br />与
+     <br />策划 
+     <!--<img src="./images/icon/select_bar.png" style="position:absolute;left:0px;z-index:-1;">--> 
+    </div> 
+    <div id="a_o" class="btn-list">
+      行政
+     <br />与
+     <br />办公 
+     <!--<img src="./images/icon/unselect_bar.png" style="position:absolute;left:0px;">--> 
+    </div> 
+    <div id="b_p" class="btn-list">
+     招标
+     <br />与
+     <br />采购
+    </div> 
+    <div id="c_b" class="btn-list">
+     合约
+     <br />与
+     <br />商务
+    </div> 
+    <div id="p_t" class="btn-list">
+     生产
+     <br />与
+     <br />技术
+    </div> 
+    <div id="s_m" class="btn-list">
+     分包
+     <br />与
+     <br />机械
+    </div> 
+    <div id="m_e" class="btn-list">
+     材料
+     <br />与
+     <br />设备
+    </div> 
+    <div id="e_m" class="btn-list">
+     试验
+     <br />与
+     <br />资料
+    </div> 
+    <div id="b_c" class="btn-list">
+     预算
+     <br />与
+     <br />结算
+    </div> 
+    <div id="v_c" class="btn-list">
+     签证
+     <br />与
+     <br />索赔
+    </div> 
+    <div id="c_p" class="btn-list">
+     成本
+     <br />与
+     <br />利润
+    </div> 
+   </div> 
+   <div layout="2.2" class="tab-list" style="position:absolute;top:0px;bottom:0px; background-color:#fff;padding:10px;border-right:1px solid #999999;"> 
+    <div style="border-bottom:1px solid #000; height:40px;line-height:40px;font-weight:bold;spadding-left:10px;padding-right:5px;">
+      <font size="4" face="Microsoft YaHei">表单中心</font>
+     <span style="float:right;cursor:pointer;" id="hid_tar">X</span> 
+    </div> 
+    <div class="tab-lists"> 
+    <ul> 
+      <li><img src="./images/icon/bookmark.png" />项目列表</li> 
+	  <!--
+      <li><img src="./images/icon/bookmark.png" />一号文件</li> 
+      <li> <img src="./images/icon/bookmark.png" />二号文件（子菜单） 
+       <ul> 
+        <li><img src="./images/icon/bookmark.png" />二号一号文件</li> 
+        <li><img src="./images/icon/bookmark.png" />二号二号文件</li> 
+        <li><img src="./images/icon/bookmark.png" />二号三号文件</li> 
+        <li><img src="./images/icon/bookmark.png" />二号四号文件</li> 
+       </ul> </li> 
+      <li><img src="./images/icon/bookmark.png" />三号文件</li> -->
+     </ul>
+    </div> 
+   </div> 
+   <div layout="2.3" class="main-content" style="position:absolute;top:0px;bottom:0px;background-color:#999999;"> 
+    <div layout="2.3.1" class="center-center"> 
+	<center>
+		 <a href="./index_t2.html?center=liucheng" id="work_center" class="new-button">工作中心</a> 
+		 <a href="javascript:;" id="process_center" style=""class="new-button">流程中心</a> 
+		 <a href="javascript:;" id="supervision _center" class="new-button">监管中心</a> 
+		 <a href="javascript:;" id="archive_center" class="new-button">档案室</a> 
+		 <a href="javascript:;" id="acknowledge_center" class="new-button">知识库</a> 
+   </center>
+   </div> 
+    <div layout="2.3.2" class="content-container" style="width:100%;position:absolute;top:40px;bottom:0px;
+	right:0px;left:0px; overflow-y:scroll;padding-top:40px;background-color:#797979;"> 
+		<div  id="clearandreplacecontent" style="background-color:#797979;">
+		<!-------------------------------------------------------->
+
+
+		<!-------------------------------------------------------->
+		</div> 
+    </div> 
+   </div> 
+  </div>   
+     <div id="youjicaidan" class="right-click-list"> 
+      <ul> 
+       <li class="one-class"> 新建表单</li> 
+       <li> <img src="./images/icon/delete.png" />删除表单</li> 
+       <li class="one-class"><img src="./images/icon/copy.png" />复制表单</li> 
+       <li class="one-class">跳转菜单</li> 
+      </ul> 
+     </div>  
+  
+    <div class="float-menu" style="display:none;position:absolute;top:90%; left:35%;z-index:10;width:390px;height:49px;"> 
+     <div class="float-menu-pic" style="background-position: -0px 0px;width:25px;"></div> 
+     <div class="float-menu-pic" style="background-position: -25px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -60px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -91px 0px;width:10px;"></div> 
+     <div class="float-menu-pic" style="background-position: -101px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -135px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -163px 0px;width:70px;"></div> 
+     <div class="float-menu-pic" style="background-position: -233px 0px;width:10px;"></div> 
+     <div class="float-menu-pic" style="background-position: -243px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -274px 0px;width:31px;"></div> 
+     <div class="float-menu-pic" style="background-position: -305px 0px;width:10px;"></div> 
+     <div class="float-menu-pic" id="no_full_screen" style="background-position: -315px 0px;width:37px;"></div> 
+     <div class="float-menu-pic" style="background-position: -352px 0px;width:37px;"></div> 
+    </div> 
+
+<script>
+
+//全局量设置
+var message = "{'SERVER_ROOT':'http://localhost:80','fun':'zuzhiyucehua','center':'work','proid':'6'}";
+var pars = eval("(" + message + ")");
+var SERVER_ROOT = pars['SERVER_ROOT'];
+var pro_id = pars['proid']; //全局变量：项目对应的id,当操作的是项目注册表的时候，pro_id和now_operate_tab将是同一个。
+var now_operate_tab = 'xiang_mu_xin_xi_'; //全局变量，正在操作的表的名称，初始化的时候，对应于项目注册表。
+var now_operate_tab_item_id = pro_id; //正在在操作的表的的id，初始化的时候因为是项目注册表，这时候整在操作的表的id 就等于是项目的id
+var golbal = this;
+$(function () {
+
+	function init_layout(l1, l2, l3) {
+		//控制layout="2"内部div的布局
+		if (l3 == -1) {
+			l3 = 100 - l1 - l2;
+		}
+		$('div[layout="2.1"]').css({
+			"width" : l1 + "%",
+			"left" : "0%",
+		});
+		$('div[layout="2.2"]').css({
+			"width" : l2 + "%",
+			"left" : l1 + "%",
+		});
+		$('div[layout="2.3"]').css({
+			"width" : l3 + "%",
+			"left" : (l1 + l2) + "%",
+		});
+		//处理宽度为0的bug，让宽度为0的隐藏
+		div_arr = ['div[layout="2.1"]', 'div[layout="2.2"]', 'div[layout="2.3"]'];
+		for (k in div_arr) {
+			if ($(div_arr[k]).width() == 0) {
+				$(div_arr[k]).hide();
+			} else {
+				$(div_arr[k]).show();
+			}
+		}
+		//布局影响表格的位置，这里重新刷新表格
+		if (golbal.pp.arr_pages.length > 0) {
+			golbal.pp.refreshPosition();
+		}
+
+	}
+
+	function start_full_screen() {
+		//控制全屏
+		init_layout(0, 0, -1);
+		$('.float-menu').show();
+		//主动触发缩放到自适应状态
+		$(".scale-option").val("-1");
+		$(".scale-option").trigger("change");
+	}
+	function stop_full_screen() {
+		//控制取消全屏的
+		init_layout(3.4, 15, -1);
+		$('.float-menu').hide();
+		//主动触发缩放到自适应状态
+		$(".scale-option").val("-1");
+		$(".scale-option").trigger("change");
+	}
+	if (!golbal.pp) {
+		//初始化一个页面处理模块
+		golbal.pp = new PagesModel("#clearandreplacecontent", 100, "col");
+	}
+	//初始化布局
+	init_layout(3.4, 15, -1);
+	
+	//初始化项目注册表
+	$.ajax({
+		type : "POST",
+		url : SERVER_ROOT + "/projectlist_table.php",
+		success : function (data) {
+			
+				$("#clearandreplacecontent").empty();
+				$("#clearandreplacecontent").html(data);
+				var cc = '<div style="position:absolute;left:40%;top:40%;"><front style="font-weight:bold;font-size:25px;">工程项目列表</front></div>';
+				golbal.pp.setHead(cc, 120);
+				golbal.pp.run("col");
+			
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});
+
+	//将表格的所有内容存储到数据库
+	//需要确定接参数：表名，对应的记录id
+	$("#save_tab").click(function () {
+		var html = $("#clearandreplacecontent").html();
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/get_tab_data.php?rec=tab_update",
+			data : {
+				'fun' : pars['zuzhiyucehua'],
+				'center' : pars['center'],
+				'proid' : pars['proid'],
+				'now_operate_tab' : now_operate_tab,
+				'now_operate_tab_item_id' : now_operate_tab_item_id,
+				'html' : html
+			},
+			success : function (data) {
+				if (data == '1') {}
+				else {
+					console.log(data);
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});
+	});
+	$("body").on('click', '.tree-li', function () {
+		var tar_id = this.id;
+		var template_tab = $(this).attr("template-tab"); //获取到接下来   数据库中需要操作的表名 或者 需要从tabs中链接进来的表的名称
+		var tab_id = $(this).attr("tab-id"); //获取接下来需要操作的 对应在数据库中的记录的 id
+		//此时的逻辑:点击以后想变成全局量，提供给save功能用
+		now_operate_tab = template_tab; //全局变量，正在操作的表的名称，初始化的时候，对应于项目注册表。
+		now_operate_tab_item_id = tab_id; //正在在操作的表的的id，初始化的时候因为是项目注册表，这时候整在操作的表的id 就等于是项目的id
+		$(".tree-li").each(function (i, e) {
+			var li_id = e.id;
+			if (li_id == tar_id) {
+				$(e).addClass("tab-lists-ul-li_sel");
+			} else {
+				$(e).removeClass("tab-lists-ul-li_sel");
+			}
+		});
+		$.ajax({
+			type : "GET",
+			url : "./tabs/" + template_tab + "Template.html",
+			success : function (data) {
+				$("#clearandreplacecontent").empty();
+				$("#clearandreplacecontent").html(data);
+				if (template_tab == 'cheng_ben_') {
+					var cc = '<div style="position:absolute;left:10%;top:60%;">表单编号：</div>\<div style="position:absolute;left:40%;top:45%;">\<font class="font7">工程成本计划表</font>\</div>';
+					golbal.pp.setHead(cc, 155);
+					golbal.pp.run("row");
+				}
+				if (template_tab == 'xiang_mu_xin_xi_') {
+
+					var cc = '<div style="font-size: 22.0pt;font-weight: 700;\background-color:#fff;padding-top:59px;height:\155px"><center>项目注册表</center></div>';
+					golbal.pp.setHead(cc, 155);
+					golbal.pp.run("col");
+				}
+				console.log("golbal.pp.arr_pages.length");
+				console.log(golbal.pp.arr_pages.length);
+
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});
+
+	});
+	$(document).bind("contextmenu", function (e) {
+		return false;
+	});
+	$('body').on('mousedown', 'li', function (e) {
+		if (3 == e.which) {
+			var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+			var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+			$('#youjicaidan').css({
+				"position" : 'fixed',
+				"left" : xx,
+				"top" : yy - 3
+			});
+			$('#youjicaidan').show();
+		}
+	})
+	$("body").click(function () {
+		$('#youjicaidan').hide();
+	});
+	$("#hid_tar").click(function () {
+		//关闭侧边栏
+		init_layout(3.4, 0, -1);
+
+	})
+	$(".scale-option").change(function () {
+		//控制缩放区域的
+		if($(this).val()!=-1){		
+			$('#clearandreplacecontent').css("zoom", $(this).val());
+			golbal.pp.refreshPosition();
+		}else{
+			golbal.pp.selfAdaption();
+			//golbal.pp.refreshPosition();
+		}
+	});
+	//控制全屏
+	$("#full_screen").click(function () {
+		if ($('div[layout="2.1"]').is(":hidden")&&$('div[layout="2.2"]').is(":hidden")) {
+				stop_full_screen();
+		}else {
+				start_full_screen();
+		}
+	});
+	$("#no_full_screen").click(stop_full_screen);
+
+	
+	//控制页面滚动的
+	$("#scroll_down").click(function () {
+	    var length=100;
+		if (golbal.pp) {
+			length=parseInt(golbal.pp.margin)+parseInt(golbal.pp.hp);
+		}
+		length=parseInt(golbal.pp.arr_pages[1].css("top"))-146;
+		
+		var obj=$('div[layout="2.3.2"]');
+		var v=obj.scrollTop();
+		alert(v);
+		obj.scrollTop(length);
+		
+		if(v==obj.scrollTop()){
+			alert("到底了");
+		}
+	});
+	$("#scroll_up").click(function () {
+		var length=100;
+		if (golbal.pp) {
+			length=parseInt(golbal.pp.margin)+parseInt(golbal.pp.hp);
+		}
+		var obj=$('div[layout="2.3.2"]');
+		var v=obj.scrollTop();
+		console.log(v);
+		obj.scrollTop(v-length);
+		if(v==obj.scrollTop()){
+			alert("到顶了");
+		}
+
+	});
+	$(".btn-list").click(function () {
+		/*
+		var t_id = this.id;
+		$(".btn-list").each(function (i, e) {
+		if (e.id != t_id) {
+		$(e).removeClass("btn-list-select");
+		} else {
+		$(e).addClass("btn-list-select");
+		}
+		});
+
+		$(".tab-list").show();
+		$('.main-content').css('left', '295px');
+		 */
+		init_layout(3.4, 15, -1);
+	});
+
+	$(".new-button").click(function () {
+		var tar_id = this.id;
+		$(".new-button").each(function (i, e) {
+			if (tar_id == e.id) {
+				$(this).css({
+					"border-bottom" : "3px solid #999999",
+					"color" : "#000"
+				});
+			} else {
+				$(this).css({
+					"border-bottom" : "3px",
+					"color" : "#a5a5a5"
+				});
+			}
+		});
+	});
+
+	$('a').click(function (event) {
+		//为和electron交互做准备
+		//event.preventDefault();
+		var param = $(this).attr("href");
+		const ipcRenderer = require('electron').ipcRenderer;
+		ipcRenderer.send('chaneg-page', param);
+		console.log(param);
+
+	});
+})
+
+</script>
+ </body>
+</html>

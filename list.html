@@ -1,0 +1,158 @@
+   
+   
+<style>
+
+ul{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box; 
+	list-style: none; 
+	margin-bottom: 10px; 
+	margin-top: 0; 
+	padding-left: 15px;
+}
+li{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+</style>
+
+<div id="xx"></div>
+<script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
+<script>
+
+var menu = {
+	title : "事物",
+	id : "",
+	submenu : [{
+			title : "工程项目",
+			id : "",
+			submenu : [{
+					title : "如：1号楼",
+					id : "",
+					submenu : []
+				}, {
+					title : "如：2号楼",
+					id : "",
+					submenu : []
+				}, {
+					title : "如：3号楼",
+					id : "",
+					submenu : []
+				}, {
+					title : "如：4号楼",
+					id : "",
+					submenu : []
+				}, {
+					title : "如：5号楼",
+					id : "",
+					submenu : []
+				},
+			]
+		}, {
+			title : "单项工程",
+			id : "",
+			submenu : [
+			]
+		}, {
+			title : "专业类别",
+			id : "",
+			submenu : [{
+					title : "如：土建",
+					id : "1",
+					submenu : []
+				}, {
+					title : "如：装修",
+					id : "2",
+					submenu : []
+				}, {
+					title : "如：电气",
+					id : "3",
+					submenu : []
+				}, {
+					title : "如：水暖",
+					id : "",
+					submenu : []
+				}, ]
+		}, {
+			title : "人材机测算表",
+			id : "",
+			submenu : [{
+					title : "分包采购",
+					id : "",
+					submenu : []
+				}, {
+					title : "物资采购",
+					id : "",
+					submenu : []
+				}, {
+					title : "机材租赁",
+					id : "",
+					submenu : []
+				}, {
+					title : "管理费用",
+					id : "",
+					submenu : []
+				},
+			]
+		},
+	]
+}
+$(function () {
+
+	function createJsonMenu(obj, cc) {
+		var uu = $("<ul></ul>");
+		if (obj.submenu.length != 0) {
+			for (var i in obj.submenu) {
+				var ll = $('<li></li>');
+				var img = '<img src="./images/icon/bookmark.png" \
+															style="-moz-box-sizing: border-box; -webkit-box-sizing:\
+															border-box; border: 0; box-sizing: border-box; \
+															vertical-align: middle;">';
+				ll.append(img);
+				uu.append(ll.append(obj.submenu[i].title));
+				ll = createJsonMenu(obj.submenu[i], ll);
+			}
+			cc = cc.append(uu);
+		} else {
+			$(cc).attr("layout", "click");
+		}
+		$(cc).attr("cid", obj.id);
+		return cc;
+	}
+	$(document).on('click', 'li[layout="click"]', function () {
+		var cid = $(this).attr("cid");
+		switch (cid) {
+		case "1": {
+				alert(1);
+				break;
+			}
+		case "2": {
+				alert(2);
+				break;
+			}
+		case "3": {
+				alert(3);
+				break;
+			}
+		case "4": {
+				alert(4);
+				break;
+			}
+		case "5": {
+				alert(5);
+				break;
+			}
+		default: {
+				alert("default");
+				break;
+			}
+
+		}
+
+	});
+	createJsonMenu(menu, $("#xx"));
+
+})
+</script>

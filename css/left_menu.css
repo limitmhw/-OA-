@@ -1,0 +1,73 @@
+
+input[id*="joacims-menu"] {
+  display:none;
+}
+
+input[id*="joacims-menu"] + label {
+  display:block;
+  width:35px;
+  height:35px;
+  background:#222;
+  cursor:pointer;
+  font-size:30px;
+  color:#fff;
+  position:relative;
+}
+
+input[id*="joacims-menu"] + label span {
+  display:block;
+  position:absolute;
+  left:8px;
+  transition:.2s;
+}
+
+input[id*="joacims-menu"]:checked + label span {
+  transform:rotate(45deg);
+  font-size:34px;
+  top:-2px;
+  left:9px;
+}
+
+nav a {
+  display:block;
+  height:50px;
+  line-height:50px;
+  background:#3e3e3e;
+border-bottom: 1px solid #ccc;
+  width:100px;
+  padding-left:10px;
+  text-decoration:none;
+  color:white;
+  box-shadow:5px 0 0 #000;
+}
+
+
+
+input[id*="joacims-menu"] ~ nav a:nth-child(1) { box-shadow:5px 0 0 #FFFF99; transition-delay:.03s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(2) { box-shadow:5px 0 0 #993399; transition-delay:.06s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(3) { box-shadow:5px 0 0 #FF99CC; transition-delay:.09s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(4) { box-shadow:5px 0 0 #990066; transition-delay:.12s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(5) { box-shadow:5px 0 0 #FFFF00; transition-delay:.15s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(6) { box-shadow:5px 0 0 #003399; transition-delay:.18s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(7) { box-shadow:5px 0 0 #CC3333; transition-delay:.21s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(8) { box-shadow:5px 0 0 #333333; transition-delay:.24s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(9) { box-shadow:5px 0 0 #FF9900; transition-delay:.27s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(10) { box-shadow:5px 0 0 #660000; transition-delay:.30s; }
+input[id*="joacims-menu"] ~ nav a:nth-child(11) { box-shadow:5px 0 0 #CC9900; transition-delay:.33s; }
+input[id*="joacims-menu"]:checked ~ nav a {
+  margin-left:0px;
+}
+
+input[id*="joacims-menu"]:checked ~ nav a:hover {
+  width:110px;
+}
+
+input[id*="joacims-menu"] ~ nav a {
+  margin-left:-110px;
+  transition:.6s margin;
+}
+
+input[id*="joacims-menu"] ~ nav a:hover {
+
+  background:#999;
+}
