@@ -223,8 +223,8 @@ class PagesModel {
 	}
 	createTable() {
 		var table = $('<table  border="4" cellpadding="0" \
-										cellspacing="0" style="border-top:none;border-collapse:\
-										collapse;table-layout:fixed;margin-bottom:3px;">');
+						cellspacing="0" style="border-top:none;border-collapse:\
+						collapse;table-layout:fixed;margin-bottom:3px;">');
 		//这个地方可能有问题，先注释一下
 		table.width(this.tw);
 		//table.append(this.tr_head);
@@ -424,6 +424,9 @@ class PagesModel {
 					style="border-bottom:none;\
 					border-collapse:collapse;table-layout:fixed;">');
 		tab2.append(this.tr_head);
+		tab2.find('td').each(function(){
+			$(this).attr("ed","false");
+		});
 		page_ctx.append($("<center></center>").append(tab2).append($(tab)));
 		//表尾巴的占位和内容分离
 		page_ctx.append(page_table_foot_real_ctx);
@@ -481,7 +484,6 @@ class PagesModel {
 				sum = this.tr_head_height;
 			}
 			sum += $(this).height();
-
 			$(this).attr('groupid', gid);
 
 		});

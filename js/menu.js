@@ -1505,7 +1505,7 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "目标责任表",
 								tableType : "151_002",
-								template : 'cheng_ben_yu_li_run_/JZ-01-151_gong_cheng_cheng_ben_ze_ren_biao_/sheet002.html'
+								template : 'JZ/JZ-01-151/sheet002.htm'
 							}
 						]
 					}
@@ -1524,27 +1524,27 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "工程项目 ",
 								tableType : "152_002",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet002.html'
+								template : 'JZ/JZ-02-152/sheet002.htm'
 							}, {
 								name : "单项工程",
 								tableType : "152_003",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet003.html'
+								template : 'JZ/JZ-02-152/sheet003.htm'
 							}, {
 								name : "1-1分包工程测算表",
 								tableType : "152_004",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet004.html'
+								template : 'JZ/JZ-02-152/sheet004.htm'
 							}, {
 								name : "1-2材料设备测算表",
 								tableType : "152_005",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet005.html'
+								template : 'JZ/JZ-02-152/sheet005.htm'
 							}, {
 								name : "1-3机械与材料租赁测算表",
 								tableType : "152_006",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet006.html'
+								template : 'JZ/JZ-02-152/sheet006.htm'
 							}, {
 								name : "1-4管理费及其它测算表",
 								tableType : "152_007",
-								template : 'cheng_ben_yu_li_run_/JZ-02-152_gong_cheng_cheng_ben_ce_suan_biao_/sheet007.html'
+								template : 'JZ/JZ-02-152/sheet007.htm'
 							}
 						]
 					}, {
@@ -1558,7 +1558,7 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "工程成本调整表",
 								tableType : "153_002",
-								template : 'cheng_ben_yu_li_run_/JZ-03-153_gong_cheng_cheng_ben_diao_zheng_biao_/sheet002.html'
+								template : 'JZ/JZ-03-153/sheet002.htm'
 							}
 						]
 					}
@@ -1577,11 +1577,11 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "工程项目 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-04-154_gong_cheng_cheng_ben_ji_hua_biao_/sheet002.html'
+								template : 'JZ/JZ-04-154/sheet002.htm'
 							}, {
 								name : "单项工程 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-04-154_gong_cheng_cheng_ben_ji_hua_biao_/sheet002.html'
+								template : 'JZ/JZ-04-154/sheet003.htm'
 							}
 						],
 
@@ -1598,19 +1598,19 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "工程项目 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-05-155_gong_cheng_cheng_ben_kong_zhi_biao_/sheet002.htm'
+								template : 'JZ/JZ-05-155/sheet002.htm'
 							}, {
 								name : "单项工程 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-05-155_gong_cheng_cheng_ben_kong_zhi_biao_/sheet003.htm'
+								template : 'JZ/JZ-05-155/sheet003.htm'
 							}, {
-								name : "1-1机械与材料租赁 ",
+								name : "租赁及摊销计算表",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-05-155_gong_cheng_cheng_ben_kong_zhi_biao_/sheet004.htm'
+								template : 'JZ/JZ-05-155/sheet004.htm'
 							}, {
-								name : "1-2管理费及其它 ",
+								name : "管理费及其它计算表",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-05-155_gong_cheng_cheng_ben_kong_zhi_biao_/sheet005.htm'
+								template : 'JZ/JZ-05-155/sheet005.htm'
 							}
 						],
 						parent_id : "false",
@@ -1624,7 +1624,7 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "过程控制表 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-06-156_wu_zi_cheng_ben_kong_zhi_biao_/sheet002.htm'
+								template : 'JZ/JZ-06-156/sheet002.htm'
 							}
 						],
 						parent_id : "false",
@@ -1643,11 +1643,11 @@ golbal.allmenu = [{
 						template_tab : [{
 								name : "工程项目 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-07-157_gong_cheng_cheng_ben_he_suan_biao_/sheet002.htm'
+								template : 'JZ/JZ-07-157/sheet002.htm'
 							}, {
 								name : "单项工程 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-07-157_gong_cheng_cheng_ben_he_suan_biao_/sheet002.htm'
+								template : 'JZ/JZ-07-157/sheet003.htm'
 							}
 						],
 						parent_id : "false",
@@ -1657,19 +1657,19 @@ golbal.allmenu = [{
 						title : "月度工程成本确认",
 						id : "",
 						submenu : [],
-						excelType : "",
+						excelType : "158",
 						template_tab : [{
 								name : "工程成本确认单 ",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-08-158_yue_du_cheng_ben_he_suan_biao_/sheet002.htm'
+								template : 'JZ/JZ-08-158/sheet002.htm'
 							}, {
 								name : "附件1—物资成本确认单",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-08-158_yue_du_cheng_ben_he_suan_biao_/sheet003.htm'
+								template : 'JZ/JZ-08-158/sheet003.htm'
 							}, {
 								name : "附件2—租赁成本确认单",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-08-158_yue_du_cheng_ben_he_suan_biao_/sheet004.htm'
+								template : 'JZ/JZ-08-158/sheet004.htm'
 							}
 						],
 						parent_id : "false",
@@ -1684,8 +1684,12 @@ golbal.allmenu = [{
 						title : "工程成本综合分析",
 						id : "",
 						submenu : [],
-						excelType : "",
-						template_tab : [],
+						excelType : "159",
+						template_tab : [{
+								name : "综合统计",
+								tableType : "",
+								template : 'JZ/JZ-09-159/sheet002.htm'
+							}],
 						parent_id : "false",
 						li_id : "169",
 						li_type : "fixed",
@@ -1693,24 +1697,33 @@ golbal.allmenu = [{
 						title : "工程成本综合分析",
 						id : "",
 						submenu : [],
-						excelType : "",
-						template_tab : [],
+						excelType : "160",
+						template_tab : [{
+								name : "工程项目",
+								tableType : "",
+								template : 'JZ/JZ-10-160/sheet002.htm'
+							}, {
+								name : "单项工程",
+								tableType : "",
+								template : 'JZ/JZ-10-160/sheet003.htm'
+							}
+						],
 						parent_id : "false",
-						li_id : "169",
+						li_id : "169-2",
 						li_type : "fixed",
 					}, {
 						title : "主要物资成本分析",
 						id : "",
 						submenu : [],
-						excelType : "",
+						excelType : "161",
 						template_tab : [{
 								name : "汇总统计",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-10-160_zhu_yao_wu_zi_cheng_ben_fen_xi_biao_/sheet002.htm'
+								template : 'JZ/JZ-11-161/sheet002.htm'
 							}, {
 								name : "月度统计",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-10-160_zhu_yao_wu_zi_cheng_ben_fen_xi_biao_/sheet003.htm'
+								template : 'JZ/JZ-11-161/sheet003.htm'
 							}
 						],
 						parent_id : "false",
@@ -1723,13 +1736,13 @@ golbal.allmenu = [{
 				title : "利润预测",
 				submenu : [{
 						title : "项目利润预测表",
-						id : "",
+						id : "162",
 						submenu : [],
 						excelType : "",
 						template_tab : [{
 								name : "成本利润分析表",
 								tableType : "",
-								template : 'cheng_ben_yu_li_run_/JZ-11-161_gong_cheng_xiang_mu_li_run_yu_ce_biao_/sheet002.htm'
+								template : 'JZ/JZ-12-162/sheet002.htm'
 							}
 						],
 						parent_id : "false",

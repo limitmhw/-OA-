@@ -4,7 +4,6 @@
   <meta charset="utf-8" /> 
   <title>项目管理平台</title> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
-  <!-- Custom CSS --> 
   <link href="css/common.css" rel="stylesheet" /> 
   <link rel="stylesheet" type="text/css" href="css/easyui.css" />
   
@@ -15,12 +14,8 @@
   <script type="text/javascript" src="js/comm.js"></script> 
   <script type="text/javascript" src="js/handletable.js"></script> 
   <script type="text/javascript" src="js/menu.js"></script> 
-  <script type="text/javascript" src="js/selectTable.js"></script> 
   
 
-  <!--[if IE]>
-    <script src="js/html5shiv.js"></script>
-    <![endif]--> 
 <style>
   article, aside, figure, footer, header, hgroup, 
   menu, nav, section { display: block; }
@@ -107,10 +102,7 @@
 	 color:#217346;
 }
  </style>
-</style>
-<script>
-//document.onselectstart = function(){return false;}
-</script> 
+
  </head> 
  <body > 
   <div layout="1" style="height:35px;overflow: hidden; border-top:1px;padding:0;margin:0;"> 
@@ -372,6 +364,7 @@ var menu = {
 };
 
 golbal.now_menu = {};
+golbal.information={};
 //全局量设置
 var message = "{'SERVER_ROOT':'http://localhost:8080/hibernate/','fun_btn':'o_p','center':'work_center','proid':'6'}";
 
@@ -439,385 +432,424 @@ $(function () {
 		$(".scale-option").val("-1");
 		$(".scale-option").trigger("change");
 	}
-
 	function setTable(cc_tabel_head, cc_table_foot, style) {
 		golbal.pp.setTableHead(cc_tabel_head);
 		golbal.pp.setTableFoot(cc_table_foot);
 		golbal.pp.run(style);
 	}
+	//与表格的表头表尾布局有关的代码
+	function colFuncHead1(title){
+	     var cc = '\
+			<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
+			<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
+			<div style="position:absolute;left:300px;top:10px;">\
+			<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
+			font-family: 宋体;text-decoration: none;">\
+			'+title+'</font></div>\
+			<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
+			<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:100px;" contenteditable="true"></div>';
+			return cc;
+	}
+	function colFuncFoot1(){
+			var cc='<div style="float:left;">编制\\日期：</div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:90px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:40px;">&nbsp</div>\
+				<div style="float:left;">审核\\日期：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:90px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>';
+		return cc;
 	
-	function selectTable(template_tab) {
-		template_tab = template_tab.replace(/\//g, "_")
-			template_tab = template_tab.replace(/-/g, "_")
-			template_tab = template_tab.replace(/\./g, "_")
-			console.log(template_tab);
-		//清空table menu
-		if (template_tab == 'xiang_mu_xin_xi_') {
-			//（01）项目注册
-			var cc = '\
-															<div style="font-size: 22.0pt;font-weight: 700;\
-															background-color:#fff;padding-top:59px;height:\
-															155px"><center>项目注册表</center></div>';
+	}
+	function rowFuncTitle(title){
+			var cc='<div style="position:absolute;left:400px;top:10px;">\
+			<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
+			font-family: 宋体;text-decoration: none;">\
+			'+title+'</font></div>';
+			return cc;
+	}
+	function rowFuncLeftTitleHead1(title){
+		var cc = '\
+			<div style="position:absolute;left:74px;top:60px;font-size:10pt;">'+title+'：</div>\
+			<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;\
+			font-size:10.5pt;width:200px;" contenteditable="true"></div>';
+			return cc;
+	}
+	function rowFuncLeftTitleHead2(title){
+		  var cc = '<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">'+title+'：</div>\
+			<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;\
+			top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>';
+			return cc;
+	}
+	function rowFuncRightTitleHead1(title){
+		var cc = '<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
+			<div style="position:absolute;left:970px;top:60px;font-size:10pt;">'+title+'：</div>';
+			return cc;
+	}
+	function rowFuncMiddleTitleHead(title){
+		var cc = '<div style="position:absolute;left:374px;top:60px;font-size:10.5pt;">'+title+'</div>\
+			<div label="nian_" class="forEdit"  style="position:absolute;left:470px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
+			<div style="position:absolute;left:520px;top:60px;font-size:10pt;">年</div>	\
+			<div label="yue_" class="forEdit"  style="position:absolute;left:550px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
+			<div style="position:absolute;left:600px;top:60px;font-size:10pt;">月</div>	'
+			return cc;
+	}
+	function rowFuncHead1(title){
+			var cc = rowFuncLeftTitleHead1('项目名称')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+    function rowFuncHead2(title){
+			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead3(title){
+			var cc = rowFuncLeftTitleHead1('项目名称—单项工程—专业类别')
+			+rowFuncTitle(title)
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead4(title){
+			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead5(title){
+			var cc = rowFuncLeftTitleHead1('项目名称')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncMiddleTitleHead('统计月份')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead6(title){
+			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncMiddleTitleHead('统计月份')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead7(title){
+			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncRightTitleHead1('单位');
+			return cc;
+	}
+	function rowFuncHead8(title){
+			var cc = rowFuncLeftTitleHead1('项目名称')
+			+rowFuncTitle(title)
+			+rowFuncMiddleTitleHead('统计日期');
+			return cc;
+	}
+	
+	function rowFuncFoot1(){
+		var cc='<div style="float:left;">编制\\日期：</div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:20px;">&nbsp</div>\
+				<div style="float:left;">审核\\日期：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:20px;">&nbsp</div>\
+				<div style="float:left;">审批\\日期：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>';
+		return cc;
+	}
+	function rowFuncFoot2(){
+		var cc='<div style="float:left;">编制人：</div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:100px;">&nbsp</div>\
+				<div style="float:left;">审核人：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>';
+		return cc;
+	}
+	function rowFuncFoot3(){
+		var cc='<div style="float:left;">编制人：</div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:100px;">&nbsp</div>\
+				<div style="float:left;">审核/日期：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>';
+		return cc;
+	}
+	function rowFuncFoot4(){
+		var cc='<div style="float:left;">编制\\日期：</div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>\
+				<div style="float:left;width:100px;">&nbsp</div>\
+				<div style="float:left;">审核\\日期：</div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">年</div>\
+				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">月</div>\
+				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div style="float:left;">日</div>';
+		return cc;
+	}
+	
+function selectTable(template_tab) {
+	template_tab = template_tab.replace(/\//g, "_")
+		template_tab = template_tab.replace(/-/g, "_")
+		template_tab = template_tab.replace(/\./g, "_")
+		console.log(template_tab);
+		console.log('工程成本责'.length);
 
-			setTable(cc, "col");
-		}
+	switch (template_tab) {
 
-		if (template_tab == 'gong_zuo_ji_hua_biao_') {
-			//工作计划表 部门工作计划表
-			var cc = '\
-																																																	<div style="position:absolute;left:100px;top:82px;\
-																																																	font-size:10pt;">表单编号：</div>\
-																																																	<div style="position:absolute;left:40%;top:60px;">\
-																																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																																	font-family: 宋体;text-decoration: none;">\
-																																																	工作计划表</font></div>\
-																																																	<div style="position:absolute;left:100px;top:101px;font-size:10.5pt;">\
-																																																	计划单位:</div>\
-																																																	<div style="position:absolute;left:40%;top:103px;font-size:10.5pt;">\
-																																																	计划时间:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-																																																	年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\
-																																																	月</div>';
-
-			setTable(cc, cc2, "row");
-
-		}
-
-		if (template_tab == 'guan_li_tai_zhang_') {
-			//(BZ-21-026)图书标准规范法规台帐
-			var cc = '<div style="position:absolute;left:35%;top:70px;\
-																																						   font-size: 20.0pt;font-weight:700;">\
-																																							图书/标准/规范/法规管理台帐</div>\
-																																							<div style="position:absolute;left:101px;top:101px;font-size:10.5pt;">\
-																																							项目名称:</div>'
-
-				setTable(cc, cc2, "row");
-		}
-		if (template_tab == 'zhao_biao_wen_jian_feng_mian_') {
-			//（CZ-01-030）招标文件 封面
-			var cc = '';
-			setTable(cc, "col");
-		}
-		if (template_tab == 'zhao_biao_wen_jian_zheng_wen_') {
-			//（CZ-01-030）招标文件 正文
-			var cc = '<div style="font-size: 22.0pt;font-weight: 700;\
-																																																	background-color:#fff;padding-top:59px;height:\
-																																																	155px"><center>项目注册表</center></div>';
-			setTable(cc, "col");
-
-		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_01_151_gong_cheng_cheng_ben_ze_ren_biao__sheet002_html') {
+	case 'JZ_JZ_01_151_sheet002_htm': {
 			//（JZ-01-151）工程成本责任表 目标责任表
-			var cc = '<div style="position:absolute;left:340px;top:97px;\
-																																						   font-size: 20.0pt;font-weight:700;">\
-																																							工程成本责任表</div>\
-																																							<div style="position:absolute;left:75px;top:115px;font-size:9pt;">\
-																																							表单编号：</div>\
-																																							<div style="position:absolute;left:75px;top:138px;font-size:10.5pt;">\
-																																							项目名称：</div>';
-
-			var cc2 = "";
+			var cc = colFuncHead1('工程成本责任表');
+			var cc2 = colFuncFoot1();
 			setTable(cc, cc2, "col");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet002_html') {
+
+	case 'JZ_JZ_02_152_sheet002_htm': {
 			//（JZ-02-152）工程成本测算表 工程项目
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	项目预算成本测算清单</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制\日期：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核\日期：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead1('项目预算成本测算清单');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet003_html') {
+
+	case 'JZ_JZ_02_152_sheet003_htm': {
 			//（JZ-02-152）工程成本测算表 单项工程
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	工程预算成本测算清单</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制\日期：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核\日期：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead2('工程预算成本测算清单');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
 
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet004_html') {
+	case 'JZ_JZ_02_152_sheet004_htm': {
 			//（JZ-02-152）工程成本测算表 1-1分包工程测算表
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称—单项工程：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	分包工程预算成本测算表</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制\日期：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核\日期：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead2('分包工程预算成本测算表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet005_html') {
+	case 'JZ_JZ_02_152_sheet005_htm': {
 			//（JZ-02-152）工程成本测算表 1-2材料设备测算表
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称—单项工程—专业类别：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	材料设备预算成本测算表</font></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
+			var cc = rowFuncHead3('材料设备预算成本测算表');
 			var cc2 = '';
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet006_html') {
+	case 'JZ_JZ_02_152_sheet006_htm': {
 			//（JZ-02-152）工程成本测算表 1-3机械与材料租赁测算表
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称—单项工程：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	机械材料租赁预算成本测算表</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制\日期：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核\日期：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead2('机械材料租赁预算成本测算表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_02_152_gong_cheng_cheng_ben_ce_suan_biao__sheet007_html') {
+	case 'JZ_JZ_02_152_sheet007_htm': {
 			//（JZ-02-152）工程成本测算表 1-4管理费及其它测算表
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称—单项工程：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	现场经费预算成本测算表</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制\日期：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核\日期：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead2('现场经费预算成本测算表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_03_153_gong_cheng_cheng_ben_diao_zheng_biao__sheet002_html') {
+	case 'JZ_JZ_03_153_sheet002_htm': {
 			//（JZ-03-153）工程成本调整表 预算成本调整表
-			var cc = '\
-																																	<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
-																																	<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:400px;top:10px;">\
-																																	<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-																																	font-family: 宋体;text-decoration: none;">\
-																																	工程预算成本调整表</font></div>\
-																																	<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-																																	<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>\
-																																	<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-																																	<div style="position:absolute;left:970px;top:60px;font-size:10pt;">单位：</div>';
-
-			var cc2 = '<div style="float:left;">编制人：</div>\
-														<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:180px;" contenteditable="true"></div>\
-														<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>\
-														<div style="float:left;width:100px;">&nbsp</div>\
-														<div style="float:left;">审核人：</div>\
-														<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:180px;" contenteditable="true"></div>\
-														<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">年</div>\
-														<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">月</div>\
-														<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-														<div style="float:left;">日</div>';
+			var cc = rowFuncHead1('工程预算成本调整表');
+			var cc2 = rowFuncFoot2();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_04_154_gong_cheng_cheng_ben_ji_hua_biao__sheet002_html') {
+	case 'JZ_JZ_04_154_sheet002_htm': {
 			//（JZ-04-154）工程成本计划表 工程项目
-			var cc = '';
-			var cc2 = "";
-			//setTable(cc, cc2, "row");
+			var cc = rowFuncHead1('工程成本计划表');
+			var cc2 = rowFuncFoot1();
+			setTable(cc, cc2, "row");
+			break;
+		}
+	case 'JZ_JZ_04_154_sheet003_htm': {
+			//（JZ-04-154）工程成本计划表 工程项目
+			var cc = rowFuncHead2('工程成本计划表');
+			var cc2 = rowFuncFoot1();
+			setTable(cc, cc2, "row");
+			break;
 		}
 
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_05_155_gong_cheng_cheng_ben_kong_zhi_biao__sheet002_htm') {
+	case 'JZ_JZ_05_155_sheet002_htm': {
 			//（JZ-04-155）工程成本控制表 工程项目
-			var cc = '';
-			var cc2 = "";
-			//setTable(cc, cc2, "row");
+			var cc = rowFuncHead1('工程成本计划表');
+			var cc2 = rowFuncFoot1();
+			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_05_155_gong_cheng_cheng_ben_kong_zhi_biao__sheet003_htm') {
+	case 'JZ_JZ_05_155_sheet003_htm': {
 			//（JZ-04-155）工程成本控制表 单项工程
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead2('工程成本计划表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_05_155_gong_cheng_cheng_ben_kong_zhi_biao__sheet004_htm') {
+	case 'JZ_JZ_05_155_sheet004_htm': {
 			//（JZ-04-155）工程成本控制表 1-1机械与材料租赁
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead5('租赁/摊销过程成本计算表');
+			var cc2 = rowFuncFoot4();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_05_155_gong_cheng_cheng_ben_kong_zhi_biao__sheet005_htm') {
+	case 'JZ_JZ_05_155_sheet005_htm': {
 			//（JZ-04-155）工程成本控制表 1-2管理费及其它
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead5('管理费/其它过程成本计算表');
+			var cc2 = rowFuncFoot4();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_06_156_wu_zi_cheng_ben_kong_zhi_biao__sheet002_htm') {
+	case 'JZ_JZ_06_156_sheet002_htm': {
 			//（JZ-04-156）物资成本控制表 过程控制表
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead5('物资成本过程控制表');
+			var cc2 = rowFuncFoot4();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_07_157_gong_cheng_cheng_ben_he_suan_biao__sheet002_htm') {
+	case 'JZ_JZ_07_157_sheet002_htm': {
 			//（JZ-07-157）工程成本核算表
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead5('工程成本核算表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_08_158_yue_du_cheng_ben_he_suan_biao__sheet002_htm') {
+	case 'JZ_JZ_07_157_sheet003_htm': {
+			//（JZ-07-157）工程成本核算表-单项工程
+			var cc = rowFuncHead6('工程成本核算表');
+			var cc2 = rowFuncFoot1();
+			setTable(cc, cc2, "row");
+			break;
+		}
+	case 'JZ_JZ_08_158_sheet002_htm': {
 			//（JZ-08-158）月工程成本确认单
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead7('月工程成本确认单');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_08_158_yue_du_cheng_ben_he_suan_biao__sheet003_htm') {
+	case 'JZ_JZ_08_158_sheet003_htm': {
 			//（JZ-08-158）月物资成本确认单
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead7('月物资成本确认单');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_08_158_yue_du_cheng_ben_he_suan_biao__sheet004_htm') {
+	case 'JZ_JZ_08_158_sheet004_htm': {
 			//（JZ-08-158）月租赁成本确认单
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead7('月租赁成本确认单');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_04_154_gong_cheng_cheng_ben_ji_hua_biao__sheet002_html') {
+	case 'JZ_JZ_09_159_sheet002_htm': {
 			//（JZ-09-159）工程成本综合分析表
-			var cc = '';
-			var cc2 = "";
+			var cc = rowFuncHead8('工程成本责任分析表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_10_160_zhu_yao_wu_zi_cheng_ben_fen_xi_biao__sheet002_htm') {
-			//（JZ-10-160）主要物资成本分析表  汇总统计
-			var cc = '';
-			var cc2 = "";
+	case 'JZ_JZ_10_160_sheet002_htm': {
+			//（JZ-10-160）工程成本过程控制表  项目
+			var cc = rowFuncHead1('工程成本过程控制表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_10_160_zhu_yao_wu_zi_cheng_ben_fen_xi_biao__sheet003_htm') {
-			//（JZ-10-160）主要物资成本分析表  月度统计
-			var cc = '';
-			var cc2 = "";
+	case 'JZ_JZ_10_160_sheet003_htm': {
+			//（JZ-10-160）工程成本过程控制表 单项工程
+			var cc = rowFuncHead1('工程成本过程控制表');
+			var cc2 = rowFuncFoot1();
 			setTable(cc, cc2, "row");
+			break;
 		}
-		if (template_tab == 'cheng_ben_yu_li_run__JZ_11_161_gong_cheng_xiang_mu_li_run_yu_ce_biao__sheet002_htm') {
-			//（JZ-11-161）项目利润预测表
-			var cc = '';
-			var cc2 = "";
+
+	case 'JZ_JZ_11_161_sheet002_htm': {
+			//（JZ-11-161）主要物资成本分析表  汇总统计
+			var cc = rowFuncHead6('主要物资成本分析表');
+			var cc2 = rowFuncFoot4();
 			setTable(cc, cc2, "row");
+			break;
+		}
+	case 'JZ_JZ_11_161_sheet003_htm': {
+			//（JZ-11-161）主要物资成本分析表  月度统计
+			var cc = rowFuncHead6('主要物资成本分析表');
+			var cc2 = rowFuncFoot4();
+			setTable(cc, cc2, "row");
+			break;
+		}
+
+	case 'JZ_JZ_12_162_sheet002_htm': {
+			//（JZ-12-162）工程项目利润预测表
+			var cc = rowFuncHead1('项目利润预测表');
+			var cc2 = rowFuncFoot1();
+			setTable(cc, cc2, "row");
+			break;
 		}
 	}
+}
 
 	function getSubExcel(gong_cheng_id,excelType){
 		var obj;
@@ -826,8 +858,8 @@ $(function () {
 			async:false,
 			url : SERVER_ROOT+"/getExcelList.action",
 			data: {
-			'excelType':excelType,
-			'gong_cheng_id':gong_cheng_id
+				'excelType':excelType,
+				'gong_cheng_id':gong_cheng_id
 			},
 			success : function (data) {			
 				obj=eval(data);
@@ -839,7 +871,6 @@ $(function () {
 		return obj;
 	}
 	function getOnlineMenu(obj){
-	
 			//这里可以用用13个第一级别的直接跳过
 			if (obj.li_type == 'fixed') {
 				if (obj.excelType !="" && obj.excelType) {
@@ -859,7 +890,6 @@ $(function () {
 					getOnlineMenu(obj.submenu[i]);
 				}
 			}
-	
 	}
 	function get_tab_trees(fun_btn, center, pro_id) {
 		/*
@@ -910,7 +940,7 @@ $(function () {
 				type : "GET",
 				url : SERVER_ROOT+"/getTableIdList.action?excel_id="+excel_id,
 				success : function (data) {			
-						console.log(data);
+					//	console.log(data);
 						resolve(data);
 				}, 
 				error : function () {
@@ -934,8 +964,6 @@ $(function () {
 					if(data[k].tableType==type){
 						$(this).attr('table_id',data[k].table_id);
 						break;
-					}else{
-						console.log(data[k].tableType);
 					}
 				}
 			});
@@ -1169,16 +1197,25 @@ $(function () {
 
 		})
 		console.log(JSON.stringify(tr_obj));
+		if(typeof(golbal.information.nowHandleTableId)=="undefined"){
+			alert("nothing to save");
+			console.log("nothing to save");
+			return;
+		}
 		$.ajax({
 			type : "GET",
 			url : SERVER_ROOT + "/saveTable.action",
 			data : {
-				'id' : '6666666666',
-				'tableType':'152_002',
+				'id' : golbal.information.nowHandleTableId,
+				'tableType':golbal.information.nowHandleTableType,
 				'tableCtx' : JSON.stringify(tr_obj)
 			},
 			success : function (data) {
-				alert("SAVE-SUCCESS");
+				console.log("SAVE-SUCCESS");
+			},
+			complete:function(){
+				////刷新当前栏目的菜单
+				$(".btn-list-select").trigger("click");
 			},
 			error : function () {
 				console.log('cuowu');
@@ -1255,8 +1292,7 @@ $(function () {
 
 	$("#add_empty_tab").on("click", function () {
 		//添加表单
-		//找父节点
-		function creatNewExcel(gong_cheng_id,excelType){
+		function createNewExcel(gong_cheng_id,excelType){
 			$.ajax({
 				type : "GET",
 				url : SERVER_ROOT + "/createExcel.action",
@@ -1265,27 +1301,44 @@ $(function () {
 					'excelType':excelType,
 				},
 				success : function (data) {
-					alert("CreateExcel-SUCCESS");
+					console.log("CreateExcel-SUCCESS");
+				},
+				complete:function(){
+				////刷新当前栏目的菜单
+					$(".btn-list-select").trigger("click");
 				},
 				error : function () {
-					console.log('cuowu');
+					console.log('创建表单失败');
 				}
 			});
 		}
-		//http://localhost:8080/hibernate/createExcel.action?excelType=152&gong_cheng_id=1
-		var pNode = findParentNode($("li[click_select=true]").attr("li_id"));
-		console.log(pNode.excelType);
-		creatNewExcel(1,pNode.excelType);
+		createNewExcel(1,$("li[click_select=true]").attr("excelType"));
 		////刷新当前栏目的菜单
 		$(".btn-list-select").trigger("click");
 	});
 	$("#del_tab").on("click", function () {
 		//删除表单
-		var pNode = findParentNode($("li[click_select=true]").attr("li_id"));
-		//建立新的对象
-		var new_li = {};
-		//服务器删除当前节点并且更新菜单//
-		pNode.submenu.pop();
+		function deleteExcel(excel_id){
+			$.ajax({
+				type : "GET",
+				url : SERVER_ROOT + "/deleteExcel.action",
+				data : {
+					'excel_id':excel_id,
+				},
+				success : function (data) {
+					console.log("deleteExcel-SUCCESS");
+				},
+				complete:function(){
+				////刷新当前栏目的菜单
+					$(".btn-list-select").trigger("click");
+				},
+				error : function () {
+					console.log('删除表单失败');
+				}
+			});
+		}
+		
+		deleteExcel($("li[click_select=true]").attr("excel_id"));
 		//////////////////////
 		////刷新当前栏目的菜单
 		$(".btn-list-select").trigger("click");
@@ -1293,26 +1346,17 @@ $(function () {
 	});
 	$("#copy_tab").on("click", function () {
 		//复制表单
-		var pNode = findParentNode($("li[click_select=true]").attr("li_id"));
-		//建立新的对象
-		var new_li = {};
-		//服务器获取新的节点//
-		for (var i in pNode) {
-			if (i != "submenu") {
-				new_li[i] = pNode[i];
-			} else {
-				new_li['submenu'] = [];
-			}
-		}
-		new_li.title += ("(" + pNode.submenu.length + ")");
-		//////////////////////
-		pNode.submenu.push(new_li);
+		//
+		alert("Development");
 		////刷新当前栏目的菜单
 		$(".btn-list-select").trigger("click");
 
 	});
 	$('body').on('click', '#table_nav li', function () {
 		//点击表内菜单完成切换页面
+		//这里添加当前操作的Table的id号####非常重要
+		golbal.information.nowHandleTableId=$(this).attr('table_id');
+		golbal.information.nowHandleTableType=$(this).attr('tabletype');
 		loadTablePage($(this).attr('template_tab'),$(this).attr('table_id'));
 	});
 
@@ -1352,45 +1396,65 @@ $(function () {
 		});
 		$('body').on('click', '#add_new_tr', function (e) {
 			//表格添加新的一行
-
-			if ($(".on-tr-handle-select").attr('TableType') == 'ctx') {
+			var nobj=$(".on-tr-handle-select");
+			if (nobj.attr('TableType') == 'ctx') {
 				var temtr = $(".on-tr-handle-select").clone(true);
-				
 				temtr.attr("tr_id","");//清空行的唯一编号
 				temtr.find("td").each(function () {
 					$(this).empty();
 				});
-				$(".on-tr-handle-select").after(temtr);
+				nobj.after(temtr);
 			}
 			unselect_tr()
 		});
 		$('body').on('click', '#delect_select_tr', function (e) {
 			//表格删除当前行
-			if ($(".on-tr-handle-select").attr('TableType') == 'ctx') {
-				$(".on-tr-handle-select").remove();
+			var nobj=$(".on-tr-handle-select");
+			if (nobj.attr('TableType') == 'ctx') {
+				if(nobj.attr('tr_id')!=''){
+				
+						$.ajax({
+							type : "GET",
+							url : SERVER_ROOT+"/deleteTr.action",
+							data: {
+								'tableType':golbal.information.nowHandleTableType,
+								'id':nobj.attr('tr_id')
+							},
+							 async:false, 
+							success : function (data) {			
+								nobj.remove();
+							}, 
+							error : function () {
+								console.log('cuowu');
+							}
+						});
+				}else{
+					nobj.remove();
+				}
 			}
-			unselect_tr()
+			unselect_tr();
 		});
 		$('body').on('click', '#copy_select_tr', function (e) {
 			//表格复制当前行
-			if ($(".on-tr-handle-select").attr('TableType') == 'ctx') {
-				var temtr = $(".on-tr-handle-select").clone(true);
+			var nobj=$(".on-tr-handle-select");
+			if (nobj.attr('TableType') == 'ctx') {
+				var temtr = nobj.clone(true);
 				temtr.attr("tr_id","");//清空行的唯一编号
-				$(".on-tr-handle-select").after(temtr);
+				nobj.after(temtr);
 			}
 			unselect_tr()
 		});
 		$('body').on('click', '.set_as_title', function (e) {
+			var nobj = $(".on-tr-handle-select");
 			if ($(".on-tr-handle-select").attr('TableType') == 'ctx') {
-				var obj = $(".on-tr-handle-select");
 				alert($(this).attr("level"));
 				//设置当前行为标题
-				var temtr = obj.clone(true);
+				var temtr = nobj.clone(true);
 				temtr.attr("tr_id","");//清空行的唯一编号
 				temtr.find("td").each(function () {
 					$(this).empty();
 				});
-				obj.after(temtr);
+				nobj.after(temtr);
 				temtr.css("background-color", "red");
 			}
 			unselect_tr()
@@ -1420,7 +1484,7 @@ $(function () {
 			}
 		});
 		//这里点击后添加表内菜单
-		alert($(this).attr("li_id"));
+		//alert($(this).attr("li_id"));
 		var pNode = findParentNode($(this).attr("li_id"));
 		if(pNode!=-1){			
 			updateTableList(pNode.template_tab,$(this).attr("excel_id"),function(){
