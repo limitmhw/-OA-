@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)file:///C:/Users/MHW/Desktop/zTree_v3-master/demo/cn/core/custom_icon.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title> ZTREE DEMO - Custom Icon </title>
+	
+  <link href="css/bootstrap.css" rel="stylesheet" /> 
+  <link href="css/common.css" rel="stylesheet" /> 
+  <link rel="stylesheet" href="./js/ztree/zTreeStyle.css" type="text/css">   
+  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
+  <script type="text/javascript" src="js/comm.js"></script> 
+  <script type="text/javascript" src="js/handletable.js"></script> 
+  <script type="text/javascript" src="js/menu.js"></script> 
+  <script type="text/javascript" src="./js/ztree/jquery.ztree.core.js"></script>
+
+<script type="text/javascript">
+	  
+	var allData=  [{
+		id : "",
+		title : "成本责任",
+		submenu : [{
+				title : "工程成本责任表",
+				id : "",
+				submenu : [],
+				excelType : "151",
+				parent_id : "false",
+				li_id : "161",
+				li_type : "fixed",
+				template_tab : [{
+						name : "目标责任表",
+						tableType : "151_002",
+						template : 'JZ/JZ-01-151/sheet002.htm'
+					}
+				]
+			}
+		]
+	}, {
+		id : "",
+		title : "成本测算",
+		submenu : [{
+				title : "工程成本测算表",
+				id : "",
+				submenu : [],
+				excelType : "152",
+				parent_id : "false",
+				li_id : "162",
+				li_type : "fixed",
+				template_tab : [{
+						name : "工程项目 ",
+						tableType : "152_002",
+						template : 'JZ/JZ-02-152/sheet002.htm'
+					}, {
+						name : "单项工程",
+						tableType : "152_003",
+						template : 'JZ/JZ-02-152/sheet003.htm'
+					}, {
+						name : "1-1分包工程测算表",
+						tableType : "152_004",
+						template : 'JZ/JZ-02-152/sheet004.htm'
+					}, {
+						name : "1-2材料设备测算表",
+						tableType : "152_005",
+						template : 'JZ/JZ-02-152/sheet005.htm'
+					}, {
+						name : "1-3机械与材料租赁测算表",
+						tableType : "152_006",
+						template : 'JZ/JZ-02-152/sheet006.htm'
+					}, {
+						name : "1-4管理费及其它测算表",
+						tableType : "152_007",
+						template : 'JZ/JZ-02-152/sheet007.htm'
+					}
+				]
+			}, {
+				title : "工程成本调整表",
+				id : "",
+				submenu : [],
+				excelType : "153",
+				parent_id : "false",
+				li_id : "163",
+				li_type : "fixed",
+				template_tab : [{
+						name : "工程成本调整表",
+						tableType : "153_002",
+						template : 'JZ/JZ-03-153/sheet002.htm'
+					}
+				]
+			}
+		]
+	}, {
+		id : "",
+		title : "成本计划",
+		submenu : [{
+				title : "工程成本计划表",
+				id : "152_003",
+				submenu : [],
+				excelType : "154",
+				parent_id : "false",
+				li_id : "164",
+				li_type : "fixed",
+				template_tab : [{
+						name : "工程项目 ",
+						tableType : "154_002",
+						template : 'JZ/JZ-04-154/sheet002.htm'
+					}, {
+						name : "单项工程 ",
+						tableType : "154_003",
+						template : 'JZ/JZ-04-154/sheet003.htm'
+					}
+				],
+
+			}
+		]
+	}, {
+		id : "",
+		title : "成本控制",
+		submenu : [{
+				title : "工程成本控制表",
+				id : "",
+				submenu : [],
+				excelType : "155",
+				template_tab : [{
+						name : "工程项目 ",
+						tableType : "155_002",
+						template : 'JZ/JZ-05-155/sheet002.htm'
+					}, {
+						name : "单项工程 ",
+						tableType : "155_003",
+						template : 'JZ/JZ-05-155/sheet003.htm'
+					}, {
+						name : "租赁及摊销计算表",
+						tableType : "155_004",
+						template : 'JZ/JZ-05-155/sheet004.htm'
+					}, {
+						name : "管理费及其它计算表",
+						tableType : "155_005",
+						template : 'JZ/JZ-05-155/sheet005.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "165",
+				li_type : "fixed",
+			}, {
+				title : "物资成本控制表",
+				id : "",
+				submenu : [],
+				excelType : "156",
+				template_tab : [{
+						name : "过程控制表 ",
+						tableType : "156_002",
+						template : 'JZ/JZ-06-156/sheet002.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "166",
+				li_type : "fixed",
+			}
+		]
+	}, {
+		id : "",
+		title : "成本核算",
+		submenu : [{
+				title : "工程成本核算表",
+				id : "",
+				submenu : [],
+				excelType : "157",
+				template_tab : [{
+						name : "工程项目 ",
+						tableType : "157_002",
+						template : 'JZ/JZ-07-157/sheet002.htm'
+					}, {
+						name : "单项工程 ",
+						tableType : "157_003",
+						template : 'JZ/JZ-07-157/sheet003.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "167",
+				li_type : "fixed",
+			}, {
+				title : "月度工程成本确认",
+				id : "",
+				submenu : [],
+				excelType : "158",
+				template_tab : [{
+						name : "工程成本确认单 ",
+						tableType : "158_002",
+						template : 'JZ/JZ-08-158/sheet002.htm'
+					}, {
+						name : "附件1—物资成本确认单",
+						tableType : "158_003",
+						template : 'JZ/JZ-08-158/sheet003.htm'
+					}, {
+						name : "附件2—租赁成本确认单",
+						tableType : "158_004",
+						template : 'JZ/JZ-08-158/sheet004.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "168",
+				li_type : "fixed",
+			}
+		]
+	}, {
+		id : "",
+		title : "成本分析",
+		submenu : [{
+				title : "工程成本综合分析",
+				id : "",
+				submenu : [],
+				excelType : "159",
+				template_tab : [{
+						name : "综合统计",
+						tableType : "159_002",
+						template : 'JZ/JZ-09-159/sheet002.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "169",
+				li_type : "fixed",
+			}, {
+				title : "工程成本综合分析",
+				id : "",
+				submenu : [],
+				excelType : "160",
+				template_tab : [{
+						name : "工程项目",
+						tableType : "160_002",
+						template : 'JZ/JZ-10-160/sheet002.htm'
+					}, {
+						name : "单项工程",
+						tableType : "160_003",
+						template : 'JZ/JZ-10-160/sheet003.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "169-2",
+				li_type : "fixed",
+			}, {
+				title : "主要物资成本分析",
+				id : "",
+				submenu : [],
+				excelType : "161",
+				template_tab : [{
+						name : "汇总统计",
+						tableType : "161_002",
+						template : 'JZ/JZ-11-161/sheet002.htm'
+					}, {
+						name : "月度统计",
+						tableType : "161_003",
+						template : 'JZ/JZ-11-161/sheet003.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "170",
+				li_type : "fixed",
+			}
+		]
+	}, {
+		id : "",
+		title : "利润预测",
+		submenu : [{
+				title : "项目利润预测表",
+				id : "",
+				submenu : [],
+				excelType : "162",
+				template_tab : [{
+						name : "成本利润分析表",
+						tableType : "162_002",
+						template : 'JZ/JZ-12-162/sheet002.htm'
+					}
+				],
+				parent_id : "false",
+				li_id : "171",
+				li_type : "fixed",
+			}
+		]
+	}
+
+];
+
+	  
+	  </script>
+	<script type="text/javascript">
+		<!--
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+
+		
+
+		$(document).ready(function(){
+			
+			function  tranlateMenu(argdata){
+				var arr =[];
+				$.each(argdata,function(i,data){
+					var temp={name:data.title};
+					if(typeof(data.submenu)!="undefined"&&data.submenu.length>0){
+						temp['children']=[];
+						$.each(data.submenu,function(k,dd){
+							temp['children'].push({name:dd.title});
+						});
+					}
+					//console.log(data);
+					arr.push(temp);
+				});
+				return arr;
+			}
+			var zNodes=tranlateMenu(allData);
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			
+		var tt =[
+			{ id:1, pId:0, name:"展开、折叠 自定义图标不同", open:true, iconOpen:"./js/ztree/img/diy/1_open.png", iconClose:"./js/ztree/img/diy/1_close.png"},
+			{ id:11, pId:1, name:"叶子节点1", icon:"./js/ztree/img/diy/2.png"},
+			{ id:12, pId:1, name:"叶子节点2", icon:"./js/ztree/img/diy/3.png"},
+			{ id:13, pId:1, name:"叶子节点3", icon:"./js/ztree/img/diy/5.png"},
+			{ id:2, pId:0, name:"展开、折叠 自定义图标相同", open:true, icon:"./js/ztree/img/diy/4.png"},
+			{ id:21, pId:2, name:"叶子节点1", icon:"./js/ztree/img/diy/6.png"},
+			{ id:22, pId:2, name:"叶子节点2", icon:"./js/ztree/img/diy/7.png"},
+			{ id:23, pId:2, name:"叶子节点3", icon:"./js/ztree/img/diy/8.png"},
+			{ id:3, pId:0, name:"不使用自定义图标", open:true },
+			{ id:31, pId:3, name:"叶子节点1"},
+			{ id:32, pId:3, name:"叶子节点2"},
+			{ id:33, pId:3, name:"叶子节点3"}
+
+		];
+			$('body').delegate("#treeDemo .node_name","click",function(){
+				$.fn.zTree.init($("#treeDemo"), setting, tt);
+				//alert($(this).text());
+			
+			});
+		});
+		//-->
+	</script>
+</head>
+
+<body>
+
+
+		<ul id="treeDemo" class="ztree"></ul>
+		
+
+</body>
+</html>

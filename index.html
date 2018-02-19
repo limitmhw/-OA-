@@ -5,16 +5,36 @@
   <title>项目管理平台</title> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
   <link href="css/common.css" rel="stylesheet" /> 
-  <link rel="stylesheet" type="text/css" href="css/easyui.css" />
-  
+  <link rel="stylesheet" href="./js/ztree/zTreeStyle.css" type="text/css">   
   <script>
   var golbal = this;
+  function sleep(millis) {
+  	var njf1 = njen(this, arguments, "millis");
+  	nj : while (1) {
+  		try {
+  			switch (njf1.cp) {
+  			case 0:
+  				njf1._notifier = NjsRuntime.createNotifier();
+  				setTimeout(njf1._notifier, njf1._millis);
+  				njf1.cp = 1;
+  				njf1._notifier.wait(njf1);
+  				return;
+  			case 1:
+  				break nj;
+  			}
+  		} catch (ex) {
+  			if (!njf1.except(ex, 1))
+  				return;
+  		}
+  	}
+  	njf1.pf();
+  }
   </script> 
   <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
   <script type="text/javascript" src="js/comm.js"></script> 
   <script type="text/javascript" src="js/handletable.js"></script> 
   <script type="text/javascript" src="js/menu.js"></script> 
-  
+  <script type="text/javascript" src="./js/ztree/jquery.ztree.core.js"></script>
 
 <style>
   article, aside, figure, footer, header, hgroup, 
@@ -366,7 +386,7 @@ var menu = {
 golbal.now_menu = {};
 golbal.information={};
 //全局量设置
-var message = "{'SERVER_ROOT':'http://localhost:8080/hibernate/','fun_btn':'o_p','center':'work_center','proid':'6'}";
+var message = "{'SERVER_ROOT':'http://localhost:8080/simpleMVC/excel/','fun_btn':'o_p','center':'work_center','proid':'6'}";
 
 var pars = eval("(" + message + ")");
 var SERVER_ROOT = pars['SERVER_ROOT'];
@@ -452,21 +472,21 @@ $(function () {
 	}
 	function colFuncFoot1(){
 			var cc='<div style="float:left;">编制\\日期：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:90px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:40px;">&nbsp</div>\
 				<div style="float:left;">审核\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:90px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>';
 		return cc;
 	
@@ -498,9 +518,9 @@ $(function () {
 	}
 	function rowFuncMiddleTitleHead(title){
 		var cc = '<div style="position:absolute;left:374px;top:60px;font-size:10.5pt;">'+title+'</div>\
-			<div label="nian_" class="forEdit"  style="position:absolute;left:470px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
+			<div label="tong_ji_ri_qi_nian_" class="forEdit"  style="position:absolute;left:470px;top:60px;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 			<div style="position:absolute;left:520px;top:60px;font-size:10pt;">年</div>	\
-			<div label="yue_" class="forEdit"  style="position:absolute;left:550px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
+			<div label="tong_ji_ri_qi_yue_" class="forEdit"  style="position:absolute;left:550px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
 			<div style="position:absolute;left:600px;top:60px;font-size:10pt;">月</div>	'
 			return cc;
 	}
@@ -563,90 +583,90 @@ $(function () {
 	
 	function rowFuncFoot1(){
 		var cc='<div style="float:left;">编制\\日期：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:20px;">&nbsp</div>\
 				<div style="float:left;">审核\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:20px;">&nbsp</div>\
 				<div style="float:left;">审批\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_pi_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+				<div label="shen_pi_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_pi_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+				<div label="shen_pi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>';
 		return cc;
 	}
 	function rowFuncFoot2(){
 		var cc='<div style="float:left;">编制人：</div>\
 				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:100px;">&nbsp</div>\
 				<div style="float:left;">审核人：</div>\
 				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>';
 		return cc;
 	}
 	function rowFuncFoot3(){
 		var cc='<div style="float:left;">编制人：</div>\
 				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:100px;">&nbsp</div>\
 				<div style="float:left;">审核/日期：</div>\
 				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>';
 		return cc;
 	}
 	function rowFuncFoot4(){
 		var cc='<div style="float:left;">编制\\日期：</div>\
 				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>\
 				<div style="float:left;width:100px;">&nbsp</div>\
 				<div style="float:left;">审核\\日期：</div>\
 				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
 				<div style="float:left;">日</div>';
 		return cc;
 	}
@@ -851,7 +871,9 @@ function selectTable(template_tab) {
 	}
 }
 
-	function getSubExcel(gong_cheng_id,excelType){
+
+	
+	function getSubExcel(jsObj,ccobj,gong_cheng_id,excelType,func){
 		var obj;
 		$.ajax({
 			type : "GET",
@@ -861,8 +883,9 @@ function selectTable(template_tab) {
 				'excelType':excelType,
 				'gong_cheng_id':gong_cheng_id
 			},
-			success : function (data) {			
-				obj=eval(data);
+			success : function (dd) {			
+				func(ccobj,eval(dd));
+				jsObj.js=jsObj.js-1;
 			}, 
 			error : function () {
 				console.log('cuowu');
@@ -870,12 +893,14 @@ function selectTable(template_tab) {
 		});
 		return obj;
 	}
-	function getOnlineMenu(obj){
+	function getOnlineMenu(resultArr,obj){
 			//这里可以用用13个第一级别的直接跳过
 			if (obj.li_type == 'fixed') {
 				if (obj.excelType !="" && obj.excelType) {
 					//获取在线菜单添加到菜单当中
 					var gong_cheng_id=1;
+					resultArr.push(obj);
+					/*
 					obj.submenu=getSubExcel(gong_cheng_id,obj.excelType);
 					//这里属于打补丁的操作，因为其实exceltype，能代替li_id
 					if(typeof(obj.submenu)!="undefined"){
@@ -883,11 +908,11 @@ function selectTable(template_tab) {
 							obj.submenu[i]['li_id']=obj.li_id;
 						}
 					}
-					
+					*/
 				}
 			}else if (typeof(obj.submenu)!="undefined"&& obj.submenu.length != 0) {
 				for (var i in obj.submenu) {
-					getOnlineMenu(obj.submenu[i]);
+					getOnlineMenu(resultArr,obj.submenu[i]);
 				}
 			}
 	}
@@ -899,23 +924,52 @@ function selectTable(template_tab) {
 		 *center：表中五中不同的中心分类
 		 *proid：表示项目id；
 		 */
+		 
+		 function callfunc(ccobj,data){
+			ccobj.submenu=data
+			if (typeof(ccobj.submenu) != "undefined") {
+				for (var g in ccobj.submenu) {
+					ccobj.submenu[g]['li_id'] = ccobj.li_id;
+				}
+			}
+		 }
+
+
 		for (i in golbal.allmenu) {
 			if (golbal.allmenu[i].id == fun_btn) {
 				//构建13栏目其中的一个
 				$("#menu2").empty();
 				golbal.now_menu = golbal.allmenu[i];
-				
+
 				//在这里加入查询的代码
-				//getSubExcel(1,152);
-				
+
+
 				//这里要刷新两次
-				getOnlineMenu(golbal.allmenu[i]);
-				
+				resultArr = [];
+				getOnlineMenu(resultArr, golbal.allmenu[i]);
+				{
+					var gong_cheng_id = 1;
+					console.log(resultArr);
+					var js = resultArr.length;
+					console.log(js);
+					var jsObj = {
+						js : js
+					};
+
+					for (var w = 0; w < js; w++) {
+						getSubExcel(jsObj,resultArr[w],gong_cheng_id, resultArr[w].excelType,callfunc);
+						//这里属于打补丁的操作，因为其实exceltype，能代替li_id
+					}
+					while (jsObj.js > 0) {
+							//console.log(JSON.stringify(golbal.allmenu[i]));
+					}
+				}
 				updateJsonMenu(golbal.allmenu[i], $("#menu2"));
+				break;
 			}
 		}
+
 	}
-	
 	
 	function updateTableList(table_list, excel_id,func) {
 		//更新table菜单的表
@@ -1003,14 +1057,17 @@ function selectTable(template_tab) {
 	}
 	function updateJsonMenu(obj, cc) {
 		//载入json的菜单，输出li菜单
+	
+
 		var uu = $("<ul></ul>");
 		if (typeof(obj.submenu)!="undefined"&& obj.submenu.length != 0 ) {
 			for (var i in obj.submenu) {
 				var ll = $('<li></li>');
-				var img = '<img src="./images/icon/bookmark.png" \
+				var img = $('<img src="./images/folder.png" \
 														style="-moz-box-sizing: border-box; -webkit-box-sizing:\
 														border-box; border: 0; box-sizing: border-box; \
-														vertical-align: middle;">';{
+														vertical-align: middle;">');
+				{
 					//这里可以添加特定的条目内容
 					for (var k in obj.submenu[i]) {
 						if (k == 'submenu') {
@@ -1027,6 +1084,9 @@ function selectTable(template_tab) {
 					ll.attr('id', ll.attr('template_tab'));
 				}
 
+				if (typeof(obj.submenu[i].li_type)!="undefined"&& obj.submenu[i].li_type == "fixed" ){
+					img.attr('src','./images/file.png');
+				}
 				ll.append(img);
 				uu.append(ll.append(obj.submenu[i].title));
 				ll = updateJsonMenu(obj.submenu[i], ll);
@@ -1040,8 +1100,13 @@ function selectTable(template_tab) {
 		} else {
 			//末端的li
 			$(cc).attr("layout", "click");
+			if($(cc).attr("li_type")!="fixed"){
+				$(cc).find('img').attr('src','./images/file2.png');
+			}
+			
 		}
 		$(cc).attr("cid", obj.id);
+		
 		return cc;
 	}
 	
@@ -1073,7 +1138,6 @@ function selectTable(template_tab) {
 				
 				$.ajax({
 					type : "GET",
-					async:false,
 					url : SERVER_ROOT+"/getTable.action?id="+table_id,
 					success : function (data) {			
 							resolve(data)
@@ -1092,9 +1156,25 @@ function selectTable(template_tab) {
 		p.then(function(val) {			
 			var std_tr=val[0];
 			var data=val[1];
+			
+			console.log(data);
 			std_tr=$(std_tr)
 			std_tr.attr("tr_id","");
-			var cc_arr=eval(data);	
+			
+			
+			var tableObj=eval(data)[0];
+			
+			for (var key in tableObj){
+				//table信息注入
+				if(key!='tr_info'){
+					var ii='<input iidata="'+key+'" class="forinit" type="hidden" value="'+tableObj[key]+'">';
+					$("#clearandreplacecontent").append(ii);
+				}
+			}
+			
+			
+			
+			var cc_arr=tableObj.tr_info;	
 			if(cc_arr.length==0){
 			//数据表为空
 				for(var i=0;i<14;i++){
@@ -1170,6 +1250,29 @@ function selectTable(template_tab) {
 	});
 	$("#save_tab").click(function () {
 	//保存表格里面TableType='ctx'的行
+	
+		var tableInfo = {
+			xiang_mu_ming_chen_ : $("#clearandreplacecontent div[label='xiang_mu_ming_chen_']").text(),
+			biao_dan_bian_hao_ : $("#clearandreplacecontent div[label='biao_dan_bian_hao_']").eq(0).text(),
+			tong_ji_ri_qi_nian_ : $("#clearandreplacecontent div[label='tong_ji_ri_qi_nian_']").eq(0).text(),
+			tong_ji_ri_qi_yue_ : $("#clearandreplacecontent div[label='tong_ji_ri_qi_yue_']").eq(0).text(),
+			dan_wei_ : $("#clearandreplacecontent div[label='dan_wei_']").eq(0).text(),
+			bian_zhi_ren_ : $("#clearandreplacecontent div[label='bian_zhi_ren_']").eq(0).text(),
+			bian_zhi_ren_nian_ : $("#clearandreplacecontent div[label='bian_zhi_ren_nian_']").eq(0).text(),
+			bian_zhi_ren_yue_ : $("#clearandreplacecontent div[label='bian_zhi_ren_yue_']").eq(0).text(),
+			bian_zhi_ren_ri_ : $("#clearandreplacecontent div[label='bian_zhi_ren_ri_']").eq(0).text(),
+			shen_he_ren_ : $("#clearandreplacecontent div[label='shen_he_ren_']").eq(0).text(),
+			shen_he_ren_nian_ : $("#clearandreplacecontent div[label='shen_he_ren_nian_']").eq(0).text(),
+			shen_he_ren_yue_ : $("#clearandreplacecontent div[label='shen_he_ren_yue_']").eq(0).text(),
+			shen_he_ren_ri_ : $("#clearandreplacecontent div[label='shen_he_ren_ri_']").eq(0).text(),
+			shen_pi_ren_: $("#clearandreplacecontent div[label='shen_pi_ren_']").eq(0).text(),
+			shen_pi_ren_nian_: $("#clearandreplacecontent div[label='shen_pi_ren_nian_']").eq(0).text(),
+			shen_pi_ren_yue_: $("#clearandreplacecontent div[label='shen_pi_ren_yue_']").eq(0).text(),
+			shen_pi_ren_ri_: $("#clearandreplacecontent div[label='shen_pi_ren_ri_']").eq(0).text()
+		};
+
+
+		console.log(tableInfo);
 		var html_obj = $("#clearandreplacecontent tr[TableType='ctx']");//.html();
 		var tr_obj={};
 		var submit_tr=[];
@@ -1208,6 +1311,7 @@ function selectTable(template_tab) {
 			data : {
 				'id' : golbal.information.nowHandleTableId,
 				'tableType':golbal.information.nowHandleTableType,
+				'tableInfo':JSON.stringify(tableInfo),
 				'tableCtx' : JSON.stringify(tr_obj)
 			},
 			success : function (data) {
@@ -1215,7 +1319,7 @@ function selectTable(template_tab) {
 			},
 			complete:function(){
 				////刷新当前栏目的菜单
-				$(".btn-list-select").trigger("click");
+				////$(".btn-list-select").trigger("click");
 			},
 			error : function () {
 				console.log('cuowu');
@@ -1355,6 +1459,11 @@ function selectTable(template_tab) {
 	$('body').on('click', '#table_nav li', function () {
 		//点击表内菜单完成切换页面
 		//这里添加当前操作的Table的id号####非常重要
+		
+		if(typeof($(this).attr('table_id'))=="undefined"){
+				alert();
+		}
+
 		golbal.information.nowHandleTableId=$(this).attr('table_id');
 		golbal.information.nowHandleTableType=$(this).attr('tabletype');
 		loadTablePage($(this).attr('template_tab'),$(this).attr('table_id'));
@@ -1420,7 +1529,6 @@ function selectTable(template_tab) {
 								'tableType':golbal.information.nowHandleTableType,
 								'id':nobj.attr('tr_id')
 							},
-							 async:false, 
 							success : function (data) {			
 								nobj.remove();
 							}, 

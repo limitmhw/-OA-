@@ -1576,11 +1576,11 @@ golbal.allmenu = [{
 						li_type : "fixed",
 						template_tab : [{
 								name : "工程项目 ",
-								tableType : "",
+								tableType : "154_002",
 								template : 'JZ/JZ-04-154/sheet002.htm'
 							}, {
 								name : "单项工程 ",
-								tableType : "",
+								tableType : "154_003",
 								template : 'JZ/JZ-04-154/sheet003.htm'
 							}
 						],
@@ -1597,19 +1597,19 @@ golbal.allmenu = [{
 						excelType : "155",
 						template_tab : [{
 								name : "工程项目 ",
-								tableType : "",
+								tableType : "155_002",
 								template : 'JZ/JZ-05-155/sheet002.htm'
 							}, {
 								name : "单项工程 ",
-								tableType : "",
+								tableType : "155_003",
 								template : 'JZ/JZ-05-155/sheet003.htm'
 							}, {
 								name : "租赁及摊销计算表",
-								tableType : "",
+								tableType : "155_004",
 								template : 'JZ/JZ-05-155/sheet004.htm'
 							}, {
 								name : "管理费及其它计算表",
-								tableType : "",
+								tableType : "155_005",
 								template : 'JZ/JZ-05-155/sheet005.htm'
 							}
 						],
@@ -1623,7 +1623,7 @@ golbal.allmenu = [{
 						excelType : "156",
 						template_tab : [{
 								name : "过程控制表 ",
-								tableType : "",
+								tableType : "156_002",
 								template : 'JZ/JZ-06-156/sheet002.htm'
 							}
 						],
@@ -1642,11 +1642,11 @@ golbal.allmenu = [{
 						excelType : "157",
 						template_tab : [{
 								name : "工程项目 ",
-								tableType : "",
+								tableType : "157_002",
 								template : 'JZ/JZ-07-157/sheet002.htm'
 							}, {
 								name : "单项工程 ",
-								tableType : "",
+								tableType : "157_003",
 								template : 'JZ/JZ-07-157/sheet003.htm'
 							}
 						],
@@ -1660,15 +1660,15 @@ golbal.allmenu = [{
 						excelType : "158",
 						template_tab : [{
 								name : "工程成本确认单 ",
-								tableType : "",
+								tableType : "158_002",
 								template : 'JZ/JZ-08-158/sheet002.htm'
 							}, {
 								name : "附件1—物资成本确认单",
-								tableType : "",
+								tableType : "158_003",
 								template : 'JZ/JZ-08-158/sheet003.htm'
 							}, {
 								name : "附件2—租赁成本确认单",
-								tableType : "",
+								tableType : "158_004",
 								template : 'JZ/JZ-08-158/sheet004.htm'
 							}
 						],
@@ -1687,7 +1687,7 @@ golbal.allmenu = [{
 						excelType : "159",
 						template_tab : [{
 								name : "综合统计",
-								tableType : "",
+								tableType : "159_002",
 								template : 'JZ/JZ-09-159/sheet002.htm'
 							}],
 						parent_id : "false",
@@ -1700,11 +1700,11 @@ golbal.allmenu = [{
 						excelType : "160",
 						template_tab : [{
 								name : "工程项目",
-								tableType : "",
+								tableType : "160_002",
 								template : 'JZ/JZ-10-160/sheet002.htm'
 							}, {
 								name : "单项工程",
-								tableType : "",
+								tableType : "160_003",
 								template : 'JZ/JZ-10-160/sheet003.htm'
 							}
 						],
@@ -1718,11 +1718,11 @@ golbal.allmenu = [{
 						excelType : "161",
 						template_tab : [{
 								name : "汇总统计",
-								tableType : "",
+								tableType : "161_002",
 								template : 'JZ/JZ-11-161/sheet002.htm'
 							}, {
 								name : "月度统计",
-								tableType : "",
+								tableType : "161_003",
 								template : 'JZ/JZ-11-161/sheet003.htm'
 							}
 						],
@@ -1736,12 +1736,12 @@ golbal.allmenu = [{
 				title : "利润预测",
 				submenu : [{
 						title : "项目利润预测表",
-						id : "162",
+						id : "",
 						submenu : [],
-						excelType : "",
+						excelType : "162",
 						template_tab : [{
 								name : "成本利润分析表",
-								tableType : "",
+								tableType : "162_002",
 								template : 'JZ/JZ-12-162/sheet002.htm'
 							}
 						],

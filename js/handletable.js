@@ -115,6 +115,10 @@ class PagesModel {
 			for (var k = 0; k < oo.length; k++) {
 				oo[k] = $(oo[k]);
 				if (oo[k].attr('label')) {
+					var vv=this.obj.find("input[iidata='"+oo[k].attr('label')+"']");
+					oo[k].text(vv.val());
+					
+					vv.remove();
 					this.arr_pages[i][oo[k].attr('label')] = oo[k];
 				}
 			}
