@@ -3,11 +3,118 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
-.container-fluid{background-color:white;}
-.container{background-color:white;}
+.bgc-white{background-color:white;}
+.add-object{
+	position:fixed;
+	right: 10px;
+	bottom: 20px;
+	width: 40px;
+	height: 40px;
+	font-size: 20px;
+	line-height: 40px;
+	text-align: center;
+	color: #3d8b3d;
+	cursor: pointer;
+}
+.add-object:hover{
+	background-color:#258de8;
+	color: #fff;
+}
+/*美化的radio*/
+.beautiful-radio{ display:none;}
+.beautiful-radio + label{
+	  position: relative;
+	  display:inline-block;
+	  padding-left: 30px;
+	  cursor: pointer;
+} 
+.beautiful-radio + label:before {
+	border-radius: 5%; 
+	position: absolute;
+	top: 9px;
+	left: 6px;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	content: '';
+	border: 1px solid #c0c0c0; 
+}
+
+.beautiful-radio + label:after {
+	position: absolute;
+	display: none;
+	content: ''; 
+	top: 13px;
+	left: 10px;
+	width: 8px;
+	height: 8px;
+	border-radius: 5%;
+	background: #3e97eb; }
+.beautiful-radio:checked + label:before{
+	animation-name: none; 
+	border: 1px solid #3e97eb; }		
+
+.beautiful-radio:checked + label:after{
+  display: block; }	
+ .mark-content{
+	 font-size: 2em;
+	 color:#797979;
+	 min-height: 50px;
+	 vertical-align:middle !important;
+	 text-align: center;
+	 border: #ccc dotted 1px;
+	 border-radius: 5px;
+ } 
+
+.li-select{
+	color:#258de8;
+}
+.border-bottom-light-solid{
+	border-bottom: #fff 1px solid;
+}
+.border-bottom-dashed{
+	border-bottom:1px dashed #ccc;
+}
+.border-top-dashed{
+	border-top:1px dashed #ccc;
+}
+.border-right-solid{
+	border-right:1px solid #ccc;
+}
+/*.first-Catalog{
+	line-height:25px;
+	font-size:16px;
+	padding:0px;
+}
+
+.first-Catalog-li{
+	padding:5px 10px;
+	cursor:pointer;
+	font-weight:bold;
+}
+.second-Catalog{
+	font-size:14px;
+	font-weight:normal;
+}*/
+.left-200px-menuebar{
+	width:200px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	overflow-x:hidden;
+	/*overflow-y:scroll;*/
+}
+.right-main-content{
+	background-color:#fff;
+	height:100%;
+	position:absolute;
+	left:200px;
+	top:0px;
+	right:0px;
+}
 .table-container{padding-top:30px; padding-bottom:30px;}
 .oepration-bar{
-	width:160px;
 	height:40px;
 	background-color:#999;
 	border-radius:20px;
@@ -71,7 +178,7 @@
 	overflow-y:scroll;
 	overflow-x:hidden;
 }
-.content-container::-webkit-scrollbar{  
+.content-container::-webkit-scrollbar{
     width: 1px;  
     height:10px;     
 	background-color:#fafafa;
@@ -94,7 +201,7 @@
 	opacity:1;     
 }
 .form-lists{
-	border-bottom:1px solid #000; 
+	border-bottom:1px solid #ccc; 
 	height:30px;
 	line-height:20px;
 	font-weight:bold;
@@ -116,23 +223,28 @@
 .tab-lists{
 	position:absolute;
 	width:100%;
-	top:30px;
+	top:40px;
 	bottom:0px;
-	padding-top:15px;
+	padding-top:10px;
 	font-family:\5FAE\8F6F\96C5\9ED1;
 }
 .tab-lists ul{
 	line-height:30px;
 	font-size:13px;
+	padding-right:5px;
+	overflow-x:hidden;
 }
 .tab-lists ul img{
-	margin-right:3px;margin-top:-2px;
+	margin-right:3px;
+	margin-top:-2px;
 }
 .tab-lists-ul-li_sel{
 	background-color:#99c1da;
 }
 .tab-lists ul li{
 	cursor:pointer;
+	white-space : nowrap;
+	overflow-x:hidden;
 }
 .btn-list:hover{
 	color:#000;
@@ -217,7 +329,17 @@ ul{
 body {
     background-color: #e6e6e6;
 }
-
+body::-webkit-scrollbar{  
+    width: 4px;  
+    height:10px;     
+	background-color:#fafafa;
+}  
+body::-webkit-scrollbar-track{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    border-radius: 2px; 
+    background-color:#fafafa;
+	opacity:1;     
+}
 #wrapper {
     width: 100%;
 }

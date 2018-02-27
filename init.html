@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<meta charset="utf-8" /> 
+		<title>软件初始化</title> 
+		<link href="css/bootstrap.css" rel="stylesheet" /> 
+		<link href="css/common.css" rel="stylesheet" /> 
+		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+		<script src="js/jquery-1.7.2.min.js"></script> 
+		<script src="js/jquery-confirm.js"></script> 
+
+	</head> 
+	<body style="background-color:#999999;font-family:\5FAE\8F6F\96C5\9ED1;padding-top:20px;"> 
+	<form id="mainForm">
+		<div class="container bgc-white" style="padding-bottom:20px;">
+			<div class="row" style="border-bottom:1px solid #ccc;margin-bottom:20px;">
+				<div class="col-lg-12">
+					<h3>重要提示</h3>
+				</div>
+				<div class="col-lg-12">
+					<p style="text-indent:2em;">尊敬的用户您好，系统检测到您是首次使用本系统，您需要为系统设置一个超级管理员。</p>
+					<p style="text-indent:2em;">超级管理员本系统最高权限管理者，我们特别提示您：为了系统的安全，请注意密码的复杂度。</p>
+					<p style="text-indent:2em;">设置完成以后，请牢记该用户名和密码，它将是您以后管理系统的最高权限账号。</p>
+				</div>				
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">管理员名</div>
+						  <input type="text" class="form-control" id="sup_user_name" name="sup_user_name" placeholder="*必填，超级管理员用户名">
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">设置密码</div>
+						  <input type="password" class="form-control" id="sup_user_pwd" name="sup_user_pwd" placeholder="*必填，设置用户密码,不小于6位">
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+					<div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">重复密码</div>
+						  <input type="password" class="form-control" id="re_sup_user_pwd" name="re_sup_user_pwd" placeholder="*必填，重复上面的密码">
+						</div>
+					</div>					
+				</div>
+			</div>
+			<div class="oepration-bar center-block text-left" style="width:120px;">
+				<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+				<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+				<!--<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>-->
+			</div>			
+		</div>	
+	</form>
+	</body>
+</html>
+<script>
+var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+$(function () {
+	$("#reset").click(function(){
+		$("#mainForm")[0].reset();
+	});
+	$("#submit").click(function(){
+		var sup_user_name=$.trim($("#sup_user_name").val());
+		var pwd=$("#sup_user_pwd").val();
+		var repwd=$("#re_sup_user_pwd").val();
+		if(sup_user_name=='' || pwd=='' || repwd==''){
+			$.alert({
+				title: '提示',
+				content: '请填写所有项目！',
+				animation: 'none',
+				closeAnimation: 'scale',
+				buttons: {
+					'确定':{}
+				}
+			});		
+			return false;
+		}else if(pwd!=repwd){
+			$.alert({
+				title: '提示',
+				content: '两次密码输入不一致，请重新输入！',
+				animation: 'none',
+				closeAnimation: 'scale',
+				buttons: {
+					'确定':{}
+				}
+			});			
+			return false;
+		}else if(pwd.length<6){
+			$.alert({
+				title: '提示',
+				content: '密码长度太小，请设置不小于6位的密码！',
+				animation: 'none',
+				closeAnimation: 'scale',
+				buttons: {
+					'确定':{}
+				}
+			});	
+			return false;			
+		}
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user/init_sup_user.action",
+			data:{"sup_user_name":sup_user_name,"pwd":pwd},
+			success : function (data) {
+				if(data!=0){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':{}
+						}
+					});	
+				}else{
+					window.location.href="login.html";
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});		
+	});
+});
+</script>	

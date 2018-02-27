@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>认证</title> 
+		<link href="css/bootstrap.css" rel="stylesheet" /> 
+		<link href="css/common.css" rel="stylesheet" /> 
+		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+		<script src="js/jquery-1.7.2.min.js"></script> 
+		<script src="js/jquery-confirm.js"></script> 
+
+ </head> 
+ <body style="background-color:#999999;font-family:\5FAE\8F6F\96C5\9ED1;padding-top:20px;"> 
+	<div class="container bgc-white" style="padding-bottom:20px;">
+	<form id="mainForm">
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+				<h3>欢迎使用</h3>
+				<p>我们的实例软件</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+				<div class="form-group">
+					<div class="input-group">
+					  <div class="input-group-addon">用户名</div>
+					  <input type="text" class="form-control" id="user_name" name="user_name" placeholder="*必填，填写用户名">
+					</div>
+				</div>					
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6 col-md-8 col-sm-10 center-block">
+				<div class="form-group">
+					<div class="input-group">
+					  <div class="input-group-addon">密&nbsp;&nbsp;&nbsp;码</div>
+					  <input type="password" class="form-control" id="pwd" name="pwd" placeholder="*必填，填写密码">
+					</div>
+				</div>					
+			</div>
+		</div>	
+		<div class="oepration-bar center-block text-left" style="width:120px;">
+			<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+			<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+			<!--<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>-->
+		</div>	
+	</form>
+	</div>
+<script>
+var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+$(function () {
+	$("#reset").click(function(){
+		$("#mainForm")[0].reset();
+	});
+	$.ajax({
+		type : "GET",
+		url : SERVER_ROOT + "/user/get_sup_user.action",
+		success : function (data) {
+			if(data==0){				
+				window.location.href="init.html";
+			}
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});
+	$("#submit").click(function(){
+		var user_name=$("#user_name").val();
+		var pwd=$("#pwd").val();
+
+		if(user_name=='' || pwd==''){
+			$.alert({
+				title: '提示',
+				content: '请填写所有项目！',
+				animation: 'none',
+				closeAnimation: 'scale',
+				buttons: {
+					'确定':{}
+				}
+			});		
+			return false;
+		}
+		
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user/login_chk.action",
+			data:{"user_name":user_name,"pwd":pwd},
+			success : function (data) {
+				if(!isNaN(data)){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':{}
+						}
+					});	
+				}else{
+					const ipcRenderer = require('electron').ipcRenderer;
+					ipcRenderer.send('login_message', data);
+					//window.close();
+					//window.location.href="index.html";
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});		
+	});	
+});
+
+</script>	
+ </body>
+</html>

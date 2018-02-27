@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>外协单位</title> 
+		<link href="css/bootstrap.css" rel="stylesheet" /> 
+		<link href="css/common.css" rel="stylesheet" /> 
+		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+		<script src="js/jquery-1.7.2.min.js"></script> 
+		<script src="js/jquery-confirm.js"></script> 
+  
+
+	<style>
+	.form-group{
+		
+	}
+	.input-group{
+		border-bottom:1px solid #ccc;
+	}
+	.input-group-addon{
+		font-size:1em;
+	}
+	.input-group-addon{
+		color:#797979 !important;
+		
+	}
+	.input-group-addon{
+		background-color:#fff;
+		color:#000;
+		border:none;
+	}
+	.form-control{
+		background-color:#fff;
+		color:#000;
+		border:none;
+		border-radius: 0px;
+		outline:none;
+		-webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+				box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);	
+	}
+	.form-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+	}
+	.form-group{
+		margin-bottom:0px;
+	}
+	table tbody tr td{
+		vertical-align: middle;
+		border:1px solid #ccc !important;
+		text-align: center; 
+		padding:0px !important;
+		color:#797979;
+	}
+	.td-input{
+		width:100%;
+		border:none;
+		height:30px;
+		color:#000;
+	}
+	.container-fluid{
+		padding-left:60px;
+		padding-right:60px;
+		padding-bottom:10px;
+	}
+	</style>
+ </head> 
+ <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;">
+	<div class="left-200px-menuebar bgc-white" style="padding-top:10px;padding-left:5px;padding-right:5px;overflow-x:hidden;">
+		<div class="form-lists">
+			<font size="4" face="Microsoft YaHei">外协单位列表</font>
+		</div>
+		<div class="tab-lists"  id="menu2" style="overflow-y:scroll;"> 
+		
+		</div> 		
+	</div>
+	<div class="right-main-content">
+		<div class="main-content content-container" style="position:absolute;top:10px;left:0px;right:0px;bottom:0px;background-color:#999999;padding:20px; overflow-y:scroll;">
+			<form id="mainForm">
+			<input type="hidden" id="gong_si_id_" name="gong_si_id_" value="" />
+			<div class="container-fluid bgc-white text-center">
+				
+				<div class="row" style="border-bottom:1px solid #ccc;">
+					<div class="col-lg-12 text-left">
+						<h3> 企业基本信息</h3>
+						<p>您可以在此设置、更新或者查看您公司的相关信息</p>
+					</div>
+				</div>
+				<div class="row" style="border-bottom:1px solid #ccc;">
+					<div class="col-lg-12 text-left">
+						<h4>基本信息</h4>
+					</div>
+				</div>		
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">企业名称</div>
+						  <input type="text" class="form-control" id="qi_ye_ming_cheng_" name="qi_ye_ming_cheng_" autofocus="autofocus" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-5">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">公司类型</div>
+						  <input type="text" class="form-control" id="gong_si_lei_xing_" name="gong_si_lei_xing_" >
+						</div>
+					  </div> 			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">注册地址</div>
+						  <input type="text" class="form-control" id="zhu_ce_di_zhi_" name="zhu_ce_di_zhi_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-5">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">法人代表</div>
+						  <input type="text" class="form-control" id="fa_ding_dai_biao_ren_" name="fa_ding_dai_biao_ren_"  placeholder="">
+						</div>
+					  </div> 			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">工商注册</div>
+						  <input type="text" class="form-control" id="gong_shang_zhu_ce_hao_" name="gong_shang_zhu_ce_hao_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-5">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">注册资本</div>
+						  <input type="text" class="form-control" id="zhu_ce_zi_ben_" name="zhu_ce_zi_ben_" placeholder="">
+						</div>
+					  </div> 			
+					</div>
+				</div>	
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-7">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">开户账号</div>
+						  <input type="text" class="form-control" id="kai_hu_zhang_hao_" name="kai_hu_zhang_hao_" placeholder="">
+						</div>
+					  </div> 						
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-5">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">开户银行</div>
+						  <input type="text" class="form-control" id="kai_hu_yin_hang_" name="kai_hu_yin_hang_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">主营范围</div>
+						  <textarea class="form-control" id="jing_ying_fan_wei_" name="jing_ying_fan_wei_" placeholder=""></textarea>
+						</div>
+					  </div>			
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">委托代理</div>
+						  <input type="text" class="form-control" id="wei_tuo_dai_li_ren_" name="wei_tuo_dai_li_ren_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">职务</div>
+						  <input type="text" class="form-control" id="wei_tuo_dai_li_ren_zhi_wu_" name="wei_tuo_dai_li_ren_zhi_wu_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">电话</div>
+						  <input type="text" class="form-control" id="wei_tuo_dai_li_ren_dian_hua_" name="wei_tuo_dai_li_ren_dian_hua_" placeholder="" >
+						</div>
+					  </div>			
+					</div>				
+				</div>		
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">联系人</div>
+						  <input type="text" class="form-control" id="lian_xi_ren_" name="lian_xi_ren_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">职务</div>
+						  <input type="text" class="form-control" id="lian_xi_ren_zhi_wu_" name="lian_xi_ren_zhi_wu_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">电话</div>
+						  <input type="text" class="form-control" id="lian_xi_ren_dian_hua_" name="lian_xi_ren_dian_hua_" placeholder="" >
+						</div>
+					  </div>			
+					</div>				
+				</div>			
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-8">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">电子邮箱</div>
+						  <input type="text" class="form-control" id="dian_zi_you_xiang_" name="dian_zi_you_xiang_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">传真</div>
+						  <input type="text" class="form-control" id="chuan_zhen_" name="chuan_zhen_" placeholder="" >
+						</div>
+					  </div>						
+					</div>				
+				</div>
+				
+				<div class="row" style="border-bottom:1px solid #ccc;">
+					<div class="col-lg-12 text-left">
+						<h4>办事机构(如有)</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-8">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">详细地址</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_xiang_xi_di_zhi_" name="ban_shi_ji_gou_xiang_xi_di_zhi_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">邮政编码</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_you_zheng_bian_ma_" name="ban_shi_ji_gou_you_zheng_bian_ma_" placeholder="" >
+						</div>
+					  </div>						
+					</div>				
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">联系人</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_lian_xi_ren_" name="ban_shi_ji_gou_lian_xi_ren_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">职务</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_lian_xi_ren_zhi_wu_" name="ban_shi_ji_gou_lian_xi_ren_zhi_wu_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">电话</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_lian_xi_ren_dian_hua_" name="ban_shi_ji_gou_lian_xi_ren_dian_hua_" placeholder="" >
+						</div>
+					  </div>			
+					</div>				
+				</div>
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-8">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">电子邮箱</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_lian_xi_ren_dian_zi_you_xiang_" name="ban_shi_ji_gou_lian_xi_ren_dian_zi_you_xiang_" placeholder="" >
+						</div>
+					  </div>			
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4">
+					  <div class="form-group">
+						<div class="input-group">
+						  <div class="input-group-addon">传真</div>
+						  <input type="text" class="form-control" id="ban_shi_ji_gou_lian_xi_ren_chuan_zhen_" name="ban_shi_ji_gou_lian_xi_ren_chuan_zhen_" placeholder="" >
+						</div>
+					  </div>						
+					</div>				
+				</div>		
+				
+				<br />
+				<div class="oepration-bar center-block text-left" style="width:120px;">
+					<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+					<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+				</div>
+			</div> 
+			</form>
+		</div>
+	</div>
+<script>
+var SERVER_ROOT = 'http://localhost:80';
+$(function(){
+	function get_com_trees(){
+		var html='<ul>';
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user.php?oper=get_out_com_info",
+			dataType:'text',
+			success : function (data) {
+				var coms=eval("(" + data + ")");
+				for(var i in coms){
+					html+='<li id="li'+i+'" class="tree-li" com="'+coms[i].id+'">'+coms[i].qi_ye_ming_cheng_+'</li>';
+				}
+				html+='</ul>';
+				$("#menu2").html(html);
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});
+	}
+	get_com_trees();
+
+	$("body").on('mousedown', '.tree-li',function(e){
+		var li_id=this.id;
+		var com_id=$(this).attr("com");
+		$(".tree-li").each(function(i,el){
+			if(el.id!=li_id){
+				$(el).removeClass("li-select");
+			}else{
+				$(el).addClass("li-select");
+			}		
+		});
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user.php?oper=get_sin_out_com_info",
+			data:{'id':com_id},
+			dataType:'text',
+			success : function (data) {
+				if(data!='null'){
+					var form_json=eval("(" + data + ")");
+					$("#gong_si_id_").val(form_json['id']);
+					$("#jing_ying_fan_wei_").val(form_json['jing_ying_fan_wei_']);
+					$("input").each(function(i,e){
+						if(e.id!='gong_si_id_'){
+							$(e).val(form_json[$(e).attr('id')]);
+						}
+					});
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});			
+	});
+	
+	$("#reset").click(function(){
+		$("#mainForm")[0].reset();
+	});
+
+	$("#submit").click(function(){
+		var form=new FormData($("#mainForm")[0]);
+		var qi_ye_ming_cheng_=$("#qi_ye_ming_cheng_").val();
+		if(qi_ye_ming_cheng_==""){
+			return false;
+		}
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user.php?oper=cr_outreach_un",
+			data : form,
+			cache: false,
+			processData: false,
+			contentType: false,			
+			success : function (data) {
+				if(data!='0'){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':{}
+						}
+					});
+				}else{
+					$.alert({
+						title: '操作提示',
+						content: '操作成功',
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':function(){
+								window.location.reload();
+							}
+						}
+					});
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});		
+	});
+});
+
+</script>	
+ </body>
+</html>

@@ -1306,7 +1306,7 @@ function selectTable(template_tab) {
 			return;
 		}
 		$.ajax({
-			type : "GET",
+			type : "POST",
 			url : SERVER_ROOT + "/saveTable.action",
 			data : {
 				'id' : golbal.information.nowHandleTableId,

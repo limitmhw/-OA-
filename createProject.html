@@ -5,7 +5,7 @@
   <title>新建工程项目</title> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
   <link href="css/common.css" rel="stylesheet" /> 
-  <script src="js/jquery.min-1.9.1.js"></script> 
+  <script src="js/jquery-1.7.2.min.js"></script> 
   
 
 	<style>
@@ -66,7 +66,7 @@
 	</style>
  </head> 
  <body style="background-color:#999999;font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;"> 
- 	<div class="container-fluid text-center">
+ 	<div class="container-fluid text-center bgc-white">
 		<form id="mainForm">
 		<div class="row" style="border-bottom:1px solid #ccc;">
 			<div class="col-lg-12 text-left">
@@ -169,7 +169,7 @@
 			  <div class="form-group">
 				<div class="input-group">
 				  <div class="input-group-addon">开工日期</div>
-				  <input type="text" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
+				  <input type="date" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
 				</div>
 			  </div>			
 			</div>
@@ -177,7 +177,7 @@
 			  <div class="form-group">
 				<div class="input-group">
 				  <div class="input-group-addon">竣工日期</div>
-				  <input type="text" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
+				  <input type="date" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
 				</div>
 			  </div>			
 			</div>	
@@ -241,22 +241,22 @@
 						<td width="100"></td>
 					</tr>	
 					<tr class="can-operate">
-						<td><input class="td-input" name="dan_xiang_gong_cheng_[]" /></td>
-						<td><input class="td-input" name="gui_mo_mian_ji_[]" /></td>
-						<td><input class="td-input" name="gui_mo_chang_du_[]" /></td>
-						<td><input class="td-input" name="gui_mo_qi_ta_[]" /></td>
-						<td><input class="td-input" name="yan_gao_[]" /></td>
-						<td><input class="td-input" name="zong_gao_[]" /></td>
-						<td><input class="td-input" name="di_shang_di_xia_ceng_shu_[]" /></td>
-						<td><input class="td-input" name="gong_cheng_lei_bie_[]" /></td>
-						<td><input class="td-input" name="jie_gou_lei_xing_[]" /></td>
-						<td><input class="td-input" name="ji_chu_jie_gou_[]" /></td>
+						<td><input class="td-input" name="dan_xiang_gong_cheng_" /></td>
+						<td><input class="td-input" name="gui_mo_mian_ji_" /></td>
+						<td><input class="td-input" name="gui_mo_chang_du_" /></td>
+						<td><input class="td-input" name="gui_mo_qi_ta_" /></td>
+						<td><input class="td-input" name="yan_gao_" /></td>
+						<td><input class="td-input" name="zong_gao_" /></td>
+						<td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td>
+						<td><input class="td-input" name="gong_cheng_lei_bie_" /></td>
+						<td><input class="td-input" name="jie_gou_lei_xing_" /></td>
+						<td><input class="td-input" name="ji_chu_jie_gou_" /></td>
 					</tr>
 					
 				</table>
 			</div>
 		</div>
-		<div class="oepration-bar center-block text-left">
+		<div class="oepration-bar center-block text-left" style="width:160px;">
 			<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
 			<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
 			<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>
@@ -275,7 +275,7 @@
 	</div> 
 
 <script>
-var SERVER_ROOT = 'http://localhost:80';
+var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
 $(function(){
 
 	$(document).bind("contextmenu", function (e) {
@@ -318,7 +318,7 @@ $(function(){
 		table.deleteRow(index);  
 	}
 	function add_tr(tab_id){
-		var str='<tr class="can-operate"><td><input class="td-input" name="dan_xiang_gong_cheng_[]" /></td><td><input class="td-input" name="gui_mo_mian_ji_[]" /></td><td><input class="td-input" name="gui_mo_chang_du_[]" /></td><td><input class="td-input" name="gui_mo_qi_ta_[]" /></td><td><input class="td-input" name="yan_gao_[]" /></td><td><input class="td-input" name="zong_gao_[]" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_[]" /></td><td><input class="td-input" name="gong_cheng_lei_bie_[]" /></td><td><input class="td-input" name="jie_gou_lei_xing_[]" /></td><td><input class="td-input" name="ji_chu_jie_gou_[]" /></td></tr>';
+		var str='<tr class="can-operate"><td><input class="td-input" name="dan_xiang_gong_cheng_" /></td><td><input class="td-input" name="gui_mo_mian_ji_" /></td><td><input class="td-input" name="gui_mo_chang_du_" /></td><td><input class="td-input" name="gui_mo_qi_ta_" /></td><td><input class="td-input" name="yan_gao_" /></td><td><input class="td-input" name="zong_gao_" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" /></td><td><input class="td-input" name="jie_gou_lei_xing_" /></td><td><input class="td-input" name="ji_chu_jie_gou_" /></td></tr>';
 		$("#"+tab_id).append(str);
 	}	
 	$("#reset").click(function(){
@@ -328,18 +328,26 @@ $(function(){
 		add_tr("project_info_tab");
 	});
 	$("#submit").click(function(){
-		var form=new FormData($("#mainForm")[0]);
-		var xiang_mu_ming_chen_=$("#xiang_mu_ming_chen_").val();
-		if(xiang_mu_ming_chen_==""){
-			return false;
-		}
+		var obj={};
+		
+		$(".form-control").each(function(){
+			obj[$(this).attr('name')]=$(this).val();
+		});
+		
+		var parr=[];
+		$('.can-operate').each(function(){
+			var trobj={};
+			$(this).find('input').each(function(){
+				trobj[$(this).attr('name')]=$(this).val();
+			})
+			parr.push(trobj);	
+		});
+		obj['trdata']=JSON.stringify(parr);
+		console.log(JSON.stringify(obj));
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT + "/get_tab_data.php?rec=new_project",
-			data : form,
-			cache: false,
-			processData: false,
-			contentType: false,			
+			url : SERVER_ROOT + "/project/new_project.action",
+			data : {'data':JSON.stringify(obj)},
 			success : function (data) {
 				if(data=='0'){
 					window.close();
@@ -350,37 +358,13 @@ $(function(){
 			error : function () {
 				console.log('cuowu');
 			}
-		});		
+		});
+
 	});
 });
 	
 
-	/*function subchk(){
-		var form=new FormData($("#mainForm")[0]);
-		var xiang_mu_ming_chen_=$("#xiang_mu_ming_chen_").val();
-		if(xiang_mu_ming_chen_==""){
-			return false;
-		}
-		$.ajax({
-			type : "POST",
-			url : SERVER_ROOT + "/get_tab_data.php?rec=new_project",
-			data : form,
-			cache: false,
-			processData: false,
-			contentType: false,			
-			success : function (data) {
-				if(data=='0'){
-					window.close();
-				}else{
-					alert(data);
-				}
-			},
-			error : function () {
-				console.log('cuowu');
-			}
-		});				
-		return false;
-	}*/
+	
 
 
 </script>	

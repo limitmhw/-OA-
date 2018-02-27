@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>项目人员管理</title> 
+		<link href="css/bootstrap.css" rel="stylesheet" /> 
+		<link href="css/common.css" rel="stylesheet" /> 
+		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+		<script src="js/jquery-1.7.2.min.js"></script> 
+		<script src="js/jquery-confirm.js"></script> 
+	<style>
+
+	.input-group{
+		border-bottom:1px solid #ccc;
+	}
+	.input-group-addon{
+		font-size:1em;		
+		color:#797979 !important;
+		background-color:#fff;
+		color:#000;
+		border:none;		
+	}
+	.form-control{
+		background-color:#fff;
+		color:#000;
+		border:none;
+		border-radius: 0px;
+		outline:none;
+		-webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+				box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);	
+	}
+	.form-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+	}
+	.form-group{
+		margin-bottom:0px;
+	}
+	table tbody tr td{
+		vertical-align: middle !important;
+		border:1px solid #ccc !important;
+		text-align: center; 
+		padding:0px !important;
+		color:#797979;
+	}
+	.td-input{
+		width:100%;
+		border:none;
+		height:30px;
+		color:#000;
+	}
+ .certificate{
+	border:1px dotted #ccc;padding-left:35px;padding-right:35px;margin-bottom: 15px;
+ }
+ .remove-certificate{
+	 position: absolute;
+	 color: #000;
+	 right: 15px;
+	 padding-right: 8px;
+	 cursor: pointer;
+ }
+.search_per_list{
+	background-color:#fafafa;
+	display: none;
+	width: 250px;
+	padding-right:0px;
+	padding-top:10px;
+	line-height: 25px;
+}
+.id-card{
+	color: #797979;
+	float: right;
+}
+.search_per_list ul{
+	padding-left:0px;
+}
+.search_per_list ul li{
+	padding:3px 10px;
+}
+.actual-per:hover{
+	background-color: #66afe9;
+	cursor: pointer;
+}
+	</style>
+ </head> 
+ <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;background-color:#797979;">
+<div class="container-fluid bgc-white">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>项目人员注册表</h3>
+			<h5 id="pro_name"></h5>
+		</div>	
+	</div>
+	<form id="main_form">
+	<input type="hidden" name="pro_id" id="pro_id" value="" />
+	<div class="row">
+		<div class="col-lg-12">
+			<table id="staff_tab" class="table table-hover table-bordered">
+				<tr>
+					<th>序号</th>
+					<th>岗位名称</th>
+					<th>人员姓名</th>
+					<th>身份证号</th>
+					<th>职务</th>
+					<th>所属部门</th>
+					<th>到岗时间</th>
+					<th>注册时间</th>
+					<th>岗位性质</th>
+				</tr>
+
+			</table>
+		</div>	
+	</div>
+	</form>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="oepration-bar center-block text-left" style="width:160px;">
+				<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+				<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+				<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>
+			</div>
+		</div>
+	</div>
+	<br />
+</div>
+<!--右键菜单-->
+<div id="youjicaidan" class="right-click-list" style="border:1px solid #ccc;padding:0px;width:140px;"> 
+	<ul style="margin-bottom:0px;"> 
+		<li id="addClass" class=""><i class="glyphicon glyphicon-plus"></i>  添加标签</li> 
+	</ul> 
+</div>
+<!--二级右键菜单-->
+<div id="search_div" class="search_per_list" style="border:1px solid #ccc;"> 
+	<!--<ul style="margin-bottom:0px;"> 
+		<li id="delTag" class="second-bar"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;删除</li> 
+		<li id="renameTag" class="second-bar"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;&nbsp;重命名</li>
+	</ul> -->
+</div>
+
+<!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
+
+<script>
+var page_par='';
+require('electron').ipcRenderer.on('page_par', function(event, message) {
+	page_par=message;//无法赋值出去，
+});
+
+var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+var pro_id=6;
+
+$(function(){
+	$("#submit").click(function(){
+		$("#main_form input[name^='ren_yuan_xing_ming_']").each(function(i,e){
+			var p_name=$(e).val();
+			var p_id= $($("#main_form input[name^='ren_yuan_id_']")[i]).val();
+			var p_idcard=$($("#main_form input[name^='shen_fen_zheng_hao_ma_']")[i]).val();
+			//alert(p_name+','+p_id+','+p_idcard);
+			if(p_name=='' && p_id=='' && p_idcard==''){
+
+			}else if(p_name!='' && p_id!='' && p_idcard!=''){
+
+			}else{
+				$.alert({
+					title: '',
+					content: '存在必填项目未填！',
+					animation: 'none',
+					closeAnimation: 'scale',
+					buttons: {
+						'确定':function () {}
+					}
+				});					
+				return false;
+			}
+		});
+		$("#pro_id").val(pro_id);
+		var form=new FormData($("#main_form")[0]);
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/cr_pro_staff",
+			data : form,
+			async:false,
+			cache: false,
+			processData: false,
+			contentType: false,			
+			success : function (data) {
+				if(data!='0'){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':{}
+						}
+					});					
+				}else{
+					window.location.reload();
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});				
+	});
+	$("#reset").click(function(){
+		$("#main_form")[0].reset();
+	});
+	$("#addtr").click(function(){
+		var max_index=$("#staff_tab tbody tr").length;
+		html='<tr><td vertical-align="middle">'+max_index+'<input type="hidden" name="id[]" value="" /></td><td><input type="text" name="gang_wei_ming_cheng_[]" class="td-input" value=""/></td><td><input type="hidden" name="ren_yuan_id_[]" value=""/><input type="text" name="ren_yuan_xing_ming_[]" class="td-input ren_yuan_xing_ming_" value=""/></td><td><input type="text" name="shen_fen_zheng_hao_ma_[]" class="td-input" value=""/></td><td><input type="text" name="zhi_wu_[]" class="td-input" value=""/></td><td><input type="text" name="biao_qian_ming_[]" class="td-input" value=""/></td><td><input type="date" name="dao_gang_shi_jian_[]" class="td-input" value=""/></td><td><input type="date" name="zhu_ce_shi_jian_[]" class="td-input" value=""/></td><td><input type="text" name="gang_wei_xing_zhi_[]" class="td-input" value=""/></td></tr>';
+		$("#staff_tab").append(html);
+	});
+	$("body").on("click",".actual-per",function(){
+		var rowindex=$(this).attr("rowindex");
+		var ren_yuan_id_=$(this).attr("ren_yuan_id_");
+		var xing_ming_=$(this).attr("xing_ming_");
+		var shen_fen_zheng_hao_ma_=$(this).attr("shen_fen_zheng_hao_ma_");
+		var biao_qian_ming_=$(this).attr("biao_qian_ming_");
+		var zhu_ce_shi_jian_=$(this).attr("zhu_ce_shi_jian_");
+			zhu_ce_shi_jian_=zhu_ce_shi_jian_.split(" ")[0];
+		$("#staff_tab tbody tr:eq("+rowindex+") td:eq(2)").children("input[name^='ren_yuan_id_']").val(ren_yuan_id_);
+		$("#staff_tab tbody tr:eq("+rowindex+") td:eq(2)").children("input[name^='ren_yuan_xing_ming_']").val(xing_ming_);
+		$("#staff_tab tbody tr:eq("+rowindex+") td:eq(3)").children("input").val(shen_fen_zheng_hao_ma_);
+		$("#staff_tab tbody tr:eq("+rowindex+") td:eq(5)").children("input").val(biao_qian_ming_);
+		$("#staff_tab tbody tr:eq("+rowindex+") td:eq(7)").children("input").val(zhu_ce_shi_jian_);
+		$("#search_div").click(function(){
+			$("#search_div").hide();
+		});
+	});
+	$("body").on("keyup",".ren_yuan_xing_ming_",function(){
+		var row_index=$(this).parent("td").parent("tr").index();
+		var staff_name=$(this).val();
+		var xx=$(this).offset().left;
+		var yy=$(this).offset().top;
+		var hh=$(this).height();
+		if(staff_name==''){
+			$('#search_div').empty();
+			$('#search_div').hide();
+			return false;
+		}
+
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/get_tar_staff.action",
+			data : {staff_name:staff_name},
+			dataType:'text',		
+			success : function (data) {		
+				var pers=eval("(" + data + ")");
+				var html='<ul>';
+				if(pers.length==0){
+					html+='<li>没有相关信息的人员</li>';
+				}else{
+					for(var p in pers){
+						html+='<li class="actual-per" rowindex="'+row_index+'" ren_yuan_id_="'+pers[p].id+'" xing_ming_="'+pers[p].xing_ming_+'" shen_fen_zheng_hao_ma_="'+pers[p].shen_fen_zheng_hao_ma_+'" biao_qian_ming_="'+pers[p].biao_qian_ming_+'" zhu_ce_shi_jian_="'+pers[p].zhu_ce_shi_jian_+'"><span class="per_name" >'+pers[p].xing_ming_+'</span><span class="id-card">'+pers[p].shen_fen_zheng_hao_ma_+'</span></li>';
+					}
+				}
+					html+='</ul>';
+				$('#search_div').css({
+					"position" : 'fixed',
+					"left" : xx-1,
+					"top" : yy+hh+2
+				});	
+				$('#search_div').empty();
+				$('#search_div').html(html);
+				$('#search_div').show();
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});			
+	});
+	$.ajax({
+		type : "POST",
+		url : SERVER_ROOT + "/project/get_pro_staff.action",
+		data : {pro_id:pro_id},
+		dataType:'text',		
+		success : function (data) {		
+			if(typeof(data)=='number'){
+				$.alert({
+					title: '错误提示',
+					content: '执行错误代号：'+data,
+					animation: 'none',
+					closeAnimation: 'scale',
+					buttons: {
+						'确定':function () {}
+					}
+				});					
+			}else{
+				var staffs= eval("(" + data + ")");
+				var html='';
+				var i=0;
+				if(staffs.length>0){
+					for(var p in staffs){
+						i=p*1+1;
+						var zhu_ce_shi_jian_=staffs[p].yong_hu_xin_xi_.zhu_ce_shi_jian_;
+							zhu_ce_shi_jian_=zhu_ce_shi_jian_.split(" ")[0];
+						html+='<tr><td vertical-align="middle">'+(i*1)+'<input type="hidden" name="id[]" value="'+staffs[p].id+'" /></td><td><input type="text" name="gang_wei_ming_cheng_[]" class="td-input" value="'+staffs[p].gang_wei_ming_cheng_+'"/></td><td><input type="hidden" name="ren_yuan_id_[]" value="'+staffs[p].ren_yuan_id_+'"/><input type="text" name="ren_yuan_xing_ming_[]" class="td-input ren_yuan_xing_ming_" value="'+staffs[p].yong_hu_xin_xi_.xing_ming_+'"/></td><td><input type="text" name="shen_fen_zheng_hao_ma_[]" class="td-input" value="'+staffs[p].yong_hu_xin_xi_.shen_fen_zheng_hao_ma_+'"/></td><td><input type="text" name="zhi_wu_[]" class="td-input" value="'+staffs[p].zhi_wu_+'"/></td><td><input type="text" name="biao_qian_ming_[]" class="td-input" value="'+staffs[p].suo_shu_bu_men_+'"/></td><td><input type="date" name="dao_gang_shi_jian_[]" class="td-input" value="'+staffs[p].dao_gang_shi_jian_+'"/></td><td><input type="date" name="zhu_ce_shi_jian_[]" class="td-input" value="'+zhu_ce_shi_jian_+'"/></td><td><input type="text" name="gang_wei_xing_zhi_[]" class="td-input" value="'+staffs[p].gang_wei_xing_zhi_+'"/></td></tr>';
+						
+					}
+				}
+					
+				html+='<tr><td vertical-align="middle">'+(i*1+1)+'<input type="hidden" name="id[]" value="" /></td><td><input type="text" name="gang_wei_ming_cheng_[]" class="td-input" value=""/></td><td><input type="hidden" name="ren_yuan_id_[]" value=""/><input type="text" name="ren_yuan_xing_ming_[]" class="td-input ren_yuan_xing_ming_" value=""/></td><td><input type="text" name="shen_fen_zheng_hao_ma_[]" class="td-input" value=""/></td><td><input type="text" name="zhi_wu_[]" class="td-input" value=""/></td><td><input type="text" name="biao_qian_ming_[]" class="td-input" value=""/></td><td><input type="date" name="dao_gang_shi_jian_[]" class="td-input" value=""/></td><td><input type="date" name="zhu_ce_shi_jian_[]" class="td-input" value=""/></td><td><input type="text" name="gang_wei_xing_zhi_[]" class="td-input" value=""/></td></tr>';
+				$("#staff_tab").append(html);	
+			}
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});		
+	$.ajax({
+		type : "POST",
+		url : SERVER_ROOT + "/project/get_pro_name.action",
+		data : {pro_id:pro_id},
+		dataType:'text',		
+		success : function (data) {
+			if(typeof(data)=='number'){
+				$.alert({
+					title: '错误提示',
+					content: '执行错误代号：'+data,
+					animation: 'none',
+					closeAnimation: 'scale',
+					buttons: {
+						'确定':function () {}
+					}
+				});					
+			}else{
+				var html='项目名称：'+data;
+				$("#pro_name").empty();
+				$("#pro_name").html(html);
+			}
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});	
+
+
+});
+</script>	
+ </body>
+</html>

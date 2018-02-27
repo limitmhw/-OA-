@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>项目表单管理</title> 
+		<link href="css/bootstrap.css" rel="stylesheet" /> 
+		<link href="css/common.css" rel="stylesheet" /> 
+		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+		<script src="js/jquery-1.7.2.min.js"></script> 
+		<script src="js/jquery-confirm.js"></script>
+		<script>
+		//var golbal = this;
+		</script>
+	<style>
+
+	.input-group{
+		border-bottom:1px solid #ccc;
+	}
+	.input-group-addon{
+		font-size:1em;		
+		color:#797979 !important;
+		background-color:#fff;
+		color:#000;
+		border:none;		
+	}
+	.form-control{
+		background-color:#fff;
+		color:#000;
+		border:none;
+		border-radius: 0px;
+		outline:none;
+		-webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+				box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);	
+	}
+	.form-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+	}
+	.form-group{
+		margin-bottom:0px;
+	}
+	table tbody tr td,table tbody tr th{
+		vertical-align: middle !important;
+		border:1px solid #ccc !important;
+		text-align: center; 
+		padding-left:5px !important;
+		padding-right:5px !important;
+		padding-top:2px !important;
+		padding-bottom:2px !important;
+		color:#797979;
+	}
+	.td-input{
+		width:100%;
+		border:none;
+		height:30px;
+		color:#000;
+	}
+ .certificate{
+	border:1px dotted #ccc;padding-left:35px;padding-right:35px;margin-bottom: 15px;
+ }
+ .remove-certificate{
+	 position: absolute;
+	 color: #000;
+	 right: 15px;
+	 padding-right: 8px;
+	 cursor: pointer;
+ }
+.search_per_list{
+	background-color:#fafafa;
+	display: none;
+	width: 250px;
+	padding-right:0px;
+	padding-top:10px;
+	line-height: 25px;
+}
+.id-card{
+	color: #797979;
+	float: right;
+}
+.search_per_list ul{
+	padding-left:0px;
+}
+.search_per_list ul li{
+	padding:3px 10px;
+}
+.actual-per:hover{
+	background-color: #66afe9;
+	cursor: pointer;
+}
+
+.input-chk{
+    display:none;
+}
+.input-chk + label{
+    position: relative;
+    /*display:inline;
+    background-color: red;*/
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 0px;
+    text-align: center;
+} 
+.input-chk + label:before {
+	/*border-radius: 5%; 
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-left:-8px;
+    margin-top: -8px; 
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	content: '';
+	border: 1px solid #fff; */
+}
+
+.input-chk + label:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left:-5px;
+    margin-top: -10px; 
+	display: none;
+	content: "\2713"; 
+    color: #3e97eb;
+	/*width: 8px;
+	height: 8px;*/
+	border-radius: 5%;
+	/*background: #3e97eb;*/ }
+.input-chk:checked + label:before{
+	animation-name: none; 
+	border: 1px solid #3e97eb; }		
+
+.input-chk:checked + label:after{
+	display: block; 
+}	
+	</style>
+ </head> 
+ <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;background-color:#797979;">
+<div class="container-fluid bgc-white">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>人与表配置单</h3>
+			<h5 id="pro_name"></h5>
+		</div>	
+	</div>
+	<form id="main_form">
+	<div class="row">
+		<div class="col-lg-12" id="tabDiv"> 
+
+		</div>	
+	</div>
+	</form>
+
+</div>
+<!--右键菜单-->
+<div id="youjicaidan" class="right-click-list" style="border:1px solid #ccc;padding:0px;width:140px;"> 
+	<ul style="margin-bottom:0px;"> 
+		<li id="addClass" class=""><i class="glyphicon glyphicon-plus"></i>  添加标签</li> 
+	</ul> 
+</div>
+<!--二级右键菜单-->
+<div id="search_div" class="search_per_list" style="border:1px solid #ccc;"> 
+	<!--<ul style="margin-bottom:0px;"> 
+		<li id="delTag" class="second-bar"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;删除</li> 
+		<li id="renameTag" class="second-bar"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;&nbsp;重命名</li>
+	</ul> -->
+</div>
+
+<!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
+<script src="js/tableconf.js"></script>
+<script>
+var page_par='';
+require('electron').ipcRenderer.on('page_par', function(event, message) {
+	page_par=message;//无法赋值出去，
+});
+
+var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+var pro_id=6;
+
+$(function(){
+	$("body").on("click","#submit",function(){
+		var matchResult=false;
+		$("#main_form input[name^='project_tabs']").each(function(i,e){
+			if($(e).attr("checked")=="checked"){
+				matchResult=true;
+			}
+		});		
+
+		if(matchResult==false){
+			$.alert({
+				title: '',
+				content: '您没有选择任何表单！',
+				animation: 'none',
+				closeAnimation: 'scale',
+				buttons: {
+					'确定':function () {}
+				}
+			});					
+			return false;			
+		}
+		var form=new FormData($("#main_form")[0]);
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/tabs_configure.action",
+			data : form,
+			async:false,
+			cache: false,
+			processData: false,
+			contentType: false,			
+			success : function (data) {
+				alert(data);
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});			
+	});	
+	$("body").on("click","#reset",function(){
+		$("#main_form")[0].reset();
+	});	
+	function get_pro_staffs(){
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/get_pro_staffs.action",
+			data : {pro_id:pro_id},
+			dataType:'text',		
+			success : function (data) {
+				if(typeof(data)=='number'){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':function () {}
+						}
+					});	
+				}else{
+					var deps_staffs=eval("(" + data + ")");
+					var deps_length=deps_staffs.length;
+					var staffs_length=0;
+					var staffs_id=new Array();
+					var html='<form id="main_form"><input type="hidden" name="pro_id" id="pro_id" value="'+pro_id+'" /><table id="maintab" class="table table-hover table-bordered">';
+						html+='<tr><th rowspan="2" width="50">业务<br />模块</th><th rowspan="2" width="50">工作<br />节点</th><th rowspan="2" colspan="3" >文档编号</th><th rowspan="2" width="180">工作成果</th><th rowspan="2" width="25">勾<br />选<br />表<br />单</th>';
+						for(var i=0;i<deps_length;i++){
+							html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'">'+deps_staffs[i].suo_shu_bu_men_+'</th>';
+						}
+						html+='<tr>';
+						for(var i=0;i<deps_length;i++){
+							for(var p in deps_staffs[i].ren_yuan_){
+								html+='<th class="vertical-font">'+deps_staffs[i].ren_yuan_[p].yuan_gong_xin_ming_+'</th>';
+								staffs_id[staffs_length]=deps_staffs[i].ren_yuan_[p].ren_yuan_id_;
+								staffs_length=staffs_length+1;
+							}
+						}
+						html+='</tr>';
+
+						/*for(var m in golbal.allmenu){
+							 for(var t in golbal.allmenu[m].submenu){
+								html+='<tr><td>'+golbal.allmenu[m].title+'<td><td></td><td></td><td></td><td>'+golbal.allmenu[m].submenu[t].title+'</td><td><input type="Checkbox" name="project_tabs[]" id="project_tabs_'+golbal.allmenu[m].submenu[t].id+'" value="'+golbal.allmenu[m].submenu[t].id+'" class="input-chk" /><label for="project_tabs_'+golbal.allmenu[m].submenu[t].id+'">&nbsp;</label></td>';
+								for(var j=0;j<staffs_length;j++){
+									html+='<td><input type="Checkbox" name="'+golbal.allmenu[m].submenu[t].id+'[]" id="staff_'+staffs_id[j]+'_for_'+golbal.allmenu[m].submenu[t].id+'" value="'+staffs_id[j]+'" class="input-chk" /><label for="staff_'+staffs_id[j]+'_for_'+golbal.allmenu[m].submenu[t].id+'">&nbsp;</label></td>';
+								}
+								html+='</tr>';
+							 }
+						}*/
+						console.log(menu);
+						for(var t in menu){
+							html+='<tr><td>'+menu[t].a1+'</td><td>'+menu[t].a2+'</td><td width="30">'+menu[t].a3+'</td><td width="30">'+menu[t].a4+'</td><td width="50">'+menu[t].a5+'</td><td>'+menu[t].a6+'</td><td><input type="Checkbox" name="project_tabs[]" id="project_tabs_'+menu[t].a7+'" value="'+menu[t].a7+'" class="input-chk" /><label for="project_tabs_'+menu[t].a7+'">&nbsp;</label></td>';
+							for(var j=0;j<staffs_length;j++){
+								html+='<td><input type="Checkbox" name="'+menu[t].a7+'[]" id="staff_'+staffs_id[j]+'_for_'+menu[t].a7+'" value="'+staffs_id[j]+'" class="input-chk" /><label for="staff_'+staffs_id[j]+'_for_'+menu[t].a7+'">&nbsp;</label></td>';
+							}
+							html+='</tr>';							
+						}
+						html+='<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>';
+						for(var m=0;m<staffs_length;m++){
+							html+='<td></td>';
+						}
+						html+='</tr>';
+						html+='</table><div class="oepration-bar center-block text-left" style="width:120px;margin-bottom:20px;"><div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div><div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div></div></form>';
+						
+						$("#tabDiv").empty();
+						$("#tabDiv").html(html);
+						
+						
+						
+						
+						
+						
+						function HB_table(tab_id, lei_num) {
+							var tab = document.getElementById(tab_id);
+							var name = "";
+							for (var i = 1, k = 1, j = 0; i < tab.rows.length; i++, j++) {
+								if (tab.rows[i].style.display != 'none') {
+									//tab.rows[i].style.display = 'none'; //隐藏行操作
+
+									if (name == tab.rows[i].cells[lei_num].innerHTML) {
+										tab.rows[i].cells[lei_num].style.display = "none";
+									} else {
+										tab.rows[i].cells[lei_num].style.display = "";
+										name = tab.rows[i].cells[lei_num].innerHTML;
+										tab.rows[i - j].cells[lei_num].rowSpan = k;
+										k = 0;
+										j = 0;
+									}
+									k++;
+
+								}
+							}
+						}
+						
+						
+						HB_table('maintab',0);
+						HB_table('maintab',1);
+						
+						
+						
+						
+						
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});		
+	}
+	get_pro_staffs();
+	$.ajax({
+		type : "POST",
+		url : SERVER_ROOT + "/project/get_pro_name.action",
+		data : {pro_id:pro_id},
+		dataType:'text',		
+		success : function (data) {
+			if(typeof(data)=='number'){
+				$.alert({
+					title: '错误提示',
+					content: '执行错误代号：'+data,
+					animation: 'none',
+					closeAnimation: 'scale',
+					buttons: {
+						'确定':function () {}
+					}
+				});					
+			}else{
+				var html='项目名称：'+data;
+				$("#pro_name").empty();
+				$("#pro_name").html(html);
+			}
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});	
+
+
+});
+</script>	
+ </body>
+</html>
