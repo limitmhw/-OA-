@@ -41,6 +41,9 @@
 	.form-group{
 		margin-bottom:0px;
 	}
+	table tbody tr{
+		height:47px !important;
+	}
 	table tbody tr td,table tbody tr th{
 		vertical-align: middle !important;
 		border:1px solid #ccc !important;
@@ -137,39 +140,51 @@
 .input-chk:checked + label:after{
 	display: block; 
 }	
+#tabDiv{
+	position:absolute;top:80px;bottom:0px;left:0px;right:0px;
+	padding:20px;
+	overflow-y:scroll;
+	overflow-y:scroll;
+}
+#tabDiv::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    /*background-color: #ddd;*/
+}
+
+
+/*滑块*/
+#tabDiv::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border-radius: 10px;
+}
+
+#tabDiv::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+}
+
+
+/*滑道*/
+#tabDiv::-webkit-scrollbar-track {
+	background-color:#ddd;
+    /*box-shadow: inset 0 0 6px #333;*/
+    border-radius: 10px;
+}
+
 	</style>
  </head> 
  <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;background-color:#797979;">
-<div class="container-fluid bgc-white">
+<div class="container-fluid bgc-white" style="top:20px;bottom:20px;right:20px;left:20px;position:absolute;">
 	<div class="row">
 		<div class="col-lg-12">
 			<h3>人与表配置单</h3>
 			<h5 id="pro_name"></h5>
 		</div>	
 	</div>
-	<form id="main_form">
-	<div class="row">
-		<div class="col-lg-12" id="tabDiv"> 
-
-		</div>	
+	<div id="tabDiv" style="">
+	
 	</div>
-	</form>
-
 </div>
-<!--右键菜单-->
-<div id="youjicaidan" class="right-click-list" style="border:1px solid #ccc;padding:0px;width:140px;"> 
-	<ul style="margin-bottom:0px;"> 
-		<li id="addClass" class=""><i class="glyphicon glyphicon-plus"></i>  添加标签</li> 
-	</ul> 
-</div>
-<!--二级右键菜单-->
-<div id="search_div" class="search_per_list" style="border:1px solid #ccc;"> 
-	<!--<ul style="margin-bottom:0px;"> 
-		<li id="delTag" class="second-bar"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;删除</li> 
-		<li id="renameTag" class="second-bar"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;&nbsp;重命名</li>
-	</ul> -->
-</div>
-
 <!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
 <script src="js/tableconf.js"></script>
 <script>
@@ -179,9 +194,32 @@ require('electron').ipcRenderer.on('page_par', function(event, message) {
 });
 
 var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
-var pro_id=6;
+var pro_id=1;
 
 $(function(){
+
+	//init
+	var per_sel;
+	{
+		$.ajax({
+			type : "GET",
+			url : "http://localhost:8080/simpleMVC/authority/get_authority.action",
+			async : false,
+			data:{'pro_id':pro_id},
+			success : function (data) {
+				console.log("data");
+				console.log(data);
+				per_sel = eval(data);
+
+
+			},
+			error : function () {
+				console.log('menu init error');
+			}
+		});
+	}
+
+	
 	$("body").on("click","#submit",function(){
 		var matchResult=false;
 		$("#main_form input[name^='project_tabs']").each(function(i,e){
@@ -244,35 +282,39 @@ $(function(){
 					var deps_length=deps_staffs.length;
 					var staffs_length=0;
 					var staffs_id=new Array();
-					var html='<form id="main_form"><input type="hidden" name="pro_id" id="pro_id" value="'+pro_id+'" /><table id="maintab" class="table table-hover table-bordered">';
-						html+='<tr><th rowspan="2" width="50">业务<br />模块</th><th rowspan="2" width="50">工作<br />节点</th><th rowspan="2" colspan="3" >文档编号</th><th rowspan="2" width="180">工作成果</th><th rowspan="2" width="25">勾<br />选<br />表<br />单</th>';
+					var html='<form id="main_form">\
+						<input type="hidden" name="pro_id" id="pro_id" value="'+pro_id+'" />\
+						<table id="maintab" class="center-block">';
+						html+='<tr><th rowspan="2" width="45">业务<br />模块</th>\
+						<th rowspan="2" width="45">工作<br />节点</th>\
+						<th rowspan="2" colspan="3" >文档编号</th>\
+						<th rowspan="2" width="180">工作成果</th>\
+						<th rowspan="2" width="35">勾<br />选<br />表<br />单</th>';
+
 						for(var i=0;i<deps_length;i++){
-							html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'">'+deps_staffs[i].suo_shu_bu_men_+'</th>';
+							if(deps_staffs[i].lei_xing_=='suo_shu_bu_men_'){
+								html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'" width="'+deps_staffs[i].ren_yuan_.length*35+'">'+deps_staffs[i].suo_shu_bu_men_+'</th>';
+							}else{
+								html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'" width="'+deps_staffs[i].ren_yuan_.length*35+'">'+deps_staffs[i].zhi_wu_+'</th>';
+							}
+							
 						}
 						html+='<tr>';
 						for(var i=0;i<deps_length;i++){
 							for(var p in deps_staffs[i].ren_yuan_){
-								html+='<th class="vertical-font">'+deps_staffs[i].ren_yuan_[p].yuan_gong_xin_ming_+'</th>';
+								html+='<th class="vertical-font" width="35">'+deps_staffs[i].ren_yuan_[p].yuan_gong_xin_ming_+'</th>';
 								staffs_id[staffs_length]=deps_staffs[i].ren_yuan_[p].ren_yuan_id_;
 								staffs_length=staffs_length+1;
 							}
 						}
 						html+='</tr>';
 
-						/*for(var m in golbal.allmenu){
-							 for(var t in golbal.allmenu[m].submenu){
-								html+='<tr><td>'+golbal.allmenu[m].title+'<td><td></td><td></td><td></td><td>'+golbal.allmenu[m].submenu[t].title+'</td><td><input type="Checkbox" name="project_tabs[]" id="project_tabs_'+golbal.allmenu[m].submenu[t].id+'" value="'+golbal.allmenu[m].submenu[t].id+'" class="input-chk" /><label for="project_tabs_'+golbal.allmenu[m].submenu[t].id+'">&nbsp;</label></td>';
-								for(var j=0;j<staffs_length;j++){
-									html+='<td><input type="Checkbox" name="'+golbal.allmenu[m].submenu[t].id+'[]" id="staff_'+staffs_id[j]+'_for_'+golbal.allmenu[m].submenu[t].id+'" value="'+staffs_id[j]+'" class="input-chk" /><label for="staff_'+staffs_id[j]+'_for_'+golbal.allmenu[m].submenu[t].id+'">&nbsp;</label></td>';
-								}
-								html+='</tr>';
-							 }
-						}*/
 						console.log(menu);
 						for(var t in menu){
-							html+='<tr><td>'+menu[t].a1+'</td><td>'+menu[t].a2+'</td><td width="30">'+menu[t].a3+'</td><td width="30">'+menu[t].a4+'</td><td width="50">'+menu[t].a5+'</td><td>'+menu[t].a6+'</td><td><input type="Checkbox" name="project_tabs[]" id="project_tabs_'+menu[t].a7+'" value="'+menu[t].a7+'" class="input-chk" /><label for="project_tabs_'+menu[t].a7+'">&nbsp;</label></td>';
+							html+='<tr><td>'+menu[t].a1+'</td><td>'+menu[t].a2+'</td><td width="35">'+menu[t].a3+'</td><td width="35">'+menu[t].a4+'</td><td width="40">'+menu[t].a5+'</td><td>'+menu[t].a6+'</td><td><input  type="Checkbox" name="project_tabs[]" id="project_tabs_'+menu[t].a7+'" value="'+menu[t].a7+'" class="input-chk gcTableCtl" /><label for="project_tabs_'+menu[t].a7+'">&nbsp;</label></td>';
 							for(var j=0;j<staffs_length;j++){
-								html+='<td><input type="Checkbox" name="'+menu[t].a7+'[]" id="staff_'+staffs_id[j]+'_for_'+menu[t].a7+'" value="'+staffs_id[j]+'" class="input-chk" /><label for="staff_'+staffs_id[j]+'_for_'+menu[t].a7+'">&nbsp;</label></td>';
+								html+='<td width="35" style="background-color:#eee;"><input disabled="disabled" type="Checkbox" name="'+menu[t].a7+'[]" id="'+staffs_id[j]+'#'+menu[t].a7+'" value="'+staffs_id[j]+'" class="input-chk ryTableCtl" />\
+								<label for="'+staffs_id[j]+'#'+menu[t].a7+'">&nbsp;</label></td>';
 							}
 							html+='</tr>';							
 						}
@@ -287,10 +329,8 @@ $(function(){
 						$("#tabDiv").html(html);
 						
 						
-						
-						
-						
-						
+						var total_width=415+(staffs_length-1)*35;
+						$("#maintab").width(total_width);
 						function HB_table(tab_id, lei_num) {
 							var tab = document.getElementById(tab_id);
 							var name = "";
@@ -312,15 +352,21 @@ $(function(){
 								}
 							}
 						}
-						
-						
+
 						HB_table('maintab',0);
 						HB_table('maintab',1);
-						
-						
-						
-						
-						
+	
+						for(var p in per_sel){
+							for(var t in per_sel[p].mask){
+								if(per_sel[p].mask[t]=='1'){
+									var idobj=$("#project_tabs_"+t);
+									idobj.attr("checked","checked");
+									idobj.parent().parent().find('.ryTableCtl').removeAttr("disabled");
+									idobj.parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");	
+									idobj.parent().parent().find('input[value="'+per_sel[p].renYuanId+'"]').attr("checked",true);
+								}
+							}
+						}
 				}
 			},
 			error : function () {
@@ -356,6 +402,54 @@ $(function(){
 		}
 	});	
 
+	//项目选择触发个人选择
+$("body").delegate(".gcTableCtl", "click", function () {
+	if ($(this).attr('checked')) {
+		$(this).parent().parent().find('.ryTableCtl').removeAttr("disabled");
+		$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");
+
+	} else {
+		$(this).parent().parent().find('.ryTableCtl').attr("disabled", false);
+		$(this).parent().parent().find('.ryTableCtl').removeAttr("checked");
+		$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#eee");
+	}
+
+});
+$("body").delegate(".ryTableCtl", "click", function () {
+	
+		if ($(this).attr("checked")) {
+			$(this).parent().parent().find('input[value="'+$(this).val()+'"]').attr("checked",true);
+		} else {
+			$(this).parent().parent().find('input[value="'+$(this).val()+'"]').removeAttr("checked");
+		}
+		
+})
+$("body").on("click", "#submit", function () {
+	var ret = {};
+	$('.ryTableCtl').each(function () {
+		if ($(this).attr("checked") == "checked") {
+			ret[$(this).attr('id')] = "1";
+		} else {
+			ret[$(this).attr('id')] = "0";
+		}
+	});
+
+	$.ajax({
+		type : "POST",
+		url : SERVER_ROOT + "/authority/set_authority.action",
+		data : {
+			authority : JSON.stringify(ret)
+		},
+		success : function (data) {
+			alert(data);
+		},
+		error : function () {
+			console.log('cuowu');
+		}
+	});
+
+});
+///});
 
 });
 </script>	

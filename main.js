@@ -116,6 +116,7 @@ function createProjectTablesManagementWindows(){
 		slashes : true
 	}));
 	newWin.show();	
+	newWin.maximize();
 	newWin.webContents.openDevTools();
 	
 	newWin.webContents.on('did-finish-load', function () {
@@ -208,7 +209,7 @@ function createOutreachUnitWindows() {
 	outUnitsWin.on('closed', function () {
 		win = null;
 	});
-
+	
 	outUnitsWin.loadURL(url.format({
 			pathname : path.join(__dirname, 'www/outReachUnits.html'),
 			protocol : 'file:',
@@ -243,6 +244,7 @@ function createCompanyInfoWindows() {
 			slashes : true
 	}));
 	companyin.show();
+	companyin.maximize();
 	companyin.webContents.openDevTools();
 	const ipc = require('electron').ipcMain;
 	/*ipc.on('createProjectSuccess', function () {
@@ -330,7 +332,7 @@ function createWindow() {
 			//frame: false,
 			// backgroundColor :'#000',
 		})
-		//mainWindow.maximize();
+		mainWindow.maximize();
 		// and load the index.html of the app.
 		mainWindow.loadURL(url.format({
 				//暂时改成login.html

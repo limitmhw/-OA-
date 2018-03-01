@@ -386,8 +386,8 @@ var menu = {
 golbal.now_menu = {};
 golbal.information={};
 //全局量设置
-var message = "{'SERVER_ROOT':'http://localhost:8080/simpleMVC/excel/','fun_btn':'o_p','center':'work_center','proid':'6'}";
-
+var message = "{'SERVER_ROOT':'http://localhost:8080/simpleMVC/excel/','fun_btn':'o_p','center':'work_center','proid':'1'}";
+var renYuanId="23";
 var pars = eval("(" + message + ")");
 var SERVER_ROOT = pars['SERVER_ROOT'];
 var pro_id = pars['proid']; //全局变量：项目对应的id,当操作的是项目注册表的时候，pro_id和now_operate_tab将是同一个。
@@ -397,6 +397,50 @@ var now_operate_tab_item_id = pro_id; //正在在操作的表的的id，初始�
 var fun_btn = 'o_p'; //表示左侧13项，初始默认等于组织与策划
 var center = 'work_center'; //表示五中不同的中心，初始等于工作中心
 $(function () {
+	//init golbal.allmenu
+	{
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8080/simpleMVC/authority/get_menujs.action",
+			async : false,
+			data:{'pro_id':pro_id,'renYuanId':renYuanId},
+			success : function (data) {
+				console.log("data");
+				console.log(data);
+				var vv = eval(data);
+				function initAllMenu(allmenu) {
+					function find(obj) {
+						if (obj.ccsubmenu.length != 0) {
+							var tt = [];
+							for (var k in obj.ccsubmenu) {
+								for (var m in vv) {
+									if (vv[m].excelType == obj.ccsubmenu[k]) {
+										tt.push(vv[m]);
+										break;
+									}
+								}
+							}
+							obj.submenu = tt;
+						}
+					}
+					for (var z in allmenu) {
+						var obj = allmenu[z];
+						for (var i in obj.submenu) {
+							find(obj.submenu[i]);
+						}
+					}
+
+				}
+				initAllMenu(golbal.allmenu);
+			
+				console.log(JSON.stringify(golbal.allmenu));
+
+			},
+			error : function () {
+				console.log('menu init error');
+			}
+		});
+	}
 
 	function init_layout(l1, l2, l3) {
 		//控制layout="2"内部div的布局
