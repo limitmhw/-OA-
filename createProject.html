@@ -63,209 +63,275 @@
 		padding-right:60px;
 		padding-bottom:10px;
 	}
+	.tree-li{
+		overflow: hidden; text-overflow:ellipsis; white-space: nowrap;
+		padding-right:20px;
+	}
+	.tree-li:hover{
+		color:#258de8;
+	}
+.beautiful-radio + label{
+	font-weight:normal;
+}	
+.beautiful-radio + label:before {
+	top: 2px;
+}
+
+.beautiful-radio + label:after {
+	top: 6px;
+}
+	
 	</style>
  </head> 
  <body style="background-color:#999999;font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;"> 
- 	<div class="container-fluid text-center bgc-white">
-		<form id="mainForm">
-		<div class="row" style="border-bottom:1px solid #ccc;">
-			<div class="col-lg-12 text-left">
-				<h3>项目注册</h3>
-			</div>
+ 	<div class="left-200px-menuebar bgc-white" style="padding-top:10px;padding-left:5px;padding-right:5px;overflow-x:hidden;">
+		<div class="form-lists">
+			<font size="4" face="Microsoft YaHei">项目列表</font>
 		</div>
+		<div class="tab-lists"  id="menu2" style="overflow-y:scroll;"> 
 		
-		<div class="row">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">项目名称</div>
-				  <input type="text" class="form-control" id="xiang_mu_ming_chen_" name="xiang_mu_ming_chen_" autofocus="autofocus" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-5 col-md-5 col-sm-5">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">项目用途</div>
-				  <input type="text" class="form-control" id="xiang_mu_yong_tu_" name="xiang_mu_yong_tu_" >
-				</div>
-			  </div> 			
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">工程地点</div>
-				  <input type="text" class="form-control" id="gong_cheng_di_dian_" name="gong_cheng_di_dian_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-5 col-md-5 col-sm-5">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">投资性质</div>
-				  <input type="text" class="form-control" id="tou_zi_xing_zhi_" name="tou_zi_xing_zhi_"  placeholder="">
-				</div>
-			  </div> 			
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">建设单位</div>
-				  <input type="text" class="form-control" id="jian_she_dan_wei_" name="jian_she_dan_wei_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-5 col-md-5 col-sm-5">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">驻工地代表</div>
-				  <input type="text" class="form-control" id="jian_she_dan_wei_zhu_gong_di_dai_biao_" name="jian_she_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
-				</div>
-			  </div> 			
-			</div>
-		</div>	
-		<div class="row">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">设计单位</div>
-				  <input type="text" class="form-control" id="she_ji_dan_wei_" name="she_ji_dan_wei_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-5 col-md-5 col-sm-5">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">驻工地代表</div>
-				  <input type="text" class="form-control" id="she_ji_dan_wei_zhu_gong_di_dai_biao_" name="she_ji_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
-				</div>
-			  </div> 			
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-7 col-md-7 col-sm-7">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">监理单位</div>
-				  <input type="text" class="form-control" id="jian_li_dan_wei_" name="jian_li_dan_wei_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-5 col-md-5 col-sm-5">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">监理代表</div>
-				  <input type="text" class="form-control" id="jian_li_dai_biao_" name="jian_li_dai_biao_" placeholder="">
-				</div>
-			  </div> 			
-			</div>
-		</div>	
-		<div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">开工日期</div>
-				  <input type="date" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">竣工日期</div>
-				  <input type="date" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
-				</div>
-			  </div>			
-			</div>	
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">工期天数</div>
-				  <input type="text" class="form-control" id="gong_qi_tian_shu_" name="gong_qi_tian_shu_" placeholder="" >
-				</div>
-			  </div>			
-			</div>				
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">质量目标</div>
-				  <input type="text" class="form-control" id="zhi_liang_mu_biao_" name="zhi_liang_mu_biao_" placeholder="" >
-				</div>
-			  </div>			
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group has-feedback">
-				<div class="input-group">
-				  <div class="input-group-addon">合同价款</div>
-				  <input type="text" class="form-control" id="he_tong_jia_kuan_" name="he_tong_jia_kuan_" placeholder="" >
-				  <span class="form-control-feedback" aria-hidden="true" style="color:#999999;">万元</span>
-				</div>
-			  </div>			
-			</div>	
-			<div class="col-lg-4 col-md-4 col-sm-4">
-			  <div class="form-group">
-				<div class="input-group">
-				  <div class="input-group-addon">承包方式</div>
-				  <input type="text" class="form-control" id="cheng_bao_fang_shi_" name="cheng_bao_fang_shi_" placeholder="" >
-				</div>
-			  </div>			
-			</div>				
-		</div>
-		<div class="row">
-			<div class="col-lg-12 text-center">
-				<h4>工程项目一览表</h4>
-			</div>
-		</div>
-		<div class="row ">
-			<div class="col-lg-12 text-center">
-				<table id="project_info_tab" class="table table-bordered">
-					<tr>
-						<td rowspan="2">单项工程<br />(简称) </td>
-						<td colspan="3">规模</td>
-						<td rowspan="2">檐高<br />(m)</td>
-						<td rowspan="2">总高<br />(m)</td>
-						<td rowspan="2">地上/地下<br />层数</td>
-						<td rowspan="2">工程类别</td>
-						<td rowspan="2">结构类型</td>
-						<td rowspan="2">基础结构</td>
-					</tr>
-					<tr>
-						<td width="100">面积（m²）</td>
-						<td width="100">长度（m）</td>
-						<td width="100"></td>
-					</tr>	
-					<tr class="can-operate">
-						<td><input class="td-input" name="dan_xiang_gong_cheng_" /></td>
-						<td><input class="td-input" name="gui_mo_mian_ji_" /></td>
-						<td><input class="td-input" name="gui_mo_chang_du_" /></td>
-						<td><input class="td-input" name="gui_mo_qi_ta_" /></td>
-						<td><input class="td-input" name="yan_gao_" /></td>
-						<td><input class="td-input" name="zong_gao_" /></td>
-						<td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td>
-						<td><input class="td-input" name="gong_cheng_lei_bie_" /></td>
-						<td><input class="td-input" name="jie_gou_lei_xing_" /></td>
-						<td><input class="td-input" name="ji_chu_jie_gou_" /></td>
-					</tr>
-					
-				</table>
-			</div>
-		</div>
-		<div class="oepration-bar center-block text-left" style="width:160px;">
-			<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
-			<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
-			<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>
-		</div>
-			<!--<input type="button" class="btn btn-default btn-sm" onclick="add_tr('project_info_tab')" value="添加行">
-			<input type="submit" name="submit" class="btn btn-primary btn-sm" value="注册项目"/>
-			<input type="reset" name="reset" class="btn btn-danger btn-sm" value="重置"/>-->
-		</form>
+		</div> 		
 	</div>
+	<div class="right-main-content">
+	  <div class="main-content content-container" style="position:absolute;top:10px;left:0px;right:0px;bottom:0px;background-color:#999999;padding:20px; overflow-y:scroll;">
+		<div class="container-fluid text-center bgc-white">
+			<div class="row" style="border-bottom:1px solid #ccc;">
+				<div class="col-lg-12 text-left">
+					<h3>项目注册</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-9 col-md-9 col-sm-9" style="border-right:1px dotted #ccc;">
+					<form id="mainForm">
+					<input type="hidden" name="xiang_mu_id_" id="xiang_mu_id_" value="" />
+					<div class="row">
+						<div class="col-lg-7 col-md-7 col-sm-7">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">项目名称</div>
+							  <input type="text" class="form-control" id="xiang_mu_ming_chen_" name="xiang_mu_ming_chen_" autofocus="autofocus" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-5">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">项目用途</div>
+							  <input type="text" class="form-control" id="xiang_mu_yong_tu_" name="xiang_mu_yong_tu_" >
+							</div>
+						  </div> 			
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-7 col-md-7 col-sm-7">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">工程地点</div>
+							  <input type="text" class="form-control" id="gong_cheng_di_dian_" name="gong_cheng_di_dian_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-5">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">投资性质</div>
+							  <input type="text" class="form-control" id="tou_zi_xing_zhi_" name="tou_zi_xing_zhi_"  placeholder="">
+							</div>
+						  </div> 			
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-7 col-md-7 col-sm-7">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">建设单位</div>
+							  <input type="text" class="form-control" id="jian_she_dan_wei_" name="jian_she_dan_wei_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-5">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">驻工地代表</div>
+							  <input type="text" class="form-control" id="jian_she_dan_wei_zhu_gong_di_dai_biao_" name="jian_she_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
+							</div>
+						  </div> 			
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-lg-7 col-md-7 col-sm-7">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">设计单位</div>
+							  <input type="text" class="form-control" id="she_ji_dan_wei_" name="she_ji_dan_wei_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-5">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">驻工地代表</div>
+							  <input type="text" class="form-control" id="she_ji_dan_wei_zhu_gong_di_dai_biao_" name="she_ji_dan_wei_zhu_gong_di_dai_biao_" placeholder="">
+							</div>
+						  </div> 			
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-7 col-md-7 col-sm-7">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">监理单位</div>
+							  <input type="text" class="form-control" id="jian_li_dan_wei_" name="jian_li_dan_wei_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-5">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">监理代表</div>
+							  <input type="text" class="form-control" id="jian_li_dai_biao_" name="jian_li_dai_biao_" placeholder="">
+							</div>
+						  </div> 			
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">开工日期</div>
+							  <input type="date" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">竣工日期</div>
+							  <input type="date" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
+							</div>
+						  </div>			
+						</div>	
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">工期天数</div>
+							  <input type="text" class="form-control" id="gong_qi_tian_shu_" name="gong_qi_tian_shu_" placeholder="" >
+							</div>
+						  </div>			
+						</div>				
+					</div>
+					<div class="row">
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">质量目标</div>
+							  <input type="text" class="form-control" id="zhi_liang_mu_biao_" name="zhi_liang_mu_biao_" placeholder="" >
+							</div>
+						  </div>			
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group has-feedback">
+							<div class="input-group">
+							  <div class="input-group-addon">合同价款</div>
+							  <input type="text" class="form-control" id="he_tong_jia_kuan_" name="he_tong_jia_kuan_" placeholder="" >
+							  <span class="form-control-feedback" aria-hidden="true" style="color:#999999;">万元</span>
+							</div>
+						  </div>			
+						</div>	
+						<div class="col-lg-4 col-md-4 col-sm-4">
+						  <div class="form-group">
+							<div class="input-group">
+							  <div class="input-group-addon">承包方式</div>
+							  <input type="text" class="form-control" id="cheng_bao_fang_shi_" name="cheng_bao_fang_shi_" placeholder="" >
+							</div>
+						  </div>			
+						</div>				
+					</div>
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<h4>工程项目一览表</h4>
+						</div>
+					</div>
+					<div class="row ">
+						<div class="col-lg-12 text-center">
+							<table id="project_info_tab" class="table table-bordered">
+								<tr>
+									<td rowspan="2">单项工程<br />(简称) </td>
+									<td colspan="3">规模</td>
+									<td rowspan="2">檐高<br />(m)</td>
+									<td rowspan="2">总高<br />(m)</td>
+									<td rowspan="2">地上/地下<br />层数</td>
+									<td rowspan="2">工程类别</td>
+									<td rowspan="2">结构类型</td>
+									<td rowspan="2">基础结构</td>
+								</tr>
+								<tr>
+									<td width="100">面积（m²）</td>
+									<td width="100">长度（m）</td>
+									<td width="100"></td>
+								</tr>	
+								<tr class="can-operate">
+									<td><input class="td-input" name="gong_cheng_id_" type="hidden" />
+									    <input class="td-input" name="dan_xiang_gong_cheng_" /></td>
+									<td><input class="td-input" name="gui_mo_mian_ji_" /></td>
+									<td><input class="td-input" name="gui_mo_chang_du_" /></td>
+									<td><input class="td-input" name="gui_mo_qi_ta_" /></td>
+									<td><input class="td-input" name="yan_gao_" /></td>
+									<td><input class="td-input" name="zong_gao_" /></td>
+									<td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td>
+									<td><input class="td-input" name="gong_cheng_lei_bie_" /></td>
+									<td><input class="td-input" name="jie_gou_lei_xing_" /></td>
+									<td><input class="td-input" name="ji_chu_jie_gou_" /></td>
+								</tr>
+								
+							</table>
+						</div>
+					</div>
+					<div class="oepration-bar center-block text-left" style="width:160px;">
+						<div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+						<div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div>
+						<div id="addtr" class="oepration-bar-btn text-center"><i class="glyphicon glyphicon-plus"></i></div>
+					</div>
+					</form>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-3">
+					<div class="tou_zi_xing_zhi_xuan_ze_qi_ text-left">
+						<h4>投资性质</h4>
+						<div class="tou_zi_xing_zhi_xuan_ze_xiang_">
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_guo_bo_" value="国拨" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_guo_bo_">国拨</label>
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_qi_ye_zi_chou_" value="企业自筹" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_qi_ye_zi_chou_">企业自筹</label>
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_si_ren_" value="私人" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_si_ren_">私人</label>
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_wai_zi_" value="外资" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_wai_zi_">外资</label>
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_dai_kuan_" value="世（亚）行贷款" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_dai_kuan_">世（亚）行贷款</label>
+							<input type="radio" name="tou_zi_xing_zhi_nei_rong_[]" for_input="tou_zi_xing_zhi_" id="tou_zi_xing_zhi_qi_ta_" value="其他" class="beautiful-radio fill-input"><label for="tou_zi_xing_zhi_qi_ta_">其他</label>
+						</div>
+					</div>
+					<div class="cheng_bao_fang_shi_xuan_ze_qi_ text-left">
+						<h4>承包方式</h4>
+						<div class="tou_zi_xing_zhi_xuan_ze_xiang_">
+							<input type="radio" name="cheng_bao_fang_shi_nei_rong_[]" for_input="cheng_bao_fang_shi_" id="cheng_bao_fang_shi_zong_cheng_bao_" value="总承包" class="beautiful-radio fill-input"><label for="cheng_bao_fang_shi_zong_cheng_bao_">总承包</label>
+							<input type="radio" name="cheng_bao_fang_shi_nei_rong_[]" for_input="cheng_bao_fang_shi_" id="cheng_bao_fang_shi_lian_he_zong_" value="联合总承包，合作伙伴是" class="beautiful-radio fill-input"><label for="cheng_bao_fang_shi_lian_he_zong_">联合总承包，合作伙伴是______。</label>
+							<input type="radio" name="cheng_bao_fang_shi_nei_rong_[]" for_input="cheng_bao_fang_shi_" id="cheng_bao_fang_shi_fen_bao_" value="分包，总承包商是" class="beautiful-radio fill-input"><label for="cheng_bao_fang_shi_fen_bao_">分包，总承包商是______。</label>
+						</div>
+					</div>	
+					<div class="gong_cheng_lei_bie_xuan_ze_qi_ text-left">
+						<h4>工程类别</h4>
+						<div class="tou_zi_xing_zhi_xuan_ze_xiang_">
+							<input type="radio" name="gong_cheng_lei_bie_nei_rong_[]" for_input="gong_cheng_lei_bie_" id="gong_cheng_lei_bie_gong_jian_" value="公建" class="beautiful-radio"><label for="gong_cheng_lei_bie_gong_jian_">公建</label>
+							<input type="radio" name="gong_cheng_lei_bie_nei_rong_[]" for_input="gong_cheng_lei_bie_" id="gong_cheng_lei_bie_chang_fang_" value="厂房" class="beautiful-radio"><label for="gong_cheng_lei_bie_chang_fang_">厂房</label>
+							<input type="radio" name="gong_cheng_lei_bie_nei_rong_[]" for_input="gong_cheng_lei_bie_" id="gong_cheng_lei_bie_zhu_zhai_" value="住宅" class="beautiful-radio"><label for="gong_cheng_lei_bie_zhu_zhai_">住宅</label>
+							<input type="radio" name="gong_cheng_lei_bie_nei_rong_[]" for_input="gong_cheng_lei_bie_" id="gong_cheng_lei_bie_lu_qiao_" value="路桥" class="beautiful-radio"><label for="gong_cheng_lei_bie_lu_qiao_">路桥</label>
+							<input type="radio" name="gong_cheng_lei_bie_nei_rong_[]" for_input="gong_cheng_lei_bie_" id="gong_cheng_lei_bie_qi_ta_" value="其他" class="beautiful-radio"><label for="gong_cheng_lei_bie_qi_ta_">其他</label>
+						
+						</div>
+					</div>						
+				</div>				
+			</div>
+		
+		</div>
+	  </div>
+	</div>	
+	
 	<!--右键菜单-->
 	<div id="youjicaidan" class="right-click-list" style="border:1px solid #ccc;"> 
 		<ul> 
@@ -276,8 +342,86 @@
 
 <script>
 var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+var SERVER_ROOT2 = 'http://localhost:80';
 $(function(){
+	$(".fill-input").click(function(){
+		var tar_input=$(this).attr("for_input");
+		var input_val=$(this).val();
+		$("#mainForm input[name='"+tar_input+"']").val(input_val);
+	});
+	$("body").on('mousedown', '.tree-li',function(e){
+		var li_id=this.id;
+		var project_id=$(this).attr("project");
+		$(".tree-li").each(function(i,el){
+			if(el.id!=li_id){
+				$(el).removeClass("li-select");
+			}else{
+				$(el).addClass("li-select");
+			}		
+		});
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT2 + "/get_tab_data.php?rec=get_pro_info",
+			data:{'pro_id':project_id},
+			dataType:'text',
+			success : function (data) {
+				if(!isNaN(data)){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':{}
+						}
+					});	
+				}else{
+					var pro_info=eval("(" + data + ")");
+					for( var k in pro_info){
+						if(k!='id' && k!='single_projects' && k!='kai_gong_ri_qi_' && k!='jun_gong_ri_qi_'){
+							$("#"+k).val(pro_info[k]);
+						}
+					} 
+					$("#kai_gong_ri_qi_").val(pro_info['kai_gong_ri_qi_'].split(" ")[0]);
+					$("#jun_gong_ri_qi_").val(pro_info['jun_gong_ri_qi_'].split(" ")[0]);
+					$("#xiang_mu_id_").val(pro_info['id']);
+					
+					var html='';
+					for(var p in pro_info['single_projects']){
+						html+='<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="'+pro_info['single_projects'][p].id+'" /><input class="td-input" name="dan_xiang_gong_cheng_" value="'+pro_info['single_projects'][p].dan_xiang_gong_cheng_+'" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="'+pro_info['single_projects'][p].gui_mo_mian_ji_+'" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="'+pro_info['single_projects'][p].gui_mo_chang_du_+'" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="'+pro_info['single_projects'][p].gui_mo_qi_ta_+'" /></td><td><input class="td-input" name="yan_gao_" value="'+pro_info['single_projects'][p].yan_gao_+'" /></td><td><input class="td-input" name="zong_gao_" value="'+pro_info['single_projects'][p].zong_gao_+'" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="'+pro_info['single_projects'][p].di_shang_di_xia_ceng_shu_+'" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="'+pro_info['single_projects'][p].gong_cheng_lei_bie_+'" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value="'+pro_info['single_projects'][p].jie_gou_lei_xing_+'"/></td><td><input class="td-input" name="ji_chu_jie_gou_" value="'+pro_info['single_projects'][p].ji_chu_jie_gou_+'"/></td></tr>';					
+					}
+						html+='<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="" /><input class="td-input" name="dan_xiang_gong_cheng_" value="" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="" /></td><td><input class="td-input" name="yan_gao_" value="" /></td><td><input class="td-input" name="zong_gao_" value="" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value=""/></td><td><input class="td-input" name="ji_chu_jie_gou_" value=""/></td></tr>';					
 
+					$(".can-operate").remove();
+					$("#project_info_tab").append(html);
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});	
+	});
+
+	function get_pros(){
+		var html='<ul>';
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT2 + "/get_tab_data.php?rec=get_pros",
+			success : function (data) {
+				var projects=eval("(" + data + ")");
+				for(var i in projects){
+					html+='<li id="li'+i+'" class="tree-li" project="'+projects[i].id+'">'+projects[i].xiang_mu_ming_chen_+'</li>';
+				}
+				html+='</ul>';
+				$("#menu2").html(html);
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});	
+	}
+	get_pros();
+	
 	$(document).bind("contextmenu", function (e) {
 		return false;
 	});
@@ -318,7 +462,7 @@ $(function(){
 		table.deleteRow(index);  
 	}
 	function add_tr(tab_id){
-		var str='<tr class="can-operate"><td><input class="td-input" name="dan_xiang_gong_cheng_" /></td><td><input class="td-input" name="gui_mo_mian_ji_" /></td><td><input class="td-input" name="gui_mo_chang_du_" /></td><td><input class="td-input" name="gui_mo_qi_ta_" /></td><td><input class="td-input" name="yan_gao_" /></td><td><input class="td-input" name="zong_gao_" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" /></td><td><input class="td-input" name="jie_gou_lei_xing_" /></td><td><input class="td-input" name="ji_chu_jie_gou_" /></td></tr>';
+		var str='<tr class="can-operate"><td><input class="td-input" name="gong_cheng_id_" type="hidden" /><input class="td-input" name="dan_xiang_gong_cheng_" /></td><td><input class="td-input" name="gui_mo_mian_ji_" /></td><td><input class="td-input" name="gui_mo_chang_du_" /></td><td><input class="td-input" name="gui_mo_qi_ta_" /></td><td><input class="td-input" name="yan_gao_" /></td><td><input class="td-input" name="zong_gao_" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" /></td><td><input class="td-input" name="jie_gou_lei_xing_" /></td><td><input class="td-input" name="ji_chu_jie_gou_" /></td></tr>';
 		$("#"+tab_id).append(str);
 	}	
 	$("#reset").click(function(){

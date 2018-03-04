@@ -169,7 +169,7 @@
 	margin-right:5px;
 }
 .function-bar-list{
-	width:45px;
+	width:35px;
 	position:absolute;
 	left:0px;
 	top:0px;
@@ -251,7 +251,7 @@
 	background-size:contain;
 	background-image:url("../images/icon/select_bar.png") !important;
 	background-size:100%;
-	z-index:3 !important;
+	z-index:2 !important;
 }
 .btn-list-select{
 	color:#000;
@@ -261,21 +261,23 @@
 	z-index:2 !important;
 }
 .start-btn{
-	margin-top:0px !important;
+	margin-top:-10px !important;
 	top:0px !important;
 }
-
+.end-btn{
+	height:70px !important;
+}
 
 .btn-list{
-	width:45px;
+	width:35px;
 	height:80px;
-	padding-top:13px;
+	padding-top:12px;
 	padding-bottom:15px;
-	padding-left:7px;
+	padding-left:0px;
 	font-size:13px;
 	/*float:left;*/
 	position:relative;
-	margin-top:-10px;
+	margin-top:-8px;
 	/*_margin-top:-20px;*/
 	text-align:center; 
 	line-height:17px;
@@ -284,14 +286,16 @@
 	background-color:#040;
 	background:url("../images/icon/unselect_bar.png");
 	background-size:100%;
+	background-repeat:no-repeat;repeat-x;repeat-y;
 	#background-position:0px 0px;
-	z-index:1;
+	z-index:2;
 	font-family:\5FAE\8F6F\96C5\9ED1;
+	cursor:pointer;
 }
 .new-button:link{
 	margin:0px;
 	padding:6px 15px;
-	font-size:1.2em;
+	font-size:16px;
 	/*font-weight:bold;*/
 	color:#a5a5a5;
 	text-decoration:none;
@@ -304,7 +308,7 @@
  .new-button:hover{
 	margin:0px;
 	padding:6px 15px;
-	font-size:1.2em;
+	font-size:16px;
 	color:#000;
 	text-decoration:none;
 	border-left:none;

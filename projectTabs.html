@@ -8,9 +8,8 @@
 		<link href="css/jquery-confirm.css" rel="stylesheet" /> 
 		<script src="js/jquery-1.7.2.min.js"></script> 
 		<script src="js/jquery-confirm.js"></script>
-		<script>
-		//var golbal = this;
-		</script>
+		<script src="js/tableconf.js"></script>
+
 	<style>
 
 	.input-group{
@@ -186,7 +185,7 @@
 	</div>
 </div>
 <!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
-<script src="js/tableconf.js"></script>
+<
 <script>
 var page_par='';
 require('electron').ipcRenderer.on('page_par', function(event, message) {
@@ -352,7 +351,6 @@ $(function(){
 								}
 							}
 						}
-
 						HB_table('maintab',0);
 						HB_table('maintab',1);
 	
@@ -433,7 +431,7 @@ $("body").on("click", "#submit", function () {
 			ret[$(this).attr('id')] = "0";
 		}
 	});
-
+	console.log(JSON.stringify(ret));
 	$.ajax({
 		type : "POST",
 		url : SERVER_ROOT + "/authority/set_authority.action",

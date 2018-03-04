@@ -334,7 +334,7 @@ $(function(){
 					var pers=eval("(" + data + ")");
 					var html='<table id="pers_tab" class="table table-hover" style="border-bottom:1px solid #e6e6e6;"><tr><th>序号</th><th>姓名</th><th>身份证号</th><th>家庭住址</th><th>劳动合同</th><th>证书</th><th>操作</th></tr>';
 					for(var p in pers){
-						html+='<tr><td>'+(p*1+1)+'</td><td>'+pers[p].xing_ming_+'</td><td><a href="javascript:;" class="idcard-viewer" idcard-z="'+pers[p].shen_fen_zheng_zhao_zheng_+'" idcard-f="'+pers[p].shen_fen_zheng_zhao_fan_+'" >'+pers[p].shen_fen_zheng_hao_ma_+'</a></td><td>'+pers[p].jia_ting_zhu_zhi_+'</td><td>'+pers[p].lao_dong_he_tong_bian_hao_+'</td><td>查看</td><td><span class="btn btn-default btn-sm">编辑</span>&nbsp;<span class="btn btn-default btn-sm">删除</span></td></tr>';
+						html+='<tr><td>'+(p*1+1)+'</td><td>'+pers[p].xing_ming_+'</td><td><a href="javascript:;" class="idcard-viewer" idcard-z="'+pers[p].shen_fen_zheng_zhao_zheng_+'" idcard-f="'+pers[p].shen_fen_zheng_zhao_fan_+'" >'+pers[p].shen_fen_zheng_hao_ma_+'</a></td><td>'+pers[p].jia_ting_zhu_zhi_+'</td><td>'+pers[p].lao_dong_he_tong_bian_hao_+'</td><td>查看</td><td><a href="">编辑</a>&nbsp;<a href="">删除</a></td></tr>';
 					}
 						html+='</table>';
 					$("#table-data").empty();

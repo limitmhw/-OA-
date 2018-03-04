@@ -29,7 +29,8 @@ class PagesModel {
 		this.wp = 0;
 		this.hp = 0;
 		this.tw = 0;
-
+		//标准行高
+		this.StdTrHeight=36;
 		//页头的高度
 		this.top_margin = 50;
 		//页尾的高度
@@ -78,13 +79,13 @@ class PagesModel {
 				//这里设置0 更好看、理论上应该是27，字体大小应该是14
 				this.table_foot_height = 14;
 			}
-		}
-		{
+		}{
 			var jq_obj = this.obj.find("table[TableType='head']");
 			this.tr_head = jq_obj.html();
 			var tem_hh = 0;
-			for (var i = 0; i < jq_obj.length; i++) {
-				tem_hh += $(jq_obj[i]).height();
+			var jq_obj_tr = jq_obj.find('tr');
+			for (var i = 0; i < jq_obj_tr.length; i++) {
+				tem_hh += $(jq_obj_tr[i]).height();
 			}
 			jq_obj.remove();
 			this.tr_head_height = tem_hh;
@@ -107,6 +108,8 @@ class PagesModel {
 		this.selfAdaption();
 		//这里把所有的特殊标记的DOM，加入到arr_pages里面
 		this.handleEditDOM();
+
+		this.handlePageWithEmptyTr();
 	}
 	handleEditDOM() {
 		//将特殊标记的DOM加入到arr_pages
@@ -115,9 +118,9 @@ class PagesModel {
 			for (var k = 0; k < oo.length; k++) {
 				oo[k] = $(oo[k]);
 				if (oo[k].attr('label')) {
-					var vv=this.obj.find("input[iidata='"+oo[k].attr('label')+"']");
+					var vv = this.obj.find("input[iidata='" + oo[k].attr('label') + "']");
 					oo[k].text(vv.val());
-					
+
 					vv.remove();
 					this.arr_pages[i][oo[k].attr('label')] = oo[k];
 				}
@@ -226,9 +229,9 @@ class PagesModel {
 		});
 	}
 	createTable() {
-		var table = $('<table  border="4" cellpadding="0" \
-						cellspacing="0" style="border-top:none;border-collapse:\
-						collapse;table-layout:fixed;margin-bottom:3px;">');
+		var table = $('<table  border="3" cellpadding="0" \
+										cellspacing="0" style="border-top:none;border-collapse:\
+										collapse;table-layout:fixed;margin-bottom:3px;">');
 		//这个地方可能有问题，先注释一下
 		table.width(this.tw);
 		//table.append(this.tr_head);
@@ -310,8 +313,7 @@ class PagesModel {
 			});
 			this.arr_pages[i].page.height(this.hp);
 			this.arr_pages[i].page_ctx.css("top", this.top_margin + this.table_head_height);
-		}
-		{
+		}{
 			this.arr_pages[i].page_head.show();
 			this.arr_pages[i].page_head.height(this.top_margin);
 			this.arr_pages[i].page_table_head.show();
@@ -423,13 +425,13 @@ class PagesModel {
 		//page_table_foot.append(this.page_table_foot_ctx);
 		page_table_foot_real_ctx.append(this.page_table_foot_ctx);
 
-		var tab2 = $('<table  border="4" cellpadding="0" \
-					width="'+this.tw+'" cellspacing="0" \
-					style="border-bottom:none;\
-					border-collapse:collapse;table-layout:fixed;">');
+		var tab2 = $('<table  border="3" cellpadding="0" \
+									width="' + this.tw + '" cellspacing="0" \
+									style="border-bottom:none;\
+									border-collapse:collapse;table-layout:fixed;">');
 		tab2.append(this.tr_head);
-		tab2.find('td').each(function(){
-			$(this).attr("ed","false");
+		tab2.find('td').each(function () {
+			$(this).attr("ed", "false");
 		});
 		page_ctx.append($("<center></center>").append(tab2).append($(tab)));
 		//表尾巴的占位和内容分离
@@ -481,16 +483,17 @@ class PagesModel {
 		//初始化高度应该为表头的高度
 		var sum = this.tr_head_height;
 		var gid = 0;
+		var pthis = this;
 
-		$("tr[TableType='ctx']").each(function () {
-			if ((sum + $(this).height()) > limit) {
+		var sstr = $("tr[TableType='ctx']");
+		for (var i = 0; i < sstr.length; i++) {
+			if ((sum + sstr.eq(i).height()) > limit) {
 				gid++;
 				sum = this.tr_head_height;
 			}
-			sum += $(this).height();
-			$(this).attr('groupid', gid);
-
-		});
+			sum += sstr.eq(i).height();
+			sstr.eq(i).attr('groupid', gid);
+		}
 
 	}
 
@@ -515,13 +518,13 @@ class PagesModel {
 			这里是有内容的都不可以编辑
 			var temcc = $(this).text();
 			temcc = $.trim(temcc)
-				if (temcc.length != 0) {
-					$(this).attr("ed", "false");
-					//禁止选中
-					$(this).attr("onselectstart", 'return false');
-				}
-		    */
-			if($(this).attr("ed")=="false"){
+			if (temcc.length != 0) {
+			$(this).attr("ed", "false");
+			//禁止选中
+			$(this).attr("onselectstart", 'return false');
+			}
+			 */
+			if ($(this).attr("ed") == "false") {
 				$(this).attr("onselectstart", 'return false');
 			}
 		});
@@ -596,12 +599,57 @@ class PagesModel {
 		});
 	}
 	handleEmptyPage() {
+		//处理完全空白的页面
 		var idx = this.arr_pages.length - 1;
 		var tr_num = this.arr_pages[idx].table.find('tr').length;
 		if (tr_num == 0) {
 			this.arr_pages[idx].page.remove(); ;
 			this.arr_pages.pop();
 		}
-
+	}
+	handlePageWithEmptyTr2() {
+		//判断是否是没有填写的页面，占时没有使用
+		var js = [];
+		for (var k = 1; k < this.arr_pages.length; k++) {
+			var tr_num = this.arr_pages[k].table.find('td');
+			var isEmpty = 0;
+			for (var i = 0; i < tr_num.length; i++) {
+				if ($.trim(tr_num.eq(i).text()).length != 0) {
+					isEmpty = 1;
+					break;
+				}
+			}
+			if (isEmpty == 1) {
+				console.log("非空")
+			} else {
+				js.push(this.arr_pages[k]);
+				this.arr_pages[k].page.remove(); ;
+				this.arr_pages.pop();
+				console.log("空表")
+			}
+		}
+	}
+	handlePageWithEmptyTr() {
+		//补充表格到满
+		var limit = (this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height-30);
+		var idx = this.arr_pages.length - 1;
+		var trs = this.arr_pages[idx].table.find('tr');
+		var sum=0;
+		for(var i=0;i<trs.length;i++){
+			sum+=trs.eq(i).height();
+		}
+		//默认一行高度是36
+		var  lastNum=parseInt((limit-sum)/this.StdTrHeight);
+		console.log(lastNum);
+		{
+			var stdTr=trs.eq(0).clone();
+			stdTr.height(this.StdTrHeight);
+			stdTr.find('td').empty();
+			stdTr.find('td').attr("contentEditable", "true");
+		}
+		for(var i=0;i<lastNum;i++){
+			this.arr_pages[idx].table.append(stdTr.clone());
+		}
+			
 	}
 }

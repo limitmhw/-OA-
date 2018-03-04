@@ -116,7 +116,6 @@ function createProjectTablesManagementWindows(){
 		slashes : true
 	}));
 	newWin.show();	
-	newWin.maximize();
 	newWin.webContents.openDevTools();
 	
 	newWin.webContents.on('did-finish-load', function () {
@@ -127,8 +126,8 @@ function createProjectTablesManagementWindows(){
 //项目ID先写死
 function createProjecStaffManagementWindows(){
 	var newWin=new BrowserWindow({
-		width : 1000,
-		height : 600,
+		//width : 1000,
+		//height : 600,
 		show : false,
 		autoHideMenuBar:true,
 		frame : true
@@ -143,6 +142,7 @@ function createProjecStaffManagementWindows(){
 		slashes : true
 	}));
 	newWin.show();	
+	newWin.maximize();
 	newWin.webContents.openDevTools();
 	
 	newWin.webContents.on('did-finish-load', function () {
@@ -151,10 +151,11 @@ function createProjecStaffManagementWindows(){
 }	
 function createCreateProjectWindows() {
 	var win = new BrowserWindow({
-			width : 1000,
-			height : 600,
+			//width : 1200,
+			//height : 600,
 			show : false,
 			autoHideMenuBar:true,
+			//fullscreen:true,
 			frame : true
 		});
 	win.on('closed', function () {
@@ -167,7 +168,8 @@ function createCreateProjectWindows() {
 			slashes : true
 		}));
 	win.show();
-	
+	win.maximize();
+	win.webContents.openDevTools();
 	const ipc = require('electron').ipcMain;
 	ipc.on('createProjectSuccess', function () {
 		mainWindow.reload();
@@ -198,7 +200,6 @@ function createStaffManagementWindows(){
 }
 //创建一个窗口，用来管理外协单位的信息
 function createOutreachUnitWindows() {
-
 	var outUnitsWin = new BrowserWindow({
 			width : 1000,
 			height : 600,
@@ -209,7 +210,7 @@ function createOutreachUnitWindows() {
 	outUnitsWin.on('closed', function () {
 		win = null;
 	});
-	
+
 	outUnitsWin.loadURL(url.format({
 			pathname : path.join(__dirname, 'www/outReachUnits.html'),
 			protocol : 'file:',
@@ -244,7 +245,6 @@ function createCompanyInfoWindows() {
 			slashes : true
 	}));
 	companyin.show();
-	companyin.maximize();
 	companyin.webContents.openDevTools();
 	const ipc = require('electron').ipcMain;
 	/*ipc.on('createProjectSuccess', function () {
@@ -332,7 +332,7 @@ function createWindow() {
 			//frame: false,
 			// backgroundColor :'#000',
 		})
-		mainWindow.maximize();
+		//mainWindow.maximize();
 		// and load the index.html of the app.
 		mainWindow.loadURL(url.format({
 				//暂时改成login.html

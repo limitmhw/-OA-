@@ -5,32 +5,13 @@
   <title>项目管理平台</title> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
   <link href="css/common.css" rel="stylesheet" /> 
-  <link rel="stylesheet" href="./js/ztree/zTreeStyle.css" type="text/css">   
+  <link rel="stylesheet" href="./js/ztree/zTreeStyle.css" type="text/css">  
+  <link href="css/jquery-confirm.css" rel="stylesheet" /> 
+  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
+  <script src="js/jquery-confirm.js"></script>   
   <script>
   var golbal = this;
-  function sleep(millis) {
-  	var njf1 = njen(this, arguments, "millis");
-  	nj : while (1) {
-  		try {
-  			switch (njf1.cp) {
-  			case 0:
-  				njf1._notifier = NjsRuntime.createNotifier();
-  				setTimeout(njf1._notifier, njf1._millis);
-  				njf1.cp = 1;
-  				njf1._notifier.wait(njf1);
-  				return;
-  			case 1:
-  				break nj;
-  			}
-  		} catch (ex) {
-  			if (!njf1.except(ex, 1))
-  				return;
-  		}
-  	}
-  	njf1.pf();
-  }
   </script> 
-  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
   <script type="text/javascript" src="js/comm.js"></script> 
   <script type="text/javascript" src="js/handletable.js"></script> 
   <script type="text/javascript" src="js/menu.js"></script> 
@@ -120,6 +101,10 @@
 	 border-top:1px solid #797979;
 	 border-bottom:3px solid #797979;
 	 color:#217346;
+}
+li span:hover{
+	text-decoration:underline;
+	background-color:#BCD2EE;
 }
  </style>
 
@@ -214,7 +199,7 @@
 	<div id="e_e" class="btn-list">
 		考核<br />与<br />  激励
 	</div> 
-	<div id="c_m" class="btn-list">
+	<div id="c_m" class="btn-list end-btn">
 		竣工<br />与<br />  维保
 	</div> 
 
@@ -226,12 +211,12 @@
 			<span style="float:right;cursor:pointer;" id="hid_tar">X</span> 
 		</div> 
 		<div class="tab-lists"  id="menu2" style="overflow-y:scroll;"> 
-		
+	
 		</div> 
 		<!--这个浮动菜单的逻辑修改成了这样：准备一个和menu2一样的div容器menu1，让它开始的状态为display=none，点击控制的图标的时候，改变display。-->
 		<!--好处：表单中心头部可以复用；整体CSS可以复用，可以保证样式绝对一致。-->
-		<div class="tab-lists "  id="menu1" style="overflow-y:scroll;display:none;" > 
-		
+		<div class="tab-lists "  id="menu1" style="background-color:#ccc;width:185px;overflow-y:scroll;display:none;border-radius:5px;" > 
+
 		</div> 	
 		<!--控制的这个图标改了一下css，让它能够始终居中，控制逻辑看$(".float-bar").click();函数-->
 		<div class="float-bar" style="z-index:5;position:absolute;top:50%;margin-top:-81px;left:205px;background-color:#fcc;background:url(images/icon/left_menu.png);width:15px;height:162px;">
@@ -239,13 +224,11 @@
    </div>
    <div layout="2.3" class="main-content" style="border-left:1px solid #797979px;position:absolute;top:0px;bottom:0px;background-color:#999999;"> 
     <div onselectstart="return false" layout="2.3.1" class="center-center"> 
-		<center>
-			 <a href="javascript:;" id="work_center" class="new-button">工作中心</a> 
-			 <a href="javascript:;" id="process_center" class="new-button">流程中心</a> 
-			 <a href="javascript:;" id="supervision _center" class="new-button">监管中心</a> 
-			 <a href="javascript:;" id="archive_center" class="new-button">档案室</a> 
-			 <a href="javascript:;" id="acknowledge_center" class="new-button">知识库</a> 
-	   </center>
+		<a href="javascript:;" id="work_center" class="new-button">工作中心</a> 
+		<a href="javascript:;" id="process_center" class="new-button">流程中心</a> 
+		<a href="javascript:;" id="supervision _center" class="new-button">监管中心</a> 
+		<a href="javascript:;" id="archive_center" class="new-button" style="margin-left:40px;">档案室</a> 
+		<a href="javascript:;" id="acknowledge_center" class="new-button">知识库</a> 
    </div> 
 
     <div layout="2.3.2" class="content-container" style="width:100%;position:absolute;top:40px;bottom:0px;
@@ -268,20 +251,20 @@
   </div>   
      <div id="youjicaidan" class="right-click-list"> 
 		  <ul> 
-		   <li id="add_empty_tab" class="one-class"> 新建表单</li> 
-		   <li id="del_tab"> <img src="./images/icon/delete.png" />删除表单</li> 
-		   <li id="copy_tab" class="one-class"><img src="./images/icon/copy.png" />复制表单</li> 
-		   <li class="one-class">跳转菜单</li> 
+		   <li id="add_empty_tab" class="one-class"><span> 新建表单</span></li> 
+		   <li id="del_tab" class="menu-li"> <img src="./images/icon/delete.png" /><span> 删除表单</span></li> 
+		   <li id="copy_tab" class="one-class"><img src="./images/icon/copy.png" /><span> 复制表单</span></li> 
+		   <li class="one-class"><span> 跳转菜单</span></li> 
 		  </ul> 
      </div>  
      <div id="handle_tr" class="right-click-list"> 
 		  <ul> 
-		   <li id="add_new_tr" class="one-class">添加新行</li> 
-		   <li id="delect_select_tr"> <img src="./images/icon/delete.png" />删除当前行</li> 
-		   <li id="copy_select_tr"class="one-class"><img src="./images/icon/copy.png" />复制当前行</li> 
-		   <li class="set_as_title" level="1" class="one-class">设置一级标题</li> 
-		   <li class="set_as_title" level="2" class="one-class">设置二级标题</li> 
-		   <li class="set_as_title" level="3" class="one-class">设置三级标题</li> 
+		   <li id="add_new_tr" class="one-class"><span> 添加新行</span></li> 
+		   <li id="delect_select_tr" class="menu-li" > <img src="./images/icon/delete.png" /><span> 删除当前行</span></li> 
+		   <li id="copy_select_tr"class="one-class"><img src="./images/icon/copy.png" /><span> 复制当前行</span></li> 
+		   <li class="set_as_title" level="1" class="one-class"><span> 设置一级标题</span></li> 
+		   <li class="set_as_title" level="2" class="one-class"><span> 设置二级标题</span></li> 
+		   <li class="set_as_title" level="3" class="one-class"><span> 设置三级标题</span></li> 
 		  </ul> 
      </div> 
 
@@ -384,10 +367,10 @@ var menu = {
 };
 
 golbal.now_menu = {};
-golbal.information={};
+golbal.information = {};
 //全局量设置
 var message = "{'SERVER_ROOT':'http://localhost:8080/simpleMVC/excel/','fun_btn':'o_p','center':'work_center','proid':'1'}";
-var renYuanId="23";
+var renYuanId = "23";
 var pars = eval("(" + message + ")");
 var SERVER_ROOT = pars['SERVER_ROOT'];
 var pro_id = pars['proid']; //全局变量：项目对应的id,当操作的是项目注册表的时候，pro_id和now_operate_tab将是同一个。
@@ -403,10 +386,11 @@ $(function () {
 			type : "POST",
 			url : "http://localhost:8080/simpleMVC/authority/get_menujs.action",
 			async : false,
-			data:{'pro_id':pro_id,'renYuanId':renYuanId},
+			data : {
+				'pro_id' : pro_id,
+				'renYuanId' : renYuanId
+			},
 			success : function (data) {
-				console.log("data");
-				console.log(data);
 				var vv = eval(data);
 				function initAllMenu(allmenu) {
 					function find(obj) {
@@ -432,8 +416,7 @@ $(function () {
 
 				}
 				initAllMenu(golbal.allmenu);
-			
-				console.log(JSON.stringify(golbal.allmenu));
+				//console.log(JSON.stringify(golbal.allmenu));
 
 			},
 			error : function () {
@@ -445,7 +428,7 @@ $(function () {
 	function init_layout(l1, l2, l3) {
 		//控制layout="2"内部div的布局
 		if (l1 > 1) {
-			l1 = 45; // (45 * 100) / parseInt($('div[layout="2"]').width());
+			l1 = 35; // (45 * 100) / parseInt($('div[layout="2"]').width());
 		}
 		if (l2 > 1) {
 			l2 = 206; //(205 * 100) / parseInt($('div[layout="2"]').width());
@@ -502,463 +485,480 @@ $(function () {
 		golbal.pp.run(style);
 	}
 	//与表格的表头表尾布局有关的代码
-	function colFuncHead1(title){
-	     var cc = '\
-			<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
-			<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
-			<div style="position:absolute;left:300px;top:10px;">\
-			<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-			font-family: 宋体;text-decoration: none;">\
-			'+title+'</font></div>\
-			<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
-			<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:100px;" contenteditable="true"></div>';
-			return cc;
-	}
-	function colFuncFoot1(){
-			var cc='<div style="float:left;">编制\\日期：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:40px;">&nbsp</div>\
-				<div style="float:left;">审核\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>';
-		return cc;
-	
-	}
-	function rowFuncTitle(title){
-			var cc='<div style="position:absolute;left:400px;top:10px;">\
-			<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
-			font-family: 宋体;text-decoration: none;">\
-			'+title+'</font></div>';
-			return cc;
-	}
-	function rowFuncLeftTitleHead1(title){
+	function colFuncHead1(title) {
 		var cc = '\
-			<div style="position:absolute;left:74px;top:60px;font-size:10pt;">'+title+'：</div>\
-			<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;\
-			font-size:10.5pt;width:200px;" contenteditable="true"></div>';
-			return cc;
+						<div style="position:absolute;left:74px;top:60px;font-size:10pt;">项目名称：</div>\
+						<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:144px;top:60px;font-size:10.5pt;width:100px;" contenteditable="true"></div>\
+						<div style="position:absolute;left:300px;top:10px;">\
+						<font     style="font-size: 22pt;font-weight: 700;font-style: normal;\
+						font-family: 宋体;text-decoration: none;">\
+						' + title + '</font></div>\
+						<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">表单编号：</div>\
+						<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;top:28px;font-size:10.5pt;width:100px;" contenteditable="true"></div>';
+		return cc;
 	}
-	function rowFuncLeftTitleHead2(title){
-		  var cc = '<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">'+title+'：</div>\
-			<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;\
-			top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>';
-			return cc;
+	function colFuncFoot1() {
+		var cc = '<div style="float:left;">编制\\日期：</div>\
+							<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+							<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:40px;">&nbsp</div>\
+							<div style="float:left;">审核\\日期：</div>\
+							<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+							<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>';
+		return cc;
+
 	}
-	function rowFuncRightTitleHead1(title){
+	function rowFuncTitle(title) {
+		var title_width = 29*title.length;//$(".tab-title").width();
+		/*
+		$(".tab-title").css({
+			"top" : "10px",
+			"left" : "50%",
+			"margin-left" : -title_width / 2 + "px"
+		});
+		*/
+		var cc = '<div style="position:absolute;top:10px;left:50%;margin-left:'+-title_width / 2+'px;" class="tab-title">\
+						<font     style="font-size: 29px;font-weight: 700;font-style: normal;\
+						font-family: 宋体;text-decoration: none;">\
+						' + title + '</font></div>';
+		return cc;
+	}
+	function rowFuncLeftTitleHead2(title) {
+		var cc = '<div style="position:absolute;left:74px;top:28px;font-size:10.5pt;">' + title + '：</div>\
+						<div label="biao_dan_bian_hao_" class="forEdit"  style="position:absolute;left:144px;\
+						top:28px;font-size:10.5pt;width:200px;" contenteditable="true"></div>';
+		return cc;
+	}
+	function rowFuncLeftTitleHead3(title) {
+		var ll=13*title.length+90;
+		var cc = '\
+						<div style="position:absolute;left:74px;top:60px;font-size:10pt;">' + title + '：</div>\
+						<div label="xiang_mu_ming_chen_" class="forEdit" style="position:absolute;left:'+ll+'px;top:60px;\
+						font-size:10.5pt;width:200px;" contenteditable="true"></div>';
+		return cc;
+	}
+	function rowFuncRightTitleHead1(title) {
 		var cc = '<div label="dan_wei_" class="forEdit"  style="position:absolute;left:1010px;top:60px;font-size:10.5pt;width:60px;" contenteditable="true"></div>\
-			<div style="position:absolute;left:970px;top:60px;font-size:10pt;">'+title+'：</div>';
+						<div style="position:absolute;left:970px;top:60px;font-size:10pt;">' + title + '：</div>';
+		return cc;
+	}
+	function rowFuncMiddleTitleHead(title) {
+		var cc = '<div style="position:absolute;left:374px;top:60px;font-size:10.5pt;">' + title + '</div>\
+						<div label="tong_ji_ri_qi_nian_" class="forEdit"  style="position:absolute;left:470px;top:60px;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+						<div style="position:absolute;left:520px;top:60px;font-size:10pt;">年</div>	\
+						<div label="tong_ji_ri_qi_yue_" class="forEdit"  style="position:absolute;left:550px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
+						<div style="position:absolute;left:600px;top:60px;font-size:10pt;">月</div>	'
 			return cc;
 	}
-	function rowFuncMiddleTitleHead(title){
-		var cc = '<div style="position:absolute;left:374px;top:60px;font-size:10.5pt;">'+title+'</div>\
-			<div label="tong_ji_ri_qi_nian_" class="forEdit"  style="position:absolute;left:470px;top:60px;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-			<div style="position:absolute;left:520px;top:60px;font-size:10pt;">年</div>	\
-			<div label="tong_ji_ri_qi_yue_" class="forEdit"  style="position:absolute;left:550px;top:60px;font-size:10.5pt;width:40px;" contenteditable="true"></div>\
-			<div style="position:absolute;left:600px;top:60px;font-size:10pt;">月</div>	'
-			return cc;
-	}
-	function rowFuncHead1(title){
-			var cc = rowFuncLeftTitleHead1('项目名称')
+	function rowFuncHead1(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称')
 			+rowFuncTitle(title)
 			+rowFuncLeftTitleHead2('表单编号')
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-    function rowFuncHead2(title){
-			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+	function rowFuncHead2(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称—单项工程')
 			+rowFuncTitle(title)
 			+rowFuncLeftTitleHead2('表单编号')
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-	function rowFuncHead3(title){
-			var cc = rowFuncLeftTitleHead1('项目名称—单项工程—专业类别')
+	function rowFuncHead3(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称—单项工程—专业类别')
 			+rowFuncTitle(title)
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-	function rowFuncHead4(title){
-			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
-			+rowFuncTitle(title)
-			+rowFuncLeftTitleHead2('表单编号')
-			+rowFuncRightTitleHead1('单位');
-			return cc;
-	}
-	function rowFuncHead5(title){
-			var cc = rowFuncLeftTitleHead1('项目名称')
+	function rowFuncHead4(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称—单项工程')
 			+rowFuncTitle(title)
 			+rowFuncLeftTitleHead2('表单编号')
-			+rowFuncMiddleTitleHead('统计月份')
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-	function rowFuncHead6(title){
-			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+	function rowFuncHead5(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称')
 			+rowFuncTitle(title)
 			+rowFuncLeftTitleHead2('表单编号')
 			+rowFuncMiddleTitleHead('统计月份')
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-	function rowFuncHead7(title){
-			var cc = rowFuncLeftTitleHead1('项目名称—单项工程')
+	function rowFuncHead6(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称—单项工程')
+			+rowFuncTitle(title)
+			+rowFuncLeftTitleHead2('表单编号')
+			+rowFuncMiddleTitleHead('统计月份')
+			+rowFuncRightTitleHead1('单位');
+		return cc;
+	}
+	function rowFuncHead7(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称—单项工程')
 			+rowFuncTitle(title)
 			+rowFuncLeftTitleHead2('表单编号')
 			+rowFuncRightTitleHead1('单位');
-			return cc;
+		return cc;
 	}
-	function rowFuncHead8(title){
-			var cc = rowFuncLeftTitleHead1('项目名称')
+	function rowFuncHead8(title) {
+		var cc = rowFuncLeftTitleHead3('项目名称')
 			+rowFuncTitle(title)
 			+rowFuncMiddleTitleHead('统计日期');
-			return cc;
-	}
-	
-	function rowFuncFoot1(){
-		var cc='<div style="float:left;">编制\\日期：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:20px;">&nbsp</div>\
-				<div style="float:left;">审核\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:20px;">&nbsp</div>\
-				<div style="float:left;">审批\\日期：</div>\
-				<div label="shen_pi_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
-				<div label="shen_pi_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_pi_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_pi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>';
 		return cc;
 	}
-	function rowFuncFoot2(){
-		var cc='<div style="float:left;">编制人：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:100px;">&nbsp</div>\
-				<div style="float:left;">审核人：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>';
+
+	function rowFuncFoot1() {
+		var cc = '<div style="float:left;">编制\\日期：</div>\
+							<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+							<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:20px;">&nbsp</div>\
+							<div style="float:left;">审核\\日期：</div>\
+							<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+							<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:20px;">&nbsp</div>\
+							<div style="float:left;">审批\\日期：</div>\
+							<div label="shen_pi_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:80px;" contenteditable="true"></div>\
+							<div label="shen_pi_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_pi_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_pi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:30px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>';
 		return cc;
 	}
-	function rowFuncFoot3(){
-		var cc='<div style="float:left;">编制人：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:100px;">&nbsp</div>\
-				<div style="float:left;">审核/日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>';
+	function rowFuncFoot2() {
+		var cc = '<div style="float:left;">编制人：</div>\
+							<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:100px;">&nbsp</div>\
+							<div style="float:left;">审核人：</div>\
+							<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>';
 		return cc;
 	}
-	function rowFuncFoot4(){
-		var cc='<div style="float:left;">编制\\日期：</div>\
-				<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>\
-				<div style="float:left;width:100px;">&nbsp</div>\
-				<div style="float:left;">审核\\日期：</div>\
-				<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
-				<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">年</div>\
-				<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">月</div>\
-				<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
-				<div style="float:left;">日</div>';
+	function rowFuncFoot3() {
+		var cc = '<div style="float:left;">编制人：</div>\
+							<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:100px;">&nbsp</div>\
+							<div style="float:left;">审核/日期：</div>\
+							<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>';
 		return cc;
 	}
-	
-function selectTable(template_tab) {
-	template_tab = template_tab.replace(/\//g, "_")
-		template_tab = template_tab.replace(/-/g, "_")
-		template_tab = template_tab.replace(/\./g, "_")
-		console.log(template_tab);
+	function rowFuncFoot4() {
+		var cc = '<div style="float:left;">编制\\日期：</div>\
+							<div label="bian_zhi_ren_" class="forEdit"style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="bian_zhi_ren_nian_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="bian_zhi_ren_yue_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="bian_zhi_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>\
+							<div style="float:left;width:100px;">&nbsp</div>\
+							<div style="float:left;">审核\\日期：</div>\
+							<div label="shen_he_ren_" class="forEdit" style="float:left;font-size:10.5pt;width:160px;" contenteditable="true"></div>\
+							<div label="shen_he_ren_nian_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">年</div>\
+							<div label="shen_he_ren_yue_"class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">月</div>\
+							<div label="shen_he_ren_ri_" class="forEdit" style="text-align:center;float:left;font-size:10.5pt;width:50px;" contenteditable="true"></div>\
+							<div style="float:left;">日</div>';
+		return cc;
+	}
+
+	function selectTable(template_tab) {
+		template_tab = template_tab.replace(/\//g, "_")
+			template_tab = template_tab.replace(/-/g, "_")
+			template_tab = template_tab.replace(/\./g, "_")
+			console.log(template_tab);
 		console.log('工程成本责'.length);
 
-	switch (template_tab) {
+		switch (template_tab) {
 
-	case 'JZ_JZ_01_151_sheet002_htm': {
-			//（JZ-01-151）工程成本责任表 目标责任表
-			var cc = colFuncHead1('工程成本责任表');
-			var cc2 = colFuncFoot1();
-			setTable(cc, cc2, "col");
-			break;
-		}
+		case 'JZ_JZ_01_151_sheet002_htm': {
+				//（JZ-01-151）工程成本责任表 目标责任表
+				var cc = colFuncHead1('工程成本责任表');
+				var cc2 = colFuncFoot1();
+				setTable(cc, cc2, "col");
+				break;
+			}
 
-	case 'JZ_JZ_02_152_sheet002_htm': {
-			//（JZ-02-152）工程成本测算表 工程项目
-			var cc = rowFuncHead1('项目预算成本测算清单');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
+		case 'JZ_JZ_02_152_sheet002_htm': {
+				//（JZ-02-152）工程成本测算表 工程项目
+				var cc = rowFuncHead1('项目预算成本测算清单项目预算成本测算清单');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
 
-	case 'JZ_JZ_02_152_sheet003_htm': {
-			//（JZ-02-152）工程成本测算表 单项工程
-			var cc = rowFuncHead2('工程预算成本测算清单');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
+		case 'JZ_JZ_02_152_sheet003_htm': {
+				//（JZ-02-152）工程成本测算表 单项工程
+				var cc = rowFuncHead2('工程预算成本测算清单');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
 
-	case 'JZ_JZ_02_152_sheet004_htm': {
-			//（JZ-02-152）工程成本测算表 1-1分包工程测算表
-			var cc = rowFuncHead2('分包工程预算成本测算表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_02_152_sheet005_htm': {
-			//（JZ-02-152）工程成本测算表 1-2材料设备测算表
-			var cc = rowFuncHead3('材料设备预算成本测算表');
-			var cc2 = '';
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_02_152_sheet006_htm': {
-			//（JZ-02-152）工程成本测算表 1-3机械与材料租赁测算表
-			var cc = rowFuncHead2('机械材料租赁预算成本测算表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_02_152_sheet007_htm': {
-			//（JZ-02-152）工程成本测算表 1-4管理费及其它测算表
-			var cc = rowFuncHead2('现场经费预算成本测算表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_03_153_sheet002_htm': {
-			//（JZ-03-153）工程成本调整表 预算成本调整表
-			var cc = rowFuncHead1('工程预算成本调整表');
-			var cc2 = rowFuncFoot2();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_04_154_sheet002_htm': {
-			//（JZ-04-154）工程成本计划表 工程项目
-			var cc = rowFuncHead1('工程成本计划表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_04_154_sheet003_htm': {
-			//（JZ-04-154）工程成本计划表 工程项目
-			var cc = rowFuncHead2('工程成本计划表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
+		case 'JZ_JZ_02_152_sheet004_htm': {
+				//（JZ-02-152）工程成本测算表 1-1分包工程测算表
+				var cc = rowFuncHead2('分包工程预算成本测算表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_02_152_sheet005_htm': {
+				//（JZ-02-152）工程成本测算表 1-2材料设备测算表
+				var cc = rowFuncHead3('材料设备预算成本测算表');
+				var cc2 = '';
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_02_152_sheet006_htm': {
+				//（JZ-02-152）工程成本测算表 1-3机械与材料租赁测算表
+				var cc = rowFuncHead2('机械材料租赁预算成本测算表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_02_152_sheet007_htm': {
+				//（JZ-02-152）工程成本测算表 1-4管理费及其它测算表
+				var cc = rowFuncHead2('现场经费预算成本测算表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_03_153_sheet002_htm': {
+				//（JZ-03-153）工程成本调整表 预算成本调整表
+				var cc = rowFuncHead1('工程预算成本调整表');
+				var cc2 = rowFuncFoot2();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_04_154_sheet002_htm': {
+				//（JZ-04-154）工程成本计划表 工程项目
+				var cc = rowFuncHead1('工程成本计划表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_04_154_sheet003_htm': {
+				//（JZ-04-154）工程成本计划表 工程项目
+				var cc = rowFuncHead2('工程成本计划表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
 
-	case 'JZ_JZ_05_155_sheet002_htm': {
-			//（JZ-04-155）工程成本控制表 工程项目
-			var cc = rowFuncHead1('工程成本计划表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_05_155_sheet003_htm': {
-			//（JZ-04-155）工程成本控制表 单项工程
-			var cc = rowFuncHead2('工程成本计划表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_05_155_sheet004_htm': {
-			//（JZ-04-155）工程成本控制表 1-1机械与材料租赁
-			var cc = rowFuncHead5('租赁/摊销过程成本计算表');
-			var cc2 = rowFuncFoot4();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_05_155_sheet005_htm': {
-			//（JZ-04-155）工程成本控制表 1-2管理费及其它
-			var cc = rowFuncHead5('管理费/其它过程成本计算表');
-			var cc2 = rowFuncFoot4();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_06_156_sheet002_htm': {
-			//（JZ-04-156）物资成本控制表 过程控制表
-			var cc = rowFuncHead5('物资成本过程控制表');
-			var cc2 = rowFuncFoot4();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_07_157_sheet002_htm': {
-			//（JZ-07-157）工程成本核算表
-			var cc = rowFuncHead5('工程成本核算表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_07_157_sheet003_htm': {
-			//（JZ-07-157）工程成本核算表-单项工程
-			var cc = rowFuncHead6('工程成本核算表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_08_158_sheet002_htm': {
-			//（JZ-08-158）月工程成本确认单
-			var cc = rowFuncHead7('月工程成本确认单');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_08_158_sheet003_htm': {
-			//（JZ-08-158）月物资成本确认单
-			var cc = rowFuncHead7('月物资成本确认单');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_08_158_sheet004_htm': {
-			//（JZ-08-158）月租赁成本确认单
-			var cc = rowFuncHead7('月租赁成本确认单');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_09_159_sheet002_htm': {
-			//（JZ-09-159）工程成本综合分析表
-			var cc = rowFuncHead8('工程成本责任分析表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_10_160_sheet002_htm': {
-			//（JZ-10-160）工程成本过程控制表  项目
-			var cc = rowFuncHead1('工程成本过程控制表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_10_160_sheet003_htm': {
-			//（JZ-10-160）工程成本过程控制表 单项工程
-			var cc = rowFuncHead1('工程成本过程控制表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
-		}
+		case 'JZ_JZ_05_155_sheet002_htm': {
+				//（JZ-04-155）工程成本控制表 工程项目
+				var cc = rowFuncHead1('工程成本计划表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_05_155_sheet003_htm': {
+				//（JZ-04-155）工程成本控制表 单项工程
+				var cc = rowFuncHead2('工程成本计划表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_05_155_sheet004_htm': {
+				//（JZ-04-155）工程成本控制表 1-1机械与材料租赁
+				var cc = rowFuncHead5('租赁/摊销过程成本计算表');
+				var cc2 = rowFuncFoot4();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_05_155_sheet005_htm': {
+				//（JZ-04-155）工程成本控制表 1-2管理费及其它
+				var cc = rowFuncHead5('管理费/其它过程成本计算表');
+				var cc2 = rowFuncFoot4();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_06_156_sheet002_htm': {
+				//（JZ-04-156）物资成本控制表 过程控制表
+				var cc = rowFuncHead5('物资成本过程控制表');
+				var cc2 = rowFuncFoot4();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_07_157_sheet002_htm': {
+				//（JZ-07-157）工程成本核算表
+				var cc = rowFuncHead5('工程成本核算表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_07_157_sheet003_htm': {
+				//（JZ-07-157）工程成本核算表-单项工程
+				var cc = rowFuncHead6('工程成本核算表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_08_158_sheet002_htm': {
+				//（JZ-08-158）月工程成本确认单
+				var cc = rowFuncHead7('月工程成本确认单');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_08_158_sheet003_htm': {
+				//（JZ-08-158）月物资成本确认单
+				var cc = rowFuncHead7('月物资成本确认单');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_08_158_sheet004_htm': {
+				//（JZ-08-158）月租赁成本确认单
+				var cc = rowFuncHead7('月租赁成本确认单');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_09_159_sheet002_htm': {
+				//（JZ-09-159）工程成本综合分析表
+				var cc = rowFuncHead8('工程成本责任分析表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_10_160_sheet002_htm': {
+				//（JZ-10-160）工程成本过程控制表  项目
+				var cc = rowFuncHead1('工程成本过程控制表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_10_160_sheet003_htm': {
+				//（JZ-10-160）工程成本过程控制表 单项工程
+				var cc = rowFuncHead1('工程成本过程控制表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
 
-	case 'JZ_JZ_11_161_sheet002_htm': {
-			//（JZ-11-161）主要物资成本分析表  汇总统计
-			var cc = rowFuncHead6('主要物资成本分析表');
-			var cc2 = rowFuncFoot4();
-			setTable(cc, cc2, "row");
-			break;
-		}
-	case 'JZ_JZ_11_161_sheet003_htm': {
-			//（JZ-11-161）主要物资成本分析表  月度统计
-			var cc = rowFuncHead6('主要物资成本分析表');
-			var cc2 = rowFuncFoot4();
-			setTable(cc, cc2, "row");
-			break;
-		}
+		case 'JZ_JZ_11_161_sheet002_htm': {
+				//（JZ-11-161）主要物资成本分析表  汇总统计
+				var cc = rowFuncHead6('主要物资成本分析表');
+				var cc2 = rowFuncFoot4();
+				setTable(cc, cc2, "row");
+				break;
+			}
+		case 'JZ_JZ_11_161_sheet003_htm': {
+				//（JZ-11-161）主要物资成本分析表  月度统计
+				var cc = rowFuncHead6('主要物资成本分析表');
+				var cc2 = rowFuncFoot4();
+				setTable(cc, cc2, "row");
+				break;
+			}
 
-	case 'JZ_JZ_12_162_sheet002_htm': {
-			//（JZ-12-162）工程项目利润预测表
-			var cc = rowFuncHead1('项目利润预测表');
-			var cc2 = rowFuncFoot1();
-			setTable(cc, cc2, "row");
-			break;
+		case 'JZ_JZ_12_162_sheet002_htm': {
+				//（JZ-12-162）工程项目利润预测表
+				var cc = rowFuncHead1('项目利润预测表');
+				var cc2 = rowFuncFoot1();
+				setTable(cc, cc2, "row");
+				break;
+			}
 		}
+		//jQuery将表题居中
+		//直接计算得到的居中有一点点歪，容易被看出来
+		
+		var title_width = $(".tab-title").width();
+		$(".tab-title").css({
+			"top" : "10px",
+			"left" : "50%",
+			"margin-left" : -title_width / 2 + "px"
+		});
+		
 	}
-}
 
-
-	
-	function getSubExcel(jsObj,ccobj,gong_cheng_id,excelType,func){
+	function getSubExcel(jsObj, ccobj, gong_cheng_id, excelType, func) {
 		var obj;
 		$.ajax({
 			type : "GET",
-			async:false,
-			url : SERVER_ROOT+"/getExcelList.action",
-			data: {
-				'excelType':excelType,
-				'gong_cheng_id':gong_cheng_id
+			async : false,
+			url : SERVER_ROOT + "/getExcelList.action",
+			data : {
+				'excelType' : excelType,
+				'gong_cheng_id' : gong_cheng_id
 			},
-			success : function (dd) {			
-				func(ccobj,eval(dd));
-				jsObj.js=jsObj.js-1;
-			}, 
+			success : function (dd) {
+				func(ccobj, eval(dd));
+				jsObj.js = jsObj.js - 1;
+			},
 			error : function () {
 				console.log('cuowu');
 			}
 		});
 		return obj;
 	}
-	function getOnlineMenu(resultArr,obj){
-			//这里可以用用13个第一级别的直接跳过
-			if (obj.li_type == 'fixed') {
-				if (obj.excelType !="" && obj.excelType) {
-					//获取在线菜单添加到菜单当中
-					var gong_cheng_id=1;
-					resultArr.push(obj);
-					/*
-					obj.submenu=getSubExcel(gong_cheng_id,obj.excelType);
-					//这里属于打补丁的操作，因为其实exceltype，能代替li_id
-					if(typeof(obj.submenu)!="undefined"){
-						for(var i in obj.submenu){
-							obj.submenu[i]['li_id']=obj.li_id;
-						}
-					}
-					*/
+	function getOnlineMenu(resultArr, obj) {
+		//这里可以用用13个第一级别的直接跳过
+		if (obj.li_type == 'fixed') {
+			if (obj.excelType != "" && obj.excelType) {
+				//获取在线菜单添加到菜单当中
+				var gong_cheng_id = 1;
+				resultArr.push(obj);
+				/*
+				obj.submenu=getSubExcel(gong_cheng_id,obj.excelType);
+				//这里属于打补丁的操作，因为其实exceltype，能代替li_id
+				if(typeof(obj.submenu)!="undefined"){
+				for(var i in obj.submenu){
+				obj.submenu[i]['li_id']=obj.li_id;
 				}
-			}else if (typeof(obj.submenu)!="undefined"&& obj.submenu.length != 0) {
-				for (var i in obj.submenu) {
-					getOnlineMenu(resultArr,obj.submenu[i]);
 				}
+				 */
 			}
+		} else if (typeof(obj.submenu) != "undefined" && obj.submenu.length != 0) {
+			for (var i in obj.submenu) {
+				getOnlineMenu(resultArr, obj.submenu[i]);
+			}
+		}
 	}
 	function get_tab_trees(fun_btn, center, pro_id) {
 		/*
@@ -968,16 +968,15 @@ function selectTable(template_tab) {
 		 *center：表中五中不同的中心分类
 		 *proid：表示项目id；
 		 */
-		 
-		 function callfunc(ccobj,data){
-			ccobj.submenu=data
-			if (typeof(ccobj.submenu) != "undefined") {
-				for (var g in ccobj.submenu) {
-					ccobj.submenu[g]['li_id'] = ccobj.li_id;
-				}
-			}
-		 }
 
+		function callfunc(ccobj, data) {
+			ccobj.submenu = data
+				if (typeof(ccobj.submenu) != "undefined") {
+					for (var g in ccobj.submenu) {
+						ccobj.submenu[g]['li_id'] = ccobj.li_id;
+					}
+				}
+		}
 
 		for (i in golbal.allmenu) {
 			if (golbal.allmenu[i].id == fun_btn) {
@@ -990,22 +989,19 @@ function selectTable(template_tab) {
 
 				//这里要刷新两次
 				resultArr = [];
-				getOnlineMenu(resultArr, golbal.allmenu[i]);
-				{
+				getOnlineMenu(resultArr, golbal.allmenu[i]);{
 					var gong_cheng_id = 1;
-					console.log(resultArr);
 					var js = resultArr.length;
-					console.log(js);
 					var jsObj = {
 						js : js
 					};
 
 					for (var w = 0; w < js; w++) {
-						getSubExcel(jsObj,resultArr[w],gong_cheng_id, resultArr[w].excelType,callfunc);
+						getSubExcel(jsObj, resultArr[w], gong_cheng_id, resultArr[w].excelType, callfunc);
 						//这里属于打补丁的操作，因为其实exceltype，能代替li_id
 					}
 					while (jsObj.js > 0) {
-							//console.log(JSON.stringify(golbal.allmenu[i]));
+						//console.log(JSON.stringify(golbal.allmenu[i]));
 					}
 				}
 				updateJsonMenu(golbal.allmenu[i], $("#menu2"));
@@ -1014,18 +1010,18 @@ function selectTable(template_tab) {
 		}
 
 	}
-	
-	function updateTableList(table_list, excel_id,func) {
+
+	function updateTableList(table_list, excel_id, func) {
 		//更新table菜单的表
 		//去掉打印菜单就没有了why？？、
 		//console.log(table_list);
-		function createInnerTableMenu(resolve,reject) {
+		function createInnerTableMenu(resolve, reject) {
 			if (!table_list.length)
 				return;
 			var ul = $('#table_nav ul');
 			ul.empty();
 			for (var i in table_list) {
-				var ll = $('<li></li>');
+				var ll = $('<li style="border-radius: 13px 0px 0px 0px;margin-right:-10px;padding-right:14px"></li>');
 				ll.append(table_list[i].name);
 				ll.attr('template_tab', table_list[i].template);
 				ll.attr('tableType', table_list[i].tableType);
@@ -1033,34 +1029,33 @@ function selectTable(template_tab) {
 			}
 			resolve("");
 		}
-		function getNowExcelTableId(resolve,reject) {
+		function getNowExcelTableId(resolve, reject) {
 			$.ajax({
 				type : "GET",
-				url : SERVER_ROOT+"/getTableIdList.action?excel_id="+excel_id,
-				success : function (data) {			
-					//	console.log(data);
-						resolve(data);
-				}, 
+				url : SERVER_ROOT + "/getTableIdList.action?excel_id=" + excel_id,
+				success : function (data) {
+					resolve(data);
+				},
 				error : function () {
 					console.log('cuowu');
 				}
 			});
 		}
-		
+
 		//获取当前Excel下的Table的id
 		var a = new Promise(getNowExcelTableId);
 		//加载表格数据
 		var b = new Promise(createInnerTableMenu);
-		var p = Promise.all([a,b]);
+		var p = Promise.all([a, b]);
 		//并发处理
-		p.then(function(val) {	
-		//加入表格id
-			var data=eval(val[0]);
-			$('#table_nav ul li').each(function(){
-				var type=$(this).attr('tableType');
-				for(var k=0;k<data.length;k++){
-					if(data[k].tableType==type){
-						$(this).attr('table_id',data[k].table_id);
+		p.then(function (val) {
+			//加入表格id
+			var data = eval(val[0]);
+			$('#table_nav ul li').each(function () {
+				var type = $(this).attr('tableType');
+				for (var k = 0; k < data.length; k++) {
+					if (data[k].tableType == type) {
+						$(this).attr('table_id', data[k].table_id);
 						break;
 					}
 				}
@@ -1101,16 +1096,28 @@ function selectTable(template_tab) {
 	}
 	function updateJsonMenu(obj, cc) {
 		//载入json的菜单，输出li菜单
-	
 
-		var uu = $("<ul></ul>");
-		if (typeof(obj.submenu)!="undefined"&& obj.submenu.length != 0 ) {
+
+		var uu = $("<ul style='padding-left:7px;'></ul>");
+		if (typeof(obj.submenu) != "undefined" && obj.submenu.length != 0) {
 			for (var i in obj.submenu) {
 				var ll = $('<li></li>');
 				var img = $('<img src="./images/folder.png" \
-														style="-moz-box-sizing: border-box; -webkit-box-sizing:\
-														border-box; border: 0; box-sizing: border-box; \
-														vertical-align: middle;">');
+																				style="-moz-box-sizing: border-box; -webkit-box-sizing:\
+																				border-box; border: 0; box-sizing: border-box; \
+																				vertical-align: middle;">');
+				////////////////////////////控制图标
+				if (obj.submenu[i].icon == 'sub1') {
+					img.attr('src', './images/folder.png');
+				} else if (obj.submenu[i].icon == 'sub2') {
+					ll.attr('emptyFile', "true");
+					ll.attr("layout", "click");
+					img.attr('src', './images/file.png');
+				} else {
+					ll.attr("layout", "click");
+					img.attr('src', './images/file2.png');
+				}
+				////////////////////////////
 				{
 					//这里可以添加特定的条目内容
 					for (var k in obj.submenu[i]) {
@@ -1128,109 +1135,89 @@ function selectTable(template_tab) {
 					ll.attr('id', ll.attr('template_tab'));
 				}
 
-				if (typeof(obj.submenu[i].li_type)!="undefined"&& obj.submenu[i].li_type == "fixed" ){
-					img.attr('src','./images/file.png');
-				}
 				ll.append(img);
-				uu.append(ll.append(obj.submenu[i].title));
+				uu.append(ll.append($('<span></span>').append(obj.submenu[i].title)));
 				ll = updateJsonMenu(obj.submenu[i], ll);
 			}
 			cc = cc.append(uu);
-			if($(cc).attr("layout")=="click"){
-				//多次初始化会往下添加click，这里用来去掉click标记
-				$(cc).attr("layout", "");
-			}
-			
-		} else {
-			//末端的li
-			$(cc).attr("layout", "click");
-			if($(cc).attr("li_type")!="fixed"){
-				$(cc).find('img').attr('src','./images/file2.png');
-			}
-			
 		}
 		$(cc).attr("cid", obj.id);
-		
 		return cc;
 	}
-	
-	
-	function loadTablePage(template_path,table_id) {
-		function loadTableTemplate(resolve,reject){
+
+	function loadTablePage(template_path, table_id) {
+		function loadTableTemplate(resolve, reject) {
 			$.ajax({
-					type : "GET",
-					url : "./tabs/" + template_path,
-					success : function (data) {
-							$("#clearandreplacecontent").empty();
-							$("#clearandreplacecontent").html(data);
-							//这里需要确定Std_tr
-							var std_tr_obj=$("#clearandreplacecontent").find('table[TableType="ctx"]');
-							//表格模板数据获取
-							var std_tr=std_tr_obj.html();
-							std_tr_obj.remove();
-							std_tr=std_tr.replace(/<tbody>/g, "");
-							std_tr=std_tr.replace(/<\/tbody>/g, "");
-							//网络载入基本数据
-							resolve($(std_tr));						
-					},
-					error : function () {
-						console.log('cuowu');
-					}
-				});
+				type : "GET",
+				url : "./tabs/" + template_path,
+				success : function (data) {
+					$("#clearandreplacecontent").empty();
+					$("#clearandreplacecontent").html(data);
+					//这里需要确定Std_tr
+					var std_tr_obj = $("#clearandreplacecontent").find('table[TableType="ctx"]');
+					//表格模板数据获取
+					var std_tr = std_tr_obj.html();
+					std_tr_obj.remove();
+					std_tr = std_tr.replace(/<tbody>/g, "");
+					std_tr = std_tr.replace(/<\/tbody>/g, "");
+					//网络载入基本数据
+					resolve($(std_tr));
+				},
+				error : function () {
+					console.log('cuowu');
+				}
+			});
 		}
-		function loadTableData(resolve,reject){
-				
-				$.ajax({
-					type : "GET",
-					url : SERVER_ROOT+"/getTable.action?id="+table_id,
-					success : function (data) {			
-							resolve(data)
-					}, 
-					error : function () {
-						console.log('cuowu');
-					}
-				});
+		function loadTableData(resolve, reject) {
+
+			$.ajax({
+				type : "GET",
+				url : SERVER_ROOT + "/getTable.action?id=" + table_id,
+				success : function (data) {
+					resolve(data)
+				},
+				error : function () {
+					console.log('cuowu');
+				}
+			});
 		}
 		//加载表格模板
 		var a = new Promise(loadTableTemplate);
 		//加载表格数据
 		var b = new Promise(loadTableData);
-		var p = Promise.all([a,b]);
+		var p = Promise.all([a, b]);
 		//并发处理
-		p.then(function(val) {			
-			var std_tr=val[0];
-			var data=val[1];
-			
-			console.log(data);
-			std_tr=$(std_tr)
-			std_tr.attr("tr_id","");
-			
-			
-			var tableObj=eval(data)[0];
-			
-			for (var key in tableObj){
+		p.then(function (val) {
+			var std_tr = val[0];
+			var data = val[1];
+
+		//	console.log(data);
+			std_tr = $(std_tr);
+			std_tr.attr("tr_id", "");
+
+			var tableObj = eval(data)[0];
+
+			for (var key in tableObj) {
 				//table信息注入
-				if(key!='tr_info'){
-					var ii='<input iidata="'+key+'" class="forinit" type="hidden" value="'+tableObj[key]+'">';
+				if (key != 'tr_info') {
+					var ii = '<input iidata="' + key + '" class="forinit" type="hidden" value="' + tableObj[key] + '">';
 					$("#clearandreplacecontent").append(ii);
 				}
 			}
-			
-			
-			
-			var cc_arr=tableObj.tr_info;	
-			if(cc_arr.length==0){
-			//数据表为空
-				for(var i=0;i<14;i++){
-					var tem=std_tr.clone();
+
+			var cc_arr = tableObj.tr_info;
+			if (cc_arr.length == 0) {
+				//数据表为空
+				for (var i = 0; i < 10; i++) {
+					var tem = std_tr.clone();
 					$("#clearandreplacecontent").append(tem);
 				}
-			}else{
-			//数据表不为空
-				for(var i in cc_arr){
-					var tem=std_tr.clone();
-					tem.attr('tr_id',cc_arr[i].tr_id);
-					tem.find('td').each(function(k){
+			} else {
+				//数据表不为空
+				for (var i in cc_arr) {
+					var tem = std_tr.clone();
+					tem.attr('tr_id', cc_arr[i].tr_id);
+					tem.find('td').each(function (k) {
 						$(this).text(cc_arr[i].tr_data[k]);
 					});
 					$("#clearandreplacecontent").append(tem);
@@ -1238,25 +1225,25 @@ function selectTable(template_tab) {
 			}
 			//然后再调用文档生成
 			selectTable(template_path);
-			
+
 		})
 	}
-	
+	/*
 	function getTableIdList(excel_id){
-			$.ajax({
-				type : "GET",
-				url : SERVER_ROOT+"/getTableIdList.action?excel_id="+excel_id,
-				success : function (data) {			
-						console.log(data);
-				}, 
-				error : function () {
-					console.log('cuowu');
-				}
-			});
+	$.ajax({
+	type : "GET",
+	url : SERVER_ROOT+"/getTableIdList.action?excel_id="+excel_id,
+	success : function (data) {
+	console.log(data);
+	},
+	error : function () {
+	console.log('cuowu');
 	}
-	
-	
-	
+	});
+	}
+
+	 */
+
 	if (!golbal.pp) {
 		//初始化一个页面处理模块
 		golbal.pp = new PagesModel("#clearandreplacecontent", 20, "col");
@@ -1293,8 +1280,8 @@ function selectTable(template_tab) {
 
 	});
 	$("#save_tab").click(function () {
-	//保存表格里面TableType='ctx'的行
-	
+		//保存表格里面TableType='ctx'的行
+
 		var tableInfo = {
 			xiang_mu_ming_chen_ : $("#clearandreplacecontent div[label='xiang_mu_ming_chen_']").text(),
 			biao_dan_bian_hao_ : $("#clearandreplacecontent div[label='biao_dan_bian_hao_']").eq(0).text(),
@@ -1309,42 +1296,41 @@ function selectTable(template_tab) {
 			shen_he_ren_nian_ : $("#clearandreplacecontent div[label='shen_he_ren_nian_']").eq(0).text(),
 			shen_he_ren_yue_ : $("#clearandreplacecontent div[label='shen_he_ren_yue_']").eq(0).text(),
 			shen_he_ren_ri_ : $("#clearandreplacecontent div[label='shen_he_ren_ri_']").eq(0).text(),
-			shen_pi_ren_: $("#clearandreplacecontent div[label='shen_pi_ren_']").eq(0).text(),
-			shen_pi_ren_nian_: $("#clearandreplacecontent div[label='shen_pi_ren_nian_']").eq(0).text(),
-			shen_pi_ren_yue_: $("#clearandreplacecontent div[label='shen_pi_ren_yue_']").eq(0).text(),
-			shen_pi_ren_ri_: $("#clearandreplacecontent div[label='shen_pi_ren_ri_']").eq(0).text()
+			shen_pi_ren_ : $("#clearandreplacecontent div[label='shen_pi_ren_']").eq(0).text(),
+			shen_pi_ren_nian_ : $("#clearandreplacecontent div[label='shen_pi_ren_nian_']").eq(0).text(),
+			shen_pi_ren_yue_ : $("#clearandreplacecontent div[label='shen_pi_ren_yue_']").eq(0).text(),
+			shen_pi_ren_ri_ : $("#clearandreplacecontent div[label='shen_pi_ren_ri_']").eq(0).text()
 		};
 
-
 		console.log(tableInfo);
-		var html_obj = $("#clearandreplacecontent tr[TableType='ctx']");//.html();
-		var tr_obj={};
-		var submit_tr=[];
-		html_obj.each(function(){
-			var tem=0; 
-			$(this).each(function(k){
-				if($.trim($(this).text())!=""){
-					tem+=1;
+		var html_obj = $("#clearandreplacecontent tr[TableType='ctx']"); //.html();
+		var tr_obj = {};
+		var submit_tr = [];
+		html_obj.each(function () {
+			var tem = 0;
+			$(this).each(function (k) {
+				if ($.trim($(this).text()) != "") {
+					tem += 1;
 				}
 			});
-			if(tem==0){
+			if (tem == 0) {
 				$(this).remove();
-			}else{
+			} else {
 				submit_tr.push($(this));
 			}
 		});
-		$.each(submit_tr,function(i){
-			var tds=$(this).find('td');
-			var td_obj={};
-			tds.each(function(k){
-				td_obj[k]=$(this).text();
+		$.each(submit_tr, function (i) {
+			var tds = $(this).find('td');
+			var td_obj = {};
+			tds.each(function (k) {
+				td_obj[k] = $(this).text();
 			})
-			td_obj['tr_id']=$(this).attr('tr_id');
-			tr_obj[i]=td_obj;
+			td_obj['tr_id'] = $(this).attr('tr_id');
+			tr_obj[i] = td_obj;
 
 		})
 		console.log(JSON.stringify(tr_obj));
-		if(typeof(golbal.information.nowHandleTableId)=="undefined"){
+		if (typeof(golbal.information.nowHandleTableId) == "undefined") {
 			alert("nothing to save");
 			console.log("nothing to save");
 			return;
@@ -1354,14 +1340,14 @@ function selectTable(template_tab) {
 			url : SERVER_ROOT + "/saveTable.action",
 			data : {
 				'id' : golbal.information.nowHandleTableId,
-				'tableType':golbal.information.nowHandleTableType,
-				'tableInfo':JSON.stringify(tableInfo),
+				'tableType' : golbal.information.nowHandleTableType,
+				'tableInfo' : JSON.stringify(tableInfo),
 				'tableCtx' : JSON.stringify(tr_obj)
 			},
 			success : function (data) {
 				console.log("SAVE-SUCCESS");
 			},
-			complete:function(){
+			complete : function () {
 				////刷新当前栏目的菜单
 				////$(".btn-list-select").trigger("click");
 			},
@@ -1369,7 +1355,7 @@ function selectTable(template_tab) {
 				console.log('cuowu');
 			}
 		});
-		
+
 	});
 	$("#hid_tar").click(function () {
 		//关闭侧边栏
@@ -1402,19 +1388,6 @@ function selectTable(template_tab) {
 		var obj = $('div[layout="2.3.2"]');
 		var v = obj.scrollTop();
 		obj.scrollTop(v + length);
-		/*
-		var min=10000;
-		var min_idx;
-		for(var i=0;i<golbal.pp.arr_pages.length;i++){
-		var cx=v-parseInt(golbal.pp.arr_pages[i].css("top"));
-		if(cx>0){
-		if(min>cx){
-		cx=min;
-		min_idx=i;
-		}}}
-		golbal.pp.arr_pages[1][0].scrollIntoView();
-		*/
-
 	});
 	$("#scroll_up").click(function () {
 		var length = 100;
@@ -1440,19 +1413,19 @@ function selectTable(template_tab) {
 
 	$("#add_empty_tab").on("click", function () {
 		//添加表单
-		function createNewExcel(gong_cheng_id,excelType){
+		function createNewExcel(gong_cheng_id, excelType) {
 			$.ajax({
 				type : "GET",
 				url : SERVER_ROOT + "/createExcel.action",
 				data : {
 					'gong_cheng_id' : gong_cheng_id,
-					'excelType':excelType,
+					'excelType' : excelType,
 				},
 				success : function (data) {
 					console.log("CreateExcel-SUCCESS");
 				},
-				complete:function(){
-				////刷新当前栏目的菜单
+				complete : function () {
+					////刷新当前栏目的菜单
 					$(".btn-list-select").trigger("click");
 				},
 				error : function () {
@@ -1460,24 +1433,24 @@ function selectTable(template_tab) {
 				}
 			});
 		}
-		createNewExcel(1,$("li[click_select=true]").attr("excelType"));
+		createNewExcel(1, $("li[click_select=true]").attr("excelType"));
 		////刷新当前栏目的菜单
 		$(".btn-list-select").trigger("click");
 	});
 	$("#del_tab").on("click", function () {
 		//删除表单
-		function deleteExcel(excel_id){
+		function deleteExcel(excel_id) {
 			$.ajax({
 				type : "GET",
 				url : SERVER_ROOT + "/deleteExcel.action",
 				data : {
-					'excel_id':excel_id,
+					'excel_id' : excel_id,
 				},
 				success : function (data) {
 					console.log("deleteExcel-SUCCESS");
 				},
-				complete:function(){
-				////刷新当前栏目的菜单
+				complete : function () {
+					////刷新当前栏目的菜单
 					$(".btn-list-select").trigger("click");
 				},
 				error : function () {
@@ -1485,7 +1458,7 @@ function selectTable(template_tab) {
 				}
 			});
 		}
-		
+
 		deleteExcel($("li[click_select=true]").attr("excel_id"));
 		//////////////////////
 		////刷新当前栏目的菜单
@@ -1503,14 +1476,14 @@ function selectTable(template_tab) {
 	$('body').on('click', '#table_nav li', function () {
 		//点击表内菜单完成切换页面
 		//这里添加当前操作的Table的id号####非常重要
-		
-		if(typeof($(this).attr('table_id'))=="undefined"){
-				alert();
+
+		if (typeof($(this).attr('table_id')) == "undefined") {
+			alert();
 		}
 
-		golbal.information.nowHandleTableId=$(this).attr('table_id');
-		golbal.information.nowHandleTableType=$(this).attr('tabletype');
-		loadTablePage($(this).attr('template_tab'),$(this).attr('table_id'));
+		golbal.information.nowHandleTableId = $(this).attr('table_id');
+		golbal.information.nowHandleTableType = $(this).attr('tabletype');
+		loadTablePage($(this).attr('template_tab'), $(this).attr('table_id'));
 	});
 
 	(function () {
@@ -1549,10 +1522,10 @@ function selectTable(template_tab) {
 		});
 		$('body').on('click', '#add_new_tr', function (e) {
 			//表格添加新的一行
-			var nobj=$(".on-tr-handle-select");
+			var nobj = $(".on-tr-handle-select");
 			if (nobj.attr('TableType') == 'ctx') {
 				var temtr = $(".on-tr-handle-select").clone(true);
-				temtr.attr("tr_id","");//清空行的唯一编号
+				temtr.attr("tr_id", ""); //清空行的唯一编号
 				temtr.find("td").each(function () {
 					$(this).empty();
 				});
@@ -1562,25 +1535,25 @@ function selectTable(template_tab) {
 		});
 		$('body').on('click', '#delect_select_tr', function (e) {
 			//表格删除当前行
-			var nobj=$(".on-tr-handle-select");
+			var nobj = $(".on-tr-handle-select");
 			if (nobj.attr('TableType') == 'ctx') {
-				if(nobj.attr('tr_id')!=''){
-				
-						$.ajax({
-							type : "GET",
-							url : SERVER_ROOT+"/deleteTr.action",
-							data: {
-								'tableType':golbal.information.nowHandleTableType,
-								'id':nobj.attr('tr_id')
-							},
-							success : function (data) {			
-								nobj.remove();
-							}, 
-							error : function () {
-								console.log('cuowu');
-							}
-						});
-				}else{
+				if (nobj.attr('tr_id') != '') {
+
+					$.ajax({
+						type : "GET",
+						url : SERVER_ROOT + "/deleteTr.action",
+						data : {
+							'tableType' : golbal.information.nowHandleTableType,
+							'id' : nobj.attr('tr_id')
+						},
+						success : function (data) {
+							nobj.remove();
+						},
+						error : function () {
+							console.log('cuowu');
+						}
+					});
+				} else {
 					nobj.remove();
 				}
 			}
@@ -1588,10 +1561,10 @@ function selectTable(template_tab) {
 		});
 		$('body').on('click', '#copy_select_tr', function (e) {
 			//表格复制当前行
-			var nobj=$(".on-tr-handle-select");
+			var nobj = $(".on-tr-handle-select");
 			if (nobj.attr('TableType') == 'ctx') {
 				var temtr = nobj.clone(true);
-				temtr.attr("tr_id","");//清空行的唯一编号
+				temtr.attr("tr_id", ""); //清空行的唯一编号
 				nobj.after(temtr);
 			}
 			unselect_tr()
@@ -1602,7 +1575,7 @@ function selectTable(template_tab) {
 				alert($(this).attr("level"));
 				//设置当前行为标题
 				var temtr = nobj.clone(true);
-				temtr.attr("tr_id","");//清空行的唯一编号
+				temtr.attr("tr_id", ""); //清空行的唯一编号
 				temtr.find("td").each(function () {
 					$(this).empty();
 				});
@@ -1619,9 +1592,12 @@ function selectTable(template_tab) {
 
 	//按钮绑定-------------------------------------------------------------------------
 
-	$("body").on('click', 'div[layout="2.2"] li[layout="click"]', function () {
-	//这里绑定菜单的每个项目
+	$("body").on('click', 'div[layout="2.2"] li[layout="click"]', function (evt) {
+		//$("body").on('click', 'div[layout="2.2"] li span', function () {
+
+		//这里绑定菜单的每个项目
 		var tar_id = this.id;
+		var matchResult = true;
 		var template_tab = $(this).attr("template_tab"); //获取到接下来   数据库中需要操作的表名 或者 需要从tabs中链接进来的表的名称
 		var tab_id = $(this).attr("tab-id"); //获取接下来需要操作的 对应在数据库中的记录的 id
 		//此时的逻辑:点击以后想变成全局量，提供给save功能用
@@ -1635,14 +1611,57 @@ function selectTable(template_tab) {
 				$(e).removeClass("tab-lists-ul-li_sel");
 			}
 		});
-		//这里点击后添加表内菜单
-		//alert($(this).attr("li_id"));
-		var pNode = findParentNode($(this).attr("li_id"));
-		if(pNode!=-1){			
-			updateTableList(pNode.template_tab,$(this).attr("excel_id"),function(){
-			   $('#table_nav li').eq(0).trigger('click');
+		function createNewExcel(gong_cheng_id, excelType) {
+			$.ajax({
+				type : "GET",
+				url : SERVER_ROOT + "/createExcel.action",
+				data : {
+					'gong_cheng_id' : gong_cheng_id,
+					'excelType' : excelType,
+				},
+				success : function (data) {
+					console.log("CreateExcel-SUCCESS");
+				},
+				complete : function () {
+					////刷新当前栏目的菜单
+					$(".btn-list-select").trigger("click");
+				},
+				error : function () {
+					console.log('创建表单失败');
+				}
 			});
 		}
+
+		//这是判断是不是点击了空白表，如果是就新建一个空白的表
+		if ($(this).attr("emptyFile") == 'true') {
+			console.log("xxxxxxxxx");
+			var pthis=$(this);
+			$.confirm({
+				title : '新建表单确认',
+				content : '是否确认新建表单',
+				buttons : {
+					'确定' : function () {
+						createNewExcel(pro_id, pthis.attr("excelType"));
+						$(".btn-list-select").trigger("click");
+					},
+					'取消' : function () {}
+				}
+			});
+
+			return;
+		} else {
+			evt.stopPropagation();
+			//这里可以加入复制表单
+		}
+
+		//这里点击后添加表内菜单
+		var pNode = findParentNode($(this).attr("li_id"));
+		if (pNode != -1) {
+			updateTableList(pNode.template_tab, $(this).attr("excel_id"), function () {
+				$('#table_nav li').eq(0).trigger('click');
+			});
+		}
+
 	});
 	$(document).bind("contextmenu", function (e) {
 		return false;
