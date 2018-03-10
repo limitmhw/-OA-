@@ -1,0 +1,26 @@
+<p>3.3授权书</p>
+<table TableType='head' width="1000">
+<tr>
+    <td rowspan="2" width="4%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">序号</td>
+    <td rowspan="2" width="16%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">授权事项</td>
+    <td rowspan="2" width="38%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">授权事项内容简述</td>
+    <td rowspan="2" width="12%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">授权类型</td>
+    <td colspan="2" width="16%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">授权经济权限（万元）</td>
+    <td rowspan="2" width="15%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">备 注</td>
+  </tr>
+  <tr>
+    <td width="8%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">权限额度</td>
+    <td width="8%" style="border-top: none;border:0.67px solid;border-top: none;font-family:SimSun; font-size:13.31px;font-weight:400;padding:1px 1px 0px 1px;text-align:center; text-decoration:none;vertical-align:middle;">浮动限额</td>
+  </tr>
+</table>
+<table TableType='ctx' width="1000">
+	<tr>
+		<td width="4%" style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="16%"style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="38%"style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="12%"style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="8%" style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="8%" style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+		<td width="15%"style="border-top: none;word-wrap:break-word;border: 0.67px solid ;border-top: none;font-family:SimSun; font-size: 13.31px;  font-weight: 400;padding:1px 1px 0px 1px; text-align: left;  vertical-align: middle; "></td>
+	</tr>
+</table>

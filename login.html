@@ -47,56 +47,70 @@
 	</form>
 	</div>
 <script>
-var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
 $(function () {
-	$("#reset").click(function(){
+
+	var SERVER_ROOT;
+	const ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer.send('getbaseinfo', 'ping');
+	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
+		var BASEINFO = eval("(" + arg + ")");
+		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		$.ajax({
+			type : "POST",
+			async : false,
+			url : SERVER_ROOT + "/user/get_sup_user.action",
+			success : function (data) {
+				if(data==0){
+					window.location.href="init.html";
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+	    });
+	});
+
+	$("#reset").click(function () {
 		$("#mainForm")[0].reset();
 	});
-	$.ajax({
-		type : "GET",
-		url : SERVER_ROOT + "/user/get_sup_user.action",
-		success : function (data) {
-			if(data==0){				
-				window.location.href="init.html";
-			}
-		},
-		error : function () {
-			console.log('cuowu');
-		}
-	});
-	$("#submit").click(function(){
-		var user_name=$("#user_name").val();
-		var pwd=$("#pwd").val();
 
-		if(user_name=='' || pwd==''){
+
+	$("#submit").click(function () {
+		var user_name = $("#user_name").val();
+		var pwd = $("#pwd").val();
+
+		if (user_name == '' || pwd == '') {
 			$.alert({
-				title: '提示',
-				content: '请填写所有项目！',
-				animation: 'none',
-				closeAnimation: 'scale',
-				buttons: {
-					'确定':{}
+				title : '提示',
+				content : '请填写所有项目！',
+				animation : 'none',
+				closeAnimation : 'scale',
+				buttons : {
+					'确定' : {}
 				}
-			});		
+			});
 			return false;
 		}
-		
+
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/user/login_chk.action",
-			data:{"user_name":user_name,"pwd":pwd},
+			data : {
+				"user_name" : user_name,
+				"pwd" : pwd
+			},
 			success : function (data) {
-				if(!isNaN(data)){
+				if (!isNaN(data)) {
 					$.alert({
-						title: '错误提示',
-						content: '执行错误代号：'+data,
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':{}
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : {}
 						}
-					});	
-				}else{
+					});
+				} else {
 					const ipcRenderer = require('electron').ipcRenderer;
 					ipcRenderer.send('login_message', data);
 					//window.close();
@@ -106,10 +120,9 @@ $(function () {
 			error : function () {
 				console.log('cuowu');
 			}
-		});		
-	});	
+		});
+	});
 });
-
 </script>	
  </body>
 </html>

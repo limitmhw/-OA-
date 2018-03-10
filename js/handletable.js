@@ -23,18 +23,15 @@ class PagesModel {
 		this.obj = $(obj);
 		this.margin = margin;
 		this.default_margin = margin;
-
 		this.org_margin = margin;
-
 		this.wp = 0;
 		this.hp = 0;
 		this.tw = 0;
 		//标准行高
-		this.StdTrHeight=36;
+		this.StdTrHeight = 36;
 		//页头的高度
 		this.top_margin = 50;
 		//页尾的高度
-
 		this.buttom_margin = 50;
 		//表头高度
 		this.table_head_height = 0;
@@ -47,6 +44,7 @@ class PagesModel {
 		this.head_ctx = '';
 		this.foot_ctx = '';
 		this.tr_head = '';
+		this.limit=0;
 	}
 	run(model) {
 		this.margin = this.default_margin;
@@ -79,7 +77,7 @@ class PagesModel {
 				//这里设置0 更好看、理论上应该是27，字体大小应该是14
 				this.table_foot_height = 14;
 			}
-		}{
+		} {
 			var jq_obj = this.obj.find("table[TableType='head']");
 			this.tr_head = jq_obj.html();
 			var tem_hh = 0;
@@ -89,6 +87,10 @@ class PagesModel {
 			}
 			jq_obj.remove();
 			this.tr_head_height = tem_hh;
+		}
+		{
+			
+			this.limit=(this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height-this.tr_head_height);	
 		}
 		//this.tr_head=tr_head_obj.html;
 		//this.tr_head_height=tr_head_obj.height;
@@ -209,29 +211,16 @@ class PagesModel {
 		});
 	}
 	formatTrHeight() {
-
-		$("tr").each(function () {
-			var max = 0;
-			$(this).find("td").each(function () {
-				if (!$(this).attr("rowspan")) {
-					$(this).attr("rowspan", "1")
-				}
-				if ($(this).attr("rowspan") == "1") {
-
-					if ($(this).height() > max) {
-						max = $(this).height();
-					}
-				}
-			})
-
-			//这个对rowspan>1的有影响
-			$(this).height(max);
+		$("tr[TableType='ctx']").height(this.StdTrHeight);
+		$("tr[TableType='ctx'] td").css({
+			'height':this.StdTrHeight,
+			'margin':0,
 		});
 	}
 	createTable() {
 		var table = $('<table  border="3" cellpadding="0" \
-										cellspacing="0" style="border-top:none;border-collapse:\
-										collapse;table-layout:fixed;margin-bottom:3px;">');
+																		cellspacing="0" style="border-top:none;border-collapse:\
+																		collapse;table-layout:fixed;margin-bottom:3px;">');
 		//这个地方可能有问题，先注释一下
 		table.width(this.tw);
 		//table.append(this.tr_head);
@@ -239,7 +228,7 @@ class PagesModel {
 	}
 	hideHeadFoot() {
 		//折叠页眉页脚，表头表脚
-		{
+		console.log("hideHeadFoot");{
 			this.arr_pages[0].page_foot.hide();
 			this.arr_pages[0].page_foot.height(0);
 			this.arr_pages[0].page_table_foot.hide();
@@ -256,7 +245,8 @@ class PagesModel {
 			this.arr_pages[i].page_head.hide();
 			this.arr_pages[i].page_head.height(0);
 			this.arr_pages[i].page_table_head.hide();
-			this.arr_pages[i].page_table_head.height(0);
+			this.arr_pages[i].page_table_head.height(100);
+			this.arr_pages[i].head_table.hide();
 			this.arr_pages[i].page_table_foot.hide();
 			this.arr_pages[i].page_table_foot.height(0);
 			this.arr_pages[i].page_table_foot_real_ctx.hide();
@@ -278,6 +268,8 @@ class PagesModel {
 			this.arr_pages[i].page_head.height(0);
 			this.arr_pages[i].page_table_head.hide();
 			this.arr_pages[i].page_table_head.height(0);
+
+			this.arr_pages[i].head_table.hide();
 			var tem = parseInt(this.arr_pages[i].table.height()) + 5;
 			this.arr_pages[i].page_ctx.css({
 				"height" : tem,
@@ -299,6 +291,7 @@ class PagesModel {
 			this.arr_pages[i].page_head.height(this.top_margin);
 			this.arr_pages[i].page_table_head.show();
 			this.arr_pages[i].page_table_head.height(this.table_head_height);
+			this.arr_pages[i].head_table.show();
 			this.arr_pages[i].page_table_foot.show();
 			this.arr_pages[i].page_table_foot.height(this.table_foot_height);
 			this.arr_pages[i].page_table_foot_real_ctx.show();
@@ -313,13 +306,17 @@ class PagesModel {
 			});
 			this.arr_pages[i].page.height(this.hp);
 			this.arr_pages[i].page_ctx.css("top", this.top_margin + this.table_head_height);
-		}{
+		} {
 			this.arr_pages[i].page_head.show();
 			this.arr_pages[i].page_head.height(this.top_margin);
 			this.arr_pages[i].page_table_head.show();
 			this.arr_pages[i].page_table_head.height(this.table_head_height);
+
+			this.arr_pages[i].head_table.show();
+
 			this.arr_pages[i].page_table_foot.show();
 			this.arr_pages[i].page_table_foot.height(this.table_foot_height);
+
 			this.arr_pages[i].page_table_foot_real_ctx.show();
 			this.arr_pages[i].page_foot.show();
 			this.arr_pages[i].page_foot.height(this.buttom_margin);
@@ -426,9 +423,9 @@ class PagesModel {
 		page_table_foot_real_ctx.append(this.page_table_foot_ctx);
 
 		var tab2 = $('<table  border="3" cellpadding="0" \
-									width="' + this.tw + '" cellspacing="0" \
-									style="border-bottom:none;\
-									border-collapse:collapse;table-layout:fixed;">');
+																	width="' + this.tw + '" cellspacing="0" \
+																	style="border-bottom:none;\
+																	border-collapse:collapse;table-layout:fixed;">');
 		tab2.append(this.tr_head);
 		tab2.find('td').each(function () {
 			$(this).attr("ed", "false");
@@ -443,7 +440,6 @@ class PagesModel {
 			"position" : "absolute",
 			"width" : this.wp + 'px',
 			"height" : this.margin,
-			//"background-color":"#f00",
 			"margin" : 0,
 			"padding" : 0,
 		});
@@ -456,6 +452,7 @@ class PagesModel {
 			"page_table_foot_real_ctx" : page_table_foot_real_ctx,
 			"page_foot" : page_foot,
 			"margin" : margin_div,
+			"head_table" : tab2,
 			"table" : tab,
 		});
 		return page;
@@ -479,9 +476,9 @@ class PagesModel {
 		//更新tr分组
 
 		var mar = 0; //安全距离
-		var limit = (this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height - mar);
+		var limit = (this.limit - mar);
 		//初始化高度应该为表头的高度
-		var sum = this.tr_head_height;
+		var sum =0;
 		var gid = 0;
 		var pthis = this;
 
@@ -489,7 +486,7 @@ class PagesModel {
 		for (var i = 0; i < sstr.length; i++) {
 			if ((sum + sstr.eq(i).height()) > limit) {
 				gid++;
-				sum = this.tr_head_height;
+				sum =0;
 			}
 			sum += sstr.eq(i).height();
 			sstr.eq(i).attr('groupid', gid);
@@ -593,9 +590,21 @@ class PagesModel {
 
 	listenTableChange() {
 		var pthis = this;
+					
+		var limit = (this.limit);
 		$(document).keydown(function (event) {
-			pthis.onTableChange();
-			pthis.addPageToLayout(pthis.obj);
+			for (var i = 0; i < pthis.arr_pages.length; i++) {
+				var tt = pthis.arr_pages[i].table;
+				//console.log(tt.height());
+				//console.log(limit);
+				if ((tt.height() > limit)||(tt.height() < limit-30)) {
+					pthis.onTableChange();
+					pthis.addPageToLayout(pthis.obj);
+					pthis.handlePageWithEmptyTr();
+					break;
+				}
+			}
+
 		});
 	}
 	handleEmptyPage() {
@@ -607,11 +616,11 @@ class PagesModel {
 			this.arr_pages.pop();
 		}
 	}
-	handlePageWithEmptyTr2() {
+	handleRemovePageWithEmptyTr() {
 		//判断是否是没有填写的页面，占时没有使用
-		var js = [];
-		for (var k = 1; k < this.arr_pages.length; k++) {
-			var tr_num = this.arr_pages[k].table.find('td');
+		var pthis = this;
+		function IsUsedPage(pagesItem) {
+			var tr_num = pagesItem.table.find('td');
 			var isEmpty = 0;
 			for (var i = 0; i < tr_num.length; i++) {
 				if ($.trim(tr_num.eq(i).text()).length != 0) {
@@ -620,36 +629,45 @@ class PagesModel {
 				}
 			}
 			if (isEmpty == 1) {
-				console.log("非空")
+				return true;
 			} else {
-				js.push(this.arr_pages[k]);
-				this.arr_pages[k].page.remove(); ;
-				this.arr_pages.pop();
-				console.log("空表")
+				return false;
+			}
+		}
+
+		var idx = this.arr_pages.length - 1;
+		if (idx > 0) {
+			if (!IsUsedPage(this.arr_pages[idx])) {
+				if (!IsUsedPage(this.arr_pages[idx - 1])) {
+					this.arr_pages[idx].page.remove(); ;
+					this.arr_pages.pop();
+				}
 			}
 		}
 	}
 	handlePageWithEmptyTr() {
+
+		this.handleRemovePageWithEmptyTr();
 		//补充表格到满
-		var limit = (this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height-30);
+		var limit = (this.limit);
 		var idx = this.arr_pages.length - 1;
 		var trs = this.arr_pages[idx].table.find('tr');
-		var sum=0;
-		for(var i=0;i<trs.length;i++){
-			sum+=trs.eq(i).height();
+		var sum = 0;
+		for (var i = 0; i < trs.length; i++) {
+			sum += trs.eq(i).height();
 		}
 		//默认一行高度是36
-		var  lastNum=parseInt((limit-sum)/this.StdTrHeight);
-		console.log(lastNum);
-		{
-			var stdTr=trs.eq(0).clone();
+		var lastNum = parseInt((limit - sum) / this.StdTrHeight);
+		console.log(lastNum); {
+			var stdTr = trs.eq(0).clone();
 			stdTr.height(this.StdTrHeight);
+			stdTr.removeAttr('tr_id');
 			stdTr.find('td').empty();
 			stdTr.find('td').attr("contentEditable", "true");
 		}
-		for(var i=0;i<lastNum;i++){
+		for (var i = 0; i < lastNum; i++) {
 			this.arr_pages[idx].table.append(stdTr.clone());
 		}
-			
+
 	}
 }

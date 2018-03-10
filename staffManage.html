@@ -10,7 +10,7 @@
 		<script src="js/jquery-confirm.js"></script> 
   
 
-	<style>
+<style>
 
 	.input-group{
 		border-bottom:1px solid #ccc;
@@ -52,6 +52,9 @@
 		border:none;
 		height:30px;
 		color:#000;
+	}
+	td{
+	height:36px;
 	}
  .certificate{
 	border:1px dotted #ccc;padding-left:35px;padding-right:35px;margin-bottom: 15px;
@@ -105,9 +108,26 @@
 <div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>
 </div>
 <script>
-var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
+//var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
 var com_tags_str='';
 $(function(){
+
+
+	var SERVER_ROOT;
+	var pro_id;
+
+	const ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer.send('getbaseinfo', 'ping');
+	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
+		var BASEINFO = eval("(" + arg + ")");
+		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		pro_id = BASEINFO['pro_id'];
+		//initGetInfo();
+		fetch_tags();
+	});
+
+
+
 	$("body").on("click",".idcard-viewer",function(){
 		var z=$(this).attr("idcard-z");
 		var f=$(this).attr("idcard-f");
@@ -245,9 +265,7 @@ $(function(){
 		
 	});
 
-	/*$(".remove-certificate").click(function () {
-		$(this).parent().remove();
-	});*/
+
 	$("body").on("click",".remove-certificate",function () {
 		$(this).parent(".certificate").remove();
 	});
@@ -276,7 +294,6 @@ $(function(){
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/user/fetch_tags.action",
-			//async:false,
 			dataType:'text',			
 			success : function (res) {	
 				if(typeof(res)=='number'){
@@ -347,7 +364,7 @@ $(function(){
 		});
 	}
 
-	fetch_tags();
+	
 	
 	$(document).bind("contextmenu", function (e) {
 		return false;

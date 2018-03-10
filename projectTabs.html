@@ -187,267 +187,275 @@
 <!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
 <
 <script>
-var page_par='';
-require('electron').ipcRenderer.on('page_par', function(event, message) {
-	page_par=message;//无法赋值出去，
-});
 
-var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
-var pro_id=1;
 
-$(function(){
+
+$(function () {
+
+	var SERVER_ROOT;
+	var pro_id;
+
+	const ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer.send('getbaseinfo', 'ping');
+	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
+		var BASEINFO = eval("(" + arg + ")");
+		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		pro_id = BASEINFO['pro_id'];
+		initGetInfo();
+	});
 
 	//init
-	var per_sel;
-	{
+	function initGetInfo() {
 		$.ajax({
 			type : "GET",
-			url : "http://localhost:8080/simpleMVC/authority/get_authority.action",
+			url : SERVER_ROOT + "/authority/get_authority.action",
 			async : false,
-			data:{'pro_id':pro_id},
+			data : {
+				'pro_id' : pro_id
+			},
 			success : function (data) {
-				console.log("data");
-				console.log(data);
-				per_sel = eval(data);
 
+				var per_sel = eval(data);
+				get_pro_staffs(per_sel);
 
 			},
 			error : function () {
 				console.log('menu init error');
 			}
 		});
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/get_pro_name.action",
+			data : {
+				pro_id : pro_id
+			},
+			dataType : 'text',
+			success : function (data) {
+				if (typeof(data) == 'number') {
+					$.alert({
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : function () {}
+						}
+					});
+				} else {
+					var html = '项目名称：' + data;
+					$("#pro_name").empty();
+					$("#pro_name").html(html);
+				}
+			},
+			error : function () {
+				//console.log('cuowu');
+			}
+		});
 	}
 
-	
-	$("body").on("click","#submit",function(){
-		var matchResult=false;
-		$("#main_form input[name^='project_tabs']").each(function(i,e){
-			if($(e).attr("checked")=="checked"){
-				matchResult=true;
+	$("body").on("click", "#submit", function () {
+		var matchResult = false;
+		$("#main_form input[name^='project_tabs']").each(function (i, e) {
+			if ($(e).attr("checked") == "checked") {
+				matchResult = true;
 			}
-		});		
+		});
 
-		if(matchResult==false){
+		if (matchResult == false) {
 			$.alert({
-				title: '',
-				content: '您没有选择任何表单！',
-				animation: 'none',
-				closeAnimation: 'scale',
-				buttons: {
-					'确定':function () {}
+				title : '',
+				content : '您没有选择任何表单！',
+				animation : 'none',
+				closeAnimation : 'scale',
+				buttons : {
+					'确定' : function () {}
 				}
-			});					
-			return false;			
+			});
+			return false;
 		}
-		var form=new FormData($("#main_form")[0]);
+		var form = new FormData($("#main_form")[0]);
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/project/tabs_configure.action",
 			data : form,
-			async:false,
-			cache: false,
-			processData: false,
-			contentType: false,			
+			async : false,
+			cache : false,
+			processData : false,
+			contentType : false,
 			success : function (data) {
 				alert(data);
 			},
 			error : function () {
-				console.log('cuowu');
+				//console.log('cuowu');
 			}
-		});			
-	});	
-	$("body").on("click","#reset",function(){
+		});
+	});
+	$("body").on("click", "#reset", function () {
 		$("#main_form")[0].reset();
-	});	
-	function get_pro_staffs(){
+	});
+	function get_pro_staffs(per_sel) {
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/project/get_pro_staffs.action",
-			data : {pro_id:pro_id},
-			dataType:'text',		
+			data : {
+				pro_id : pro_id
+			},
+			dataType : 'text',
 			success : function (data) {
-				if(typeof(data)=='number'){
+				if (typeof(data) == 'number') {
 					$.alert({
-						title: '错误提示',
-						content: '执行错误代号：'+data,
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':function () {}
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : function () {}
 						}
-					});	
-				}else{
-					var deps_staffs=eval("(" + data + ")");
-					var deps_length=deps_staffs.length;
-					var staffs_length=0;
-					var staffs_id=new Array();
-					var html='<form id="main_form">\
-						<input type="hidden" name="pro_id" id="pro_id" value="'+pro_id+'" />\
-						<table id="maintab" class="center-block">';
-						html+='<tr><th rowspan="2" width="45">业务<br />模块</th>\
-						<th rowspan="2" width="45">工作<br />节点</th>\
-						<th rowspan="2" colspan="3" >文档编号</th>\
-						<th rowspan="2" width="180">工作成果</th>\
-						<th rowspan="2" width="35">勾<br />选<br />表<br />单</th>';
+					});
+				} else {
+					var deps_staffs = eval("(" + data + ")");
+					var deps_length = deps_staffs.length;
+					var staffs_length = 0;
+					var staffs_id = new Array();
+					var html = '<form id="main_form">\
+												<input type="hidden" name="pro_id" id="pro_id" value="' + pro_id + '" />\
+												<table id="maintab" class="center-block">';
+					html += '<tr><th rowspan="2" width="45">业务<br />模块</th>\
+											<th rowspan="2" width="45">工作<br />节点</th>\
+											<th rowspan="2" colspan="3" >文档编号</th>\
+											<th rowspan="2" width="180">工作成果</th>\
+											<th rowspan="2" width="35">勾<br />选<br />表<br />单</th>';
 
-						for(var i=0;i<deps_length;i++){
-							if(deps_staffs[i].lei_xing_=='suo_shu_bu_men_'){
-								html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'" width="'+deps_staffs[i].ren_yuan_.length*35+'">'+deps_staffs[i].suo_shu_bu_men_+'</th>';
-							}else{
-								html+='<th colspan="'+deps_staffs[i].ren_yuan_.length+'" width="'+deps_staffs[i].ren_yuan_.length*35+'">'+deps_staffs[i].zhi_wu_+'</th>';
-							}
-							
+					for (var i = 0; i < deps_length; i++) {
+						if (deps_staffs[i].lei_xing_ == 'suo_shu_bu_men_') {
+							html += '<th colspan="' + deps_staffs[i].ren_yuan_.length + '" width="' + deps_staffs[i].ren_yuan_.length * 35 + '">' + deps_staffs[i].suo_shu_bu_men_ + '</th>';
+						} else {
+							html += '<th colspan="' + deps_staffs[i].ren_yuan_.length + '" width="' + deps_staffs[i].ren_yuan_.length * 35 + '">' + deps_staffs[i].zhi_wu_ + '</th>';
 						}
-						html+='<tr>';
-						for(var i=0;i<deps_length;i++){
-							for(var p in deps_staffs[i].ren_yuan_){
-								html+='<th class="vertical-font" width="35">'+deps_staffs[i].ren_yuan_[p].yuan_gong_xin_ming_+'</th>';
-								staffs_id[staffs_length]=deps_staffs[i].ren_yuan_[p].ren_yuan_id_;
-								staffs_length=staffs_length+1;
-							}
-						}
-						html+='</tr>';
 
-						console.log(menu);
-						for(var t in menu){
-							html+='<tr><td>'+menu[t].a1+'</td><td>'+menu[t].a2+'</td><td width="35">'+menu[t].a3+'</td><td width="35">'+menu[t].a4+'</td><td width="40">'+menu[t].a5+'</td><td>'+menu[t].a6+'</td><td><input  type="Checkbox" name="project_tabs[]" id="project_tabs_'+menu[t].a7+'" value="'+menu[t].a7+'" class="input-chk gcTableCtl" /><label for="project_tabs_'+menu[t].a7+'">&nbsp;</label></td>';
-							for(var j=0;j<staffs_length;j++){
-								html+='<td width="35" style="background-color:#eee;"><input disabled="disabled" type="Checkbox" name="'+menu[t].a7+'[]" id="'+staffs_id[j]+'#'+menu[t].a7+'" value="'+staffs_id[j]+'" class="input-chk ryTableCtl" />\
-								<label for="'+staffs_id[j]+'#'+menu[t].a7+'">&nbsp;</label></td>';
-							}
-							html+='</tr>';							
+					}
+					html += '<tr>';
+					for (var i = 0; i < deps_length; i++) {
+						for (var p in deps_staffs[i].ren_yuan_) {
+							html += '<th class="vertical-font" width="35">' + deps_staffs[i].ren_yuan_[p].yuan_gong_xin_ming_ + '</th>';
+							staffs_id[staffs_length] = deps_staffs[i].ren_yuan_[p].ren_yuan_id_;
+							staffs_length = staffs_length + 1;
 						}
-						html+='<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>';
-						for(var m=0;m<staffs_length;m++){
-							html+='<td></td>';
+					}
+					html += '</tr>';
+
+					////console.log(menu);
+					for (var t in menu) {
+						html += '<tr><td>' + menu[t].a1 + '</td><td>' + menu[t].a2 + '</td><td width="35">' + menu[t].a3 + '</td><td width="35">' + menu[t].a4 + '</td><td width="40">' + menu[t].a5 + '</td><td>' + menu[t].a6 + '</td><td><input  type="Checkbox" name="project_tabs[]" id="project_tabs_' + menu[t].a7 + '" value="' + menu[t].a7 + '" class="input-chk gcTableCtl" /><label for="project_tabs_' + menu[t].a7 + '">&nbsp;</label></td>';
+						for (var j = 0; j < staffs_length; j++) {
+							html += '<td width="35" style="background-color:#eee;"><input disabled="disabled" type="Checkbox" name="' + menu[t].a7 + '[]" id="' + staffs_id[j] + '#' + menu[t].a7 + '" value="' + staffs_id[j] + '" class="input-chk ryTableCtl" />\
+															<label for="' + staffs_id[j] + '#' + menu[t].a7 + '">&nbsp;</label></td>';
 						}
-						html+='</tr>';
-						html+='</table><div class="oepration-bar center-block text-left" style="width:120px;margin-bottom:20px;"><div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div><div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div></div></form>';
-						
-						$("#tabDiv").empty();
-						$("#tabDiv").html(html);
-						
-						
-						var total_width=415+(staffs_length-1)*35;
-						$("#maintab").width(total_width);
-						function HB_table(tab_id, lei_num) {
-							var tab = document.getElementById(tab_id);
-							var name = "";
-							for (var i = 1, k = 1, j = 0; i < tab.rows.length; i++, j++) {
-								if (tab.rows[i].style.display != 'none') {
-									//tab.rows[i].style.display = 'none'; //隐藏行操作
+						html += '</tr>';
+					}
+					html += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>';
+					for (var m = 0; m < staffs_length; m++) {
+						html += '<td></td>';
+					}
+					html += '</tr>';
+					html += '</table><div class="oepration-bar center-block text-left" style="width:120px;margin-bottom:20px;"><div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div><div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div></div></form>';
 
-									if (name == tab.rows[i].cells[lei_num].innerHTML) {
-										tab.rows[i].cells[lei_num].style.display = "none";
-									} else {
-										tab.rows[i].cells[lei_num].style.display = "";
-										name = tab.rows[i].cells[lei_num].innerHTML;
-										tab.rows[i - j].cells[lei_num].rowSpan = k;
-										k = 0;
-										j = 0;
-									}
-									k++;
+					$("#tabDiv").empty();
+					$("#tabDiv").html(html);
 
+					var total_width = 415 + (staffs_length - 1) * 35;
+					$("#maintab").width(total_width);
+					function HB_table(tab_id, lei_num) {
+						var tab = document.getElementById(tab_id);
+						var name = "";
+						for (var i = 1, k = 1, j = 0; i < tab.rows.length; i++, j++) {
+							if (tab.rows[i].style.display != 'none') {
+								//tab.rows[i].style.display = 'none'; //隐藏行操作
+
+								if (name == tab.rows[i].cells[lei_num].innerHTML) {
+									tab.rows[i].cells[lei_num].style.display = "none";
+								} else {
+									tab.rows[i].cells[lei_num].style.display = "";
+									name = tab.rows[i].cells[lei_num].innerHTML;
+									tab.rows[i - j].cells[lei_num].rowSpan = k;
+									k = 0;
+									j = 0;
 								}
+								k++;
+
 							}
 						}
-						HB_table('maintab',0);
-						HB_table('maintab',1);
-	
-						for(var p in per_sel){
-							for(var t in per_sel[p].mask){
-								if(per_sel[p].mask[t]=='1'){
-									var idobj=$("#project_tabs_"+t);
-									idobj.attr("checked","checked");
-									idobj.parent().parent().find('.ryTableCtl').removeAttr("disabled");
-									idobj.parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");	
-									idobj.parent().parent().find('input[value="'+per_sel[p].renYuanId+'"]').attr("checked",true);
-								}
+					}
+					HB_table('maintab', 0);
+					HB_table('maintab', 1);
+
+					for (var p in per_sel) {
+						for (var t in per_sel[p].mask) {
+							if (per_sel[p].mask[t] == '1') {
+								var idobj = $("#project_tabs_" + t);
+								idobj.attr("checked", "checked");
+								idobj.parent().parent().find('.ryTableCtl').removeAttr("disabled");
+								idobj.parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");
+								idobj.parent().parent().find('input[value="' + per_sel[p].renYuanId + '"]').attr("checked", true);
 							}
 						}
+					}
 				}
 			},
 			error : function () {
-				console.log('cuowu');
+				//console.log('cuowu');
 			}
-		});		
+		});
 	}
-	get_pro_staffs();
-	$.ajax({
-		type : "POST",
-		url : SERVER_ROOT + "/project/get_pro_name.action",
-		data : {pro_id:pro_id},
-		dataType:'text',		
-		success : function (data) {
-			if(typeof(data)=='number'){
-				$.alert({
-					title: '错误提示',
-					content: '执行错误代号：'+data,
-					animation: 'none',
-					closeAnimation: 'scale',
-					buttons: {
-						'确定':function () {}
-					}
-				});					
-			}else{
-				var html='项目名称：'+data;
-				$("#pro_name").empty();
-				$("#pro_name").html(html);
-			}
-		},
-		error : function () {
-			console.log('cuowu');
-		}
-	});	
 
 	//项目选择触发个人选择
-$("body").delegate(".gcTableCtl", "click", function () {
-	if ($(this).attr('checked')) {
-		$(this).parent().parent().find('.ryTableCtl').removeAttr("disabled");
-		$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");
+	$("body").delegate(".gcTableCtl", "click", function () {
+		if ($(this).attr('checked')) {
+			$(this).parent().parent().find('.ryTableCtl').removeAttr("disabled");
+			$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#fff");
 
-	} else {
-		$(this).parent().parent().find('.ryTableCtl').attr("disabled", false);
-		$(this).parent().parent().find('.ryTableCtl').removeAttr("checked");
-		$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#eee");
-	}
+		} else {
+			$(this).parent().parent().find('.ryTableCtl').attr("disabled", false);
+			$(this).parent().parent().find('.ryTableCtl').removeAttr("checked");
+			$(this).parent().parent().find('.ryTableCtl').parent().css("background-color", "#eee");
+		}
 
-});
-$("body").delegate(".ryTableCtl", "click", function () {
-	
+	});
+	$("body").delegate(".ryTableCtl", "click", function () {
+
 		if ($(this).attr("checked")) {
-			$(this).parent().parent().find('input[value="'+$(this).val()+'"]').attr("checked",true);
+			$(this).parent().parent().find('input[value="' + $(this).val() + '"]').attr("checked", true);
 		} else {
-			$(this).parent().parent().find('input[value="'+$(this).val()+'"]').removeAttr("checked");
+			$(this).parent().parent().find('input[value="' + $(this).val() + '"]').removeAttr("checked");
 		}
-		
-})
-$("body").on("click", "#submit", function () {
-	var ret = {};
-	$('.ryTableCtl').each(function () {
-		if ($(this).attr("checked") == "checked") {
-			ret[$(this).attr('id')] = "1";
-		} else {
-			ret[$(this).attr('id')] = "0";
-		}
-	});
-	console.log(JSON.stringify(ret));
-	$.ajax({
-		type : "POST",
-		url : SERVER_ROOT + "/authority/set_authority.action",
-		data : {
-			authority : JSON.stringify(ret)
-		},
-		success : function (data) {
-			alert(data);
-		},
-		error : function () {
-			console.log('cuowu');
-		}
-	});
 
-});
-///});
+	})
+	$("body").on("click", "#submit", function () {
+		var ret = {};
+		$('.ryTableCtl').each(function () {
+			if ($(this).attr("checked") == "checked") {
+				ret[$(this).attr('id')] = "1";
+			} else {
+				ret[$(this).attr('id')] = "0";
+			}
+		});
+		//console.log(JSON.stringify(ret));
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/authority/set_authority.action",
+			data : {
+				authority : JSON.stringify(ret)
+			},
+			success : function (data) {
+				alert(data);
+			},
+			error : function () {
+				//console.log('cuowu');
+			}
+		});
+
+	});
+	///});
 
 });
 </script>	

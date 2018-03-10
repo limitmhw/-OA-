@@ -8,7 +8,7 @@
   <script src="js/jquery-1.7.2.min.js"></script> 
   
 
-	<style>
+  <style>
 	.form-group{
 		
 	}
@@ -103,7 +103,7 @@
 			<div class="row">
 				<div class="col-lg-9 col-md-9 col-sm-9" style="border-right:1px dotted #ccc;">
 					<form id="mainForm">
-					<input type="hidden" name="xiang_mu_id_" id="xiang_mu_id_" value="" />
+					<input type="hidden" name="xiang_mu_id_" class="form-control" id="xiang_mu_id_" value="" />
 					<div class="row">
 						<div class="col-lg-7 col-md-7 col-sm-7">
 						  <div class="form-group">
@@ -199,7 +199,7 @@
 						  <div class="form-group">
 							<div class="input-group">
 							  <div class="input-group-addon">开工日期</div>
-							  <input type="date" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" >
+							  <input type="date" class="form-control" id="kai_gong_ri_qi_" name="kai_gong_ri_qi_" placeholder="" value="1900-01-01">
 							</div>
 						  </div>			
 						</div>
@@ -207,7 +207,7 @@
 						  <div class="form-group">
 							<div class="input-group">
 							  <div class="input-group-addon">竣工日期</div>
-							  <input type="date" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" >
+							  <input type="date" class="form-control" id="jun_gong_ri_qi_" name="jun_gong_ri_qi_" placeholder="" value="1900-01-01">
 							</div>
 						  </div>			
 						</div>	
@@ -341,9 +341,19 @@
 	</div> 
 
 <script>
-var SERVER_ROOT = 'http://localhost:8080/simpleMVC/';
-var SERVER_ROOT2 = 'http://localhost:80';
 $(function(){
+
+
+	var SERVER_ROOT;
+	const ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer.send('getbaseinfo', 'ping');
+	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
+		var BASEINFO = eval("(" + arg + ")");
+		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		get_pros();
+	});
+
+
 	$(".fill-input").click(function(){
 		var tar_input=$(this).attr("for_input");
 		var input_val=$(this).val();
@@ -361,7 +371,7 @@ $(function(){
 		});
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT2 + "/get_tab_data.php?rec=get_pro_info",
+			url : SERVER_ROOT + "/project/get_pro_info.action",
 			data:{'pro_id':project_id},
 			dataType:'text',
 			success : function (data) {
@@ -406,7 +416,7 @@ $(function(){
 		var html='<ul>';
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT2 + "/get_tab_data.php?rec=get_pros",
+			url : SERVER_ROOT + "/project/get_pros.action",
 			success : function (data) {
 				var projects=eval("(" + data + ")");
 				for(var i in projects){
@@ -420,7 +430,7 @@ $(function(){
 			}
 		});	
 	}
-	get_pros();
+	
 	
 	$(document).bind("contextmenu", function (e) {
 		return false;
@@ -481,13 +491,21 @@ $(function(){
 		var parr=[];
 		$('.can-operate').each(function(){
 			var trobj={};
+			var em=false;
 			$(this).find('input').each(function(){
 				trobj[$(this).attr('name')]=$(this).val();
+				if($.trim($(this).val()).length!=0){
+					em=true;
+				}
 			})
-			parr.push(trobj);	
+			if(em){
+				parr.push(trobj);
+			}
 		});
 		obj['trdata']=JSON.stringify(parr);
 		console.log(JSON.stringify(obj));
+		obj.kai_gong_ri_qi_="1900-01-01";
+		obj.jun_gong_ri_qi_="1900-01-01";
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/project/new_project.action",

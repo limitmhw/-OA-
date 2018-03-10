@@ -1,5 +1,23 @@
 const electron = require('electron')
 
+var BASEINFO={
+	//'SERVER_ROOT':'http://localhost:8080/simpleMVC/',
+	'SERVER_ROOT':'http://172.20.32.125:8080/simpleMVC/',
+	'fun_btn':'o_p',
+	'center':'work_center',
+	'pro_id':'1',
+	'renYuanId':'23'
+}
+
+const ipcMain = require('electron').ipcMain;
+ipcMain.on('getbaseinfo', function(event, arg) {
+  console.log(arg);  // prints "ping"
+  event.sender.send('getbaseinfo-reply', JSON.stringify(BASEINFO));
+});
+
+
+
+
 	//工作、流程、监管放到菜单位置
 	//完全按照Adobe界面，上部依次是“系统管理、编辑、视图、窗口、帮助”，下部是工具条
 	const template = [{
@@ -80,11 +98,8 @@ const electron = require('electron')
 	const menu = electron.Menu.buildFromTemplate(template)
 	electron.Menu.setApplicationMenu(menu)
 
-	// Module to control application life.
 	const app = electron.app
-	// Module to create native browser window.
 	const BrowserWindow = electron.BrowserWindow
-
 	const path = require('path')
 	const url = require('url')
 
@@ -119,7 +134,7 @@ function createProjectTablesManagementWindows(){
 	newWin.webContents.openDevTools();
 	
 	newWin.webContents.on('did-finish-load', function () {
-		newWin.webContents.send('page_par', '{"SERVER_ROOT":"'+SERVER_URL+'","PROJECT_ID":"6"}');
+		newWin.webContents.send('page_par', '{"SERVER_ROOT":"'+SERVER_URL+'","PROJECT_ID":"1"}');
 	});		
 }
 //创建为项目添加人员的界面
@@ -304,19 +319,12 @@ function createWorkPlatWindows(userInfo) {
 	workwin.on('closed', function () {
 		workwin = null;
 	});	
-	
-	
+
+
 	workwin.webContents.on('did-finish-load', function () {
-		workwin.webContents.send('page_par', '{"SERVER_ROOT":'+SERVER_URL+',"USER_INFO":'+userInfo+'}');
+		workwin.webContents.send('page_par', '{"SERVER_ROOT":' + SERVER_URL + ',"USER_INFO":' + userInfo + '}');
 	});
-	
-	const ipc = require('electron').ipcMain;
-	ipc.on('ipc_suo_fang_', function () {
-		workwin.webContents.send('ipc_suo_fang_', 'ipc_suo_fang_0000');
-	})
-	ipc.on('openProjectList', function () {
-		createProjectListWindows();
-	})
+
 }
 function createWindow() {
 	// Create the browser window.
