@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta charset="utf-8" /> 
+  <title>项目表单管理</title> 
+	<link href="css/bootstrap.css" rel="stylesheet" /> 
+	<link href="css/common.css" rel="stylesheet" /> 
+	<link href="css/jquery-confirm.css" rel="stylesheet" /> 
+	<script src="js/jquery-1.7.2.min.js"></script> 
+	<script src="js/jquery-confirm.js"></script>
+	<script src="js/tableconf.js"></script>
+	<script>
+	
+	</script>
+	<style>
+
+	.input-group{
+		border-bottom:1px solid #ccc;
+	}
+	.input-group-addon{
+		font-size:1em;		
+		color:#797979 !important;
+		background-color:#fff;
+		color:#000;
+		border:none;		
+	}
+	.form-control{
+		background-color:#fff;
+		color:#000;
+		border:none;
+		border-radius: 0px;
+		outline:none;
+		-webkit-box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+				box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);	
+	}
+	.form-control:focus {
+		border-color: #66afe9;
+		outline: 0;
+		-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+			    box-shadow: inset 0 1px 1px rgba(0,0,0,0), 0 0 0px rgba(102, 175, 233, .6);
+	}
+	.form-group{
+		margin-bottom:0px;
+	}
+	table tbody tr{
+		height:47px !important;
+	}
+	table tbody tr td,table tbody tr th{
+		vertical-align: middle !important;
+		border:1px solid #ccc !important;
+		text-align: center; 
+		padding-left:5px !important;
+		padding-right:5px !important;
+		padding-top:2px !important;
+		padding-bottom:2px !important;
+		color:#797979;
+	}
+	.td-input{
+		width:100%;
+		border:none;
+		height:46px;
+		color:#000;
+		text-align: center !important;
+	}
+	.td-nopadding{
+		padding: 0px !important;
+	}
+ .certificate{
+	border:1px dotted #ccc;padding-left:35px;padding-right:35px;margin-bottom: 15px;
+ }
+ .remove-certificate{
+	 position: absolute;
+	 color: #000;
+	 right: 15px;
+	 padding-right: 8px;
+	 cursor: pointer;
+ }
+.search_per_list{
+	background-color:#fafafa;
+	display: none;
+	width: 75px;
+	padding-right:0px;
+	padding-top:10px;
+	line-height: 25px;
+}
+.id-card{
+	color: #797979;
+	float: right;
+}
+.search_per_list ul{
+	padding-left:0px;
+}
+.search_per_list ul li{
+	padding:3px 10px;
+}
+.actual-per:hover{
+	background-color: #66afe9;
+	cursor: pointer;
+}
+
+.input-chk{
+    display:none;
+}
+.input-chk + label{
+    position: relative;
+    /*display:inline;
+    background-color: red;*/
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    margin-bottom: 0px;
+    text-align: center;
+} 
+.input-chk + label:before {
+	/*border-radius: 5%; 
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    margin-left:-8px;
+    margin-top: -8px; 
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	content: '';
+	border: 1px solid #fff; */
+}
+
+.input-chk + label:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left:-5px;
+    margin-top: -10px; 
+	display: none;
+	content: "\2713"; 
+    color: #3e97eb;
+	/*width: 8px;
+	height: 8px;*/
+	border-radius: 5%;
+	/*background: #3e97eb;*/ }
+.input-chk:checked + label:before{
+	animation-name: none; 
+	border: 1px solid #3e97eb; }		
+
+.input-chk:checked + label:after{
+	display: block; 
+}	
+#tabDiv{
+	position:absolute;top:80px;bottom:0px;left:0px;right:0px;
+	padding:20px;
+	overflow-y:scroll;
+	overflow-y:scroll;
+}
+#tabDiv::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    /*background-color: #ddd;*/
+}
+
+
+/*滑块*/
+#tabDiv::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border-radius: 10px;
+}
+
+#tabDiv::-webkit-scrollbar-thumb:hover {
+    background-color: #777;
+}
+
+
+/*滑道*/
+#tabDiv::-webkit-scrollbar-track {
+	background-color:#ddd;
+    /*box-shadow: inset 0 0 6px #333;*/
+    border-radius: 10px;
+}
+
+	</style>
+ </head> 
+ <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;background-color:#797979;">
+<div class="container-fluid bgc-white" style="top:20px;bottom:20px;right:20px;left:20px;position:absolute;">
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>职责职权配置</h3>
+			<h5 id="pro_name"></h5>
+		</div>	
+	</div>
+	<div id="tabDiv" style="">
+	
+	</div>
+</div>
+<!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
+<div id="search_div" class="search_per_list" style="border:1px solid #ccc;"> 
+	<!--<ul style="margin-bottom:0px;"> 
+		<li id="delTag" class="second-bar"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;删除</li> 
+		<li id="renameTag" class="second-bar"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;&nbsp;重命名</li>
+	</ul> -->
+</div>
+	
+ </body>
+</html>
+<script>
+var SERVER_ROOT;
+var pro_id;
+var deps_staffs='';
+var pro_tabs='';
+$(function () {	
+	const ipcRenderer = require('electron').ipcRenderer;
+	ipcRenderer.send('getbaseinfo', 'ping');
+	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
+		var BASEINFO = eval("(" + arg + ")");
+		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		pro_id = BASEINFO['pro_id'];
+		initGetInfo();
+	});
+	//初始化函数，放在ipcRenderer中初始化执行
+	function initGetInfo() {
+		//初始化获取项目名称
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/get_pro_name.action",
+			data : {'pro_id' : pro_id},
+			dataType : 'text',
+			success : function (data) {
+				if (typeof(data) == 'number') {
+					$.alert({
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : function () {}
+						}
+					});
+				} else {
+					var html = '项目名称：' + data;
+					$("#pro_name").empty();
+					$("#pro_name").html(html);
+				}
+			},
+			error : function () {
+				//console.log('cuowu');
+			}
+		});
+		get_pro_staffs(pro_id);
+		
+		
+		
+
+	}
+
+	//初始化获取为本项目配置的所有表单
+	function get_pro_tabs(pro_id){
+		pro_tabs=menu;
+	}
+	//初始化获取参与项目的所有人,并且按照部门和职务进行分类,并且生成表头
+	function get_pro_staffs(pro_id){
+		get_pro_tabs(pro_id);
+		
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/project/get_pro_staffs.action",
+			data : {'pro_id' : pro_id},
+			dataType : 'text',
+			success : function (data) {
+				if (typeof(data) == 'number') {
+					$.alert({
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : function () {}
+						}
+					});
+				} else {
+					deps_staffs= eval("(" + data + ")");
+					var deps_length = deps_staffs.length;
+					var staff_td_width=80;
+					var html = '<form id="main_form">\
+								<input type="hidden" name="pro_id" id="pro_id" value="' + pro_id + '" />\
+								<table id="maintab" class="center-block">';
+					html += '<tr><th rowspan="3" width="45">业务<br />模块</th>\
+								<th rowspan="3" width="45">工作<br />节点</th>\
+								<th rowspan="3" colspan="3" >文档编号</th>\
+								<th rowspan="3" width="180">工作成果</th>\
+								<th colspan="'+(deps_length*4)+'">部门或岗位或职务</th></tr>';
+					html+='<tr>';
+					for (var i = 0; i < deps_length; i++) {
+						
+						if (deps_staffs[i].lei_xing_ == 'suo_shu_bu_men_') {
+							html += '<th colspan="4">' + deps_staffs[i].suo_shu_bu_men_ + '</th>';
+						} else {
+							html += '<th colspan="4">' + deps_staffs[i].zhi_wu_ + '</th>';
+						}
+
+					}
+					html += '</tr>';					
+					html+='<tr>';
+					for(var i = 0; i < deps_length; i++){
+						html+='<th width="'+(staff_td_width*1)+'">主办</th>';
+						html+='<th width="'+(staff_td_width*1)+'">评审</th>';
+						html+='<th width="'+(staff_td_width*1)+'">审核</th>';
+						html+='<th width="'+(staff_td_width*1)+'">审批</th>';
+					}
+					html += '</tr>';
+					for (var t in pro_tabs) {
+						html += '<tr><td>' + pro_tabs[t].a1 + '</td><td>' + pro_tabs[t].a2 + '</td><td width="35">' + pro_tabs[t].a3 + '</td><td width="35">' + pro_tabs[t].a4 + '</td><td width="40">' + pro_tabs[t].a5 + '</td><td>' + pro_tabs[t].a6 + '</td>';
+						for(var j = 0; j < deps_length; j++){
+							//id的命名方式：标签类型*标签名称*工作类型*表格名称*序列号
+							var tag_type=deps_staffs[j].lei_xing_;
+							var tag_name='';
+							if(tag_type=='suo_shu_bu_men_'){
+								tag_name=deps_staffs[j].suo_shu_bu_men_;
+							}else{
+								tag_name=deps_staffs[j].zhi_wu_;
+							}
+							var tag_id=deps_staffs[j].id;
+							html+='<td class="td-nopadding"><input type="text" name="' + pro_tabs[t].a7 + '[]" id="'+tag_type+'*'+tag_name+'*zhuban*'+pro_tabs[t].a7 +'" class="td-input" value=""/></td>';
+							html+='<td class="td-nopadding"><input type="text" name="' + pro_tabs[t].a7 + '[]" id="'+tag_type+'*'+tag_name+'*pingshen*'+pro_tabs[t].a7 +'" class="td-input" value=""/></td>';
+							html+='<td class="td-nopadding"><input type="text" name="' + pro_tabs[t].a7 + '[]" id="'+tag_type+'*'+tag_name+'*shenhe*'+pro_tabs[t].a7 +'" class="td-input" value=""/></td>';
+							html+='<td class="td-nopadding"><input type="text" name="' + pro_tabs[t].a7 + '[]" id="'+tag_type+'*'+tag_name+'*shenpi*'+pro_tabs[t].a7 +'" class="td-input" value=""/></td>';							
+						}
+						html+='</tr>';
+					}
+					html += '</table><div class="oepration-bar center-block text-left" style="width:120px;margin-bottom:20px;margin-top:20px;"><div id="submit" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-floppy-disk"></i></div><div id="reset" class="oepration-bar-btn text-center" style="padding-top:2px;"><i class="glyphicon glyphicon-retweet"></i></div></div></form>';
+				
+					$("#tabDiv").empty();
+					$("#tabDiv").html(html);	
+					var total_width = 380 + (deps_length - 1) *4*staff_td_width;
+					$("#maintab").width(total_width);	
+					
+					function HB_table(tab_id, lei_num) {
+						var tab = document.getElementById(tab_id);
+						var name = "";
+						for (var i = 1, k = 1, j = 0; i < tab.rows.length; i++, j++) {
+							if (tab.rows[i].style.display != 'none') {
+								//tab.rows[i].style.display = 'none'; //隐藏行操作
+
+								if (name == tab.rows[i].cells[lei_num].innerHTML) {
+									tab.rows[i].cells[lei_num].style.display = "none";
+								} else {
+									tab.rows[i].cells[lei_num].style.display = "";
+									name = tab.rows[i].cells[lei_num].innerHTML;
+									tab.rows[i - j].cells[lei_num].rowSpan = k;
+									k = 0;
+									j = 0;
+								}
+								k++;
+
+							}
+						}
+					}
+					HB_table('maintab', 0);
+					HB_table('maintab', 1);					
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});
+	}
+	
+	$("body").on("click", ".actual-per", function () {
+		var rowindex = $(this).attr("rowindex");
+		var colIndex=$(this).attr("colIndex");
+		var input_id=$(this).attr("input-id");
+		var ren_yuan_id_ = $(this).attr("ren_yuan_id_");
+		var xing_ming_=$(this).attr("xing_ming_");
+		$("#maintab tbody tr:eq(" + rowindex + ") td:eq("+colIndex+")").children("input").val(xing_ming_);
+		$("#maintab tbody tr:eq(" + rowindex + ") td:eq("+colIndex+")").children("input").attr("ren_yuan_id_",ren_yuan_id_);
+		//alert($("#"+input_id).val());
+		$("#search_div").hide();
+
+	});	
+
+	$("body").on("keyup",".td-input",function(){
+		//id的命名方式：标签类型*标签名称*工作类型*表格名称*序列号
+		var input_id=this.id;
+		var pars=input_id.split("*");
+		var tag_type=pars[0];
+		var tag_name=pars[1];
+		var job_type=pars[2];
+		var tab_id=pars[3];
+		var persons=new Array();
+		for(var d in deps_staffs){
+			if(tag_type=='suo_shu_bu_men_'){
+				if(deps_staffs[d].suo_shu_bu_men_==tag_name){
+					persons=deps_staffs[d].ren_yuan_;
+				}
+			}else{
+				if(deps_staffs[d].zhi_wu_==tag_name){
+					persons=deps_staffs[d].ren_yuan_;
+				}				
+			}
+		}
+		var staff_name = $(this).val();
+		var row_index = $(this).parent("td").parent("tr").index();	
+		var col_index=$(this).parent("td").index();
+		var xx = $(this).offset().left;
+		var yy = $(this).offset().top;
+		var hh = $(this).height();
+		var res=false;
+		if (staff_name == '') {
+			$('#search_div').empty();
+			$('#search_div').hide();
+			return false;
+		}
+		var html='<ul>';
+		for(var p in persons){
+			if(persons[p].yuan_gong_xin_ming_.match(staff_name)){
+				html+='<li class="actual-per" rowindex="' + row_index + '" colIndex="'+col_index+'" input-id="'+input_id+'" ren_yuan_id_="' + persons[p].ren_yuan_id_ + '" xing_ming_="' + persons[p].yuan_gong_xin_ming_ + '" ><span class="per_name" >' + persons[p].yuan_gong_xin_ming_ + '</span></li>';
+				res=true;
+			}
+		}	
+		if(res==false){
+			html += '<li>空</li>';
+		}				
+		html+='</ul>';
+		$('#search_div').css({
+			"position" : 'fixed',
+			"left" : xx - 1,
+			"top" : yy + hh + 2
+		});
+		$('#search_div').empty();
+		$('#search_div').html(html);
+		$('#search_div').show();		
+	});
+});
+</script>

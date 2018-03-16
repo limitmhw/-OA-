@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
- <head> 
-  <meta charset="utf-8" /> 
-  <title>项目管理平台</title> 
-  <link href="css/bootstrap.css" rel="stylesheet" /> 
-  <!-- Custom CSS --> 
-  <link href="css/common.css" rel="stylesheet" /> 
+ <head>
+  <meta charset="utf-8" />
+  <title>项目管理平台</title>
+  <link href="css/bootstrap.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="css/common.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="css/easyui.css" />
-  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script> 
-  <script type="text/javascript" src="js/comm.js"></script> 
-  <script type="text/javascript" src="js/handletable.js"></script> 
+  <script class="jsbin" src="js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="js/comm.js"></script>
+  <script type="text/javascript" src="js/handletable.js"></script>
 
   <!--[if IE]>
     <script src="js/html5shiv.js"></script>
-    <![endif]--> 
+    <![endif]-->
   <style>
-  article, aside, figure, footer, header, hgroup, 
+  article, aside, figure, footer, header, hgroup,
   menu, nav, section { display: block; }
   .west{
     width:200px;
@@ -34,7 +34,7 @@
 	float:left;
 	background-image: url(./images/menu_pic.png);
 	background-repeat: no-repeat;
-} 
+}
  .float-menu-pic{
 	cursor:pointer;
 	height:100%;
@@ -42,10 +42,10 @@
 	float:left;
 	background-image: url(./images/float_menu.png);
 	background-repeat: no-repeat;
-} 
-  
-  
-  
+}
+
+
+
 .nav_ul {
 	padding:0;
 	text-align:center;
@@ -61,183 +61,183 @@
 	 background-image: url(./images/left_menu_bg2.png);
 
 }
-</style> 
- </head> 
- <body> 
-  <div layout="1" style="height:35px;overflow: hidden; border-top:1px;padding:0;margin:0;"> 
-   <!-- 工具栏 --> 
-   <div style="background-image: url(./images/menu_bg.png);border-bottom:1px solid #000;border-top:1px solid #000;height:35px;background-color:#e6e6e6;padding-left:1em;"> 
-    <!--第一组+33最好--> 
-    <div class="menu_pic" style="width:100px;background-position: 0px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -102px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -135px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -168px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -201px 0px;"></div> 
-    <div class="menu_pic" id="save_tab" style="background-position: -235px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -267px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -303px 0px;"></div> 
-    <!--分割栏--> 
-    <div class="menu_pic" style="background-position: -335px 0px;width:10px;"></div> 
-    <!--第二组--> 
-    <div class="menu_pic" id="scroll_up" style="background-position: -347px 0px;"></div> 
-    <div class="menu_pic" id="scroll_down" style="background-position: -380px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -413px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -446px 0px;"></div> 
-    <!--第三组--> 
-    <div class="menu_pic" style="background-position: -480px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -512px 0px;"></div> 
-    <div class="menu_pic" id="zoom_select" style="background-position: -549px 0px;width:77px;"> 
-     <select class="scale-option" > 
+</style>
+ </head>
+ <body>
+  <div layout="1" style="height:35px;overflow: hidden; border-top:1px;padding:0;margin:0;">
+   <!-- 工具栏 -->
+   <div style="background-image: url(./images/menu_bg.png);border-bottom:1px solid #000;border-top:1px solid #000;height:35px;background-color:#e6e6e6;padding-left:1em;">
+    <!--第一组+33最好-->
+    <div class="menu_pic" style="width:100px;background-position: 0px 0px;"></div>
+    <div class="menu_pic" style="background-position: -102px 0px;"></div>
+    <div class="menu_pic" style="background-position: -135px 0px;"></div>
+    <div class="menu_pic" style="background-position: -168px 0px;"></div>
+    <div class="menu_pic" style="background-position: -201px 0px;"></div>
+    <div class="menu_pic" id="save_tab" style="background-position: -235px 0px;"></div>
+    <div class="menu_pic" style="background-position: -267px 0px;"></div>
+    <div class="menu_pic" style="background-position: -303px 0px;"></div>
+    <!--分割栏-->
+    <div class="menu_pic" style="background-position: -335px 0px;width:10px;"></div>
+    <!--第二组-->
+    <div class="menu_pic" id="scroll_up" style="background-position: -347px 0px;"></div>
+    <div class="menu_pic" id="scroll_down" style="background-position: -380px 0px;"></div>
+    <div class="menu_pic" style="background-position: -413px 0px;"></div>
+    <div class="menu_pic" style="background-position: -446px 0px;"></div>
+    <!--第三组-->
+    <div class="menu_pic" style="background-position: -480px 0px;"></div>
+    <div class="menu_pic" style="background-position: -512px 0px;"></div>
+    <div class="menu_pic" id="zoom_select" style="background-position: -549px 0px;width:77px;">
+     <select class="scale-option" >
 		 <option value="1.5">150%</option>
 		 <option value="1.2">120%</option>
-		 <option value="1" >100%</option> 
-		 <option value="0.8">80%</option> 
-		 <option value="0.5">50%</option> 
-		 <option value="-1" selected="selected">自适应</option> 
-	 </select> 
-    </div> 
-    <!--分割栏--> 
-    <div class="menu_pic" style="background-position: -629px 0px;width:10px;"></div> 
-    <!--第四组--> 
-    <div class="menu_pic" style="background-position: -642px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -673px 0px;"></div> 
-    <!--分割栏--> 
-    <div class="menu_pic" style="background-position: -704px 0px;width:10px;"></div> 
-    <!--第五组--> 
-    <div class="menu_pic" style="background-position: -718px 0px;"></div> 
-    <div class="menu_pic" style="background-position: -750px 0px;"></div> 
-    <!--分割栏--> 
-    <div class="menu_pic" style="background-position: -789px 0px;width:10px;"></div> 
-    <!--第六组--> 
-    <div class="menu_pic" id="full_screen" style="background-position: -800px 0px;"></div> 
-   </div> 
-  </div> 
-  <div layout="2" style="position:absolute;left:0px;top:35px;right:0px;bottom:0px; background-color:#e6e6e6;"> 
-   <div layout="2.1" class="function-bar-list"> 
+		 <option value="1" >100%</option>
+		 <option value="0.8">80%</option>
+		 <option value="0.5">50%</option>
+		 <option value="-1" selected="selected">自适应</option>
+	 </select>
+    </div>
+    <!--分割栏-->
+    <div class="menu_pic" style="background-position: -629px 0px;width:10px;"></div>
+    <!--第四组-->
+    <div class="menu_pic" style="background-position: -642px 0px;"></div>
+    <div class="menu_pic" style="background-position: -673px 0px;"></div>
+    <!--分割栏-->
+    <div class="menu_pic" style="background-position: -704px 0px;width:10px;"></div>
+    <!--第五组-->
+    <div class="menu_pic" style="background-position: -718px 0px;"></div>
+    <div class="menu_pic" style="background-position: -750px 0px;"></div>
+    <!--分割栏-->
+    <div class="menu_pic" style="background-position: -789px 0px;width:10px;"></div>
+    <!--第六组-->
+    <div class="menu_pic" id="full_screen" style="background-position: -800px 0px;"></div>
+   </div>
+  </div>
+  <div layout="2" style="position:absolute;left:0px;top:35px;right:0px;bottom:0px; background-color:#e6e6e6;">
+   <div layout="2.1" class="function-bar-list">
     <div id="o_p" class="btn-list start-btn btn-list-select">
       组织
      <br />与
-     <br />策划 
-     <!--<img src="./images/icon/select_bar.png" style="position:absolute;left:0px;z-index:-1;">--> 
-    </div> 
+     <br />策划
+     <!--<img src="./images/icon/select_bar.png" style="position:absolute;left:0px;z-index:-1;">-->
+    </div>
     <div id="a_o" class="btn-list">
       行政
      <br />与
-     <br />办公 
-     <!--<img src="./images/icon/unselect_bar.png" style="position:absolute;left:0px;">--> 
-    </div> 
+     <br />办公
+     <!--<img src="./images/icon/unselect_bar.png" style="position:absolute;left:0px;">-->
+    </div>
     <div id="b_p" class="btn-list">
      招标
      <br />与
      <br />采购
-    </div> 
+    </div>
     <div id="c_b" class="btn-list">
      合约
      <br />与
      <br />商务
-    </div> 
+    </div>
     <div id="p_t" class="btn-list">
      生产
      <br />与
      <br />技术
-    </div> 
+    </div>
     <div id="s_m" class="btn-list">
      分包
      <br />与
      <br />机械
-    </div> 
+    </div>
     <div id="m_e" class="btn-list">
      材料
      <br />与
      <br />设备
-    </div> 
+    </div>
     <div id="e_m" class="btn-list">
      试验
      <br />与
      <br />资料
-    </div> 
+    </div>
     <div id="b_c" class="btn-list">
      预算
      <br />与
      <br />结算
-    </div> 
+    </div>
     <div id="v_c" class="btn-list">
      签证
      <br />与
      <br />索赔
-    </div> 
+    </div>
     <div id="c_p" class="btn-list">
      成本
      <br />与
      <br />利润
-    </div> 
-   </div> 
-   <div layout="2.2" class="tab-list" style="position:absolute;top:0px;bottom:0px; background-color:#fff;padding:10px;border-right:1px solid #999999;"> 
+    </div>
+   </div>
+   <div layout="2.2" class="tab-list" style="position:absolute;top:0px;bottom:0px; background-color:#fff;padding:10px;border-right:1px solid #999999;">
     <div style="border-bottom:1px solid #000; height:40px;line-height:40px;font-weight:bold;spadding-left:10px;padding-right:5px;">
       <font size="4" face="Microsoft YaHei">表单中心</font>
-     <span style="float:right;cursor:pointer;" id="hid_tar">X</span> 
-    </div> 
-    <div class="tab-lists"> 
-    <ul> 
-      <li><img src="./images/icon/bookmark.png" />项目列表</li> 
+     <span style="float:right;cursor:pointer;" id="hid_tar">X</span>
+    </div>
+    <div class="tab-lists">
+    <ul>
+      <li><img src="./images/icon/bookmark.png" />项目列表</li>
 	  <!--
-      <li><img src="./images/icon/bookmark.png" />一号文件</li> 
-      <li> <img src="./images/icon/bookmark.png" />二号文件（子菜单） 
-       <ul> 
-        <li><img src="./images/icon/bookmark.png" />二号一号文件</li> 
-        <li><img src="./images/icon/bookmark.png" />二号二号文件</li> 
-        <li><img src="./images/icon/bookmark.png" />二号三号文件</li> 
-        <li><img src="./images/icon/bookmark.png" />二号四号文件</li> 
-       </ul> </li> 
+      <li><img src="./images/icon/bookmark.png" />一号文件</li>
+      <li> <img src="./images/icon/bookmark.png" />二号文件（子菜单）
+       <ul>
+        <li><img src="./images/icon/bookmark.png" />二号一号文件</li>
+        <li><img src="./images/icon/bookmark.png" />二号二号文件</li>
+        <li><img src="./images/icon/bookmark.png" />二号三号文件</li>
+        <li><img src="./images/icon/bookmark.png" />二号四号文件</li>
+       </ul> </li>
       <li><img src="./images/icon/bookmark.png" />三号文件</li> -->
      </ul>
-    </div> 
-   </div> 
-   <div layout="2.3" class="main-content" style="position:absolute;top:0px;bottom:0px;background-color:#999999;"> 
-    <div layout="2.3.1" class="center-center"> 
+    </div>
+   </div>
+   <div layout="2.3" class="main-content" style="position:absolute;top:0px;bottom:0px;background-color:#999999;">
+    <div layout="2.3.1" class="center-center">
 	<center>
-		 <a href="./index_t2.html?center=liucheng" id="work_center" class="new-button">工作中心</a> 
-		 <a href="javascript:;" id="process_center" style=""class="new-button">流程中心</a> 
-		 <a href="javascript:;" id="supervision _center" class="new-button">监管中心</a> 
-		 <a href="javascript:;" id="archive_center" class="new-button">档案室</a> 
-		 <a href="javascript:;" id="acknowledge_center" class="new-button">知识库</a> 
+		 <a href="./index_t2.html?center=liucheng" id="work_center" class="new-button">工作中心</a>
+		 <a href="javascript:;" id="process_center" style=""class="new-button">流程中心</a>
+		 <a href="javascript:;" id="supervision _center" class="new-button">监管中心</a>
+		 <a href="javascript:;" id="archive_center" class="new-button">档案室</a>
+		 <a href="javascript:;" id="acknowledge_center" class="new-button">知识库</a>
    </center>
-   </div> 
+   </div>
     <div layout="2.3.2" class="content-container" style="width:100%;position:absolute;top:40px;bottom:0px;
-	right:0px;left:0px; overflow-y:scroll;padding-top:40px;background-color:#797979;"> 
+	right:0px;left:0px; overflow-y:scroll;padding-top:40px;background-color:#797979;">
 		<div  id="clearandreplacecontent" style="background-color:#797979;">
 		<!-------------------------------------------------------->
 
 
 		<!-------------------------------------------------------->
-		</div> 
-    </div> 
-   </div> 
-  </div>   
-     <div id="youjicaidan" class="right-click-list"> 
-      <ul> 
-       <li class="one-class"> 新建表单</li> 
-       <li> <img src="./images/icon/delete.png" />删除表单</li> 
-       <li class="one-class"><img src="./images/icon/copy.png" />复制表单</li> 
-       <li class="one-class">跳转菜单</li> 
-      </ul> 
-     </div>  
-  
-    <div class="float-menu" style="display:none;position:absolute;top:90%; left:35%;z-index:10;width:390px;height:49px;"> 
-     <div class="float-menu-pic" style="background-position: -0px 0px;width:25px;"></div> 
-     <div class="float-menu-pic" style="background-position: -25px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -60px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -91px 0px;width:10px;"></div> 
-     <div class="float-menu-pic" style="background-position: -101px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -135px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -163px 0px;width:70px;"></div> 
-     <div class="float-menu-pic" style="background-position: -233px 0px;width:10px;"></div> 
-     <div class="float-menu-pic" style="background-position: -243px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -274px 0px;width:31px;"></div> 
-     <div class="float-menu-pic" style="background-position: -305px 0px;width:10px;"></div> 
-     <div class="float-menu-pic" id="no_full_screen" style="background-position: -315px 0px;width:37px;"></div> 
-     <div class="float-menu-pic" style="background-position: -352px 0px;width:37px;"></div> 
-    </div> 
+		</div>
+    </div>
+   </div>
+  </div>
+     <div id="youjicaidan" class="right-click-list">
+      <ul>
+       <li class="one-class"> 新建表单</li>
+       <li> <img src="./images/icon/delete.png" />删除表单</li>
+       <li class="one-class"><img src="./images/icon/copy.png" />复制表单</li>
+       <li class="one-class">跳转菜单</li>
+      </ul>
+     </div>
+
+    <div class="float-menu" style="display:none;position:absolute;top:90%; left:35%;z-index:10;width:390px;height:49px;">
+     <div class="float-menu-pic" style="background-position: -0px 0px;width:25px;"></div>
+     <div class="float-menu-pic" style="background-position: -25px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -60px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -91px 0px;width:10px;"></div>
+     <div class="float-menu-pic" style="background-position: -101px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -135px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -163px 0px;width:70px;"></div>
+     <div class="float-menu-pic" style="background-position: -233px 0px;width:10px;"></div>
+     <div class="float-menu-pic" style="background-position: -243px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -274px 0px;width:31px;"></div>
+     <div class="float-menu-pic" style="background-position: -305px 0px;width:10px;"></div>
+     <div class="float-menu-pic" id="no_full_screen" style="background-position: -315px 0px;width:37px;"></div>
+     <div class="float-menu-pic" style="background-position: -352px 0px;width:37px;"></div>
+    </div>
 
 <script>
 
@@ -306,19 +306,19 @@ $(function () {
 	}
 	//初始化布局
 	init_layout(3.4, 15, -1);
-	
+
 	//初始化项目注册表
 	$.ajax({
 		type : "POST",
 		url : SERVER_ROOT + "/projectlist_table.php",
 		success : function (data) {
-			
+
 				$("#clearandreplacecontent").empty();
 				$("#clearandreplacecontent").html(data);
 				var cc = '<div style="position:absolute;left:40%;top:40%;"><front style="font-weight:bold;font-size:25px;">工程项目列表</front></div>';
 				golbal.pp.setHead(cc, 120);
 				golbal.pp.run("col");
-			
+
 		},
 		error : function () {
 			console.log('cuowu');
@@ -418,7 +418,7 @@ $(function () {
 	})
 	$(".scale-option").change(function () {
 		//控制缩放区域的
-		if($(this).val()!=-1){		
+		if($(this).val()!=-1){
 			$('#clearandreplacecontent').css("zoom", $(this).val());
 			golbal.pp.refreshPosition();
 		}else{
@@ -436,7 +436,7 @@ $(function () {
 	});
 	$("#no_full_screen").click(stop_full_screen);
 
-	
+
 	//控制页面滚动的
 	$("#scroll_down").click(function () {
 	    var length=100;
@@ -444,12 +444,12 @@ $(function () {
 			length=parseInt(golbal.pp.margin)+parseInt(golbal.pp.hp);
 		}
 		length=parseInt(golbal.pp.arr_pages[1].css("top"))-146;
-		
+
 		var obj=$('div[layout="2.3.2"]');
 		var v=obj.scrollTop();
 		alert(v);
 		obj.scrollTop(length);
-		
+
 		if(v==obj.scrollTop()){
 			alert("到底了");
 		}

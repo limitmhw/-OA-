@@ -45,6 +45,7 @@ class PagesModel {
 		this.foot_ctx = '';
 		this.tr_head = '';
 		this.limit=0;
+		this.initJQBinding();
 	}
 	run(model) {
 		this.margin = this.default_margin;
@@ -414,6 +415,11 @@ class PagesModel {
 			"width" : this.wp + 'px',
 			"background-color" : "#fff"
 		});
+		/*
+		this.obj.css({
+			"padding-bottom":"1000px"
+		});
+		*/
 
 		var tab = this.createTable();
 		//这里可以添加表格的表头
@@ -490,6 +496,7 @@ class PagesModel {
 			}
 			sum += sstr.eq(i).height();
 			sstr.eq(i).attr('groupid', gid);
+			sstr.eq(i).attr('tr_order', i);
 		}
 
 	}
@@ -668,6 +675,19 @@ class PagesModel {
 		for (var i = 0; i < lastNum; i++) {
 			this.arr_pages[idx].table.append(stdTr.clone());
 		}
-
+		this.updateTrGroup();
+	}
+	initJQBinding(){
+		$('body').on('click','td[gttable="gttable"]',function(){
+			$(this).css({
+				'padding-right':0,
+				'padding-left':0
+			})
+			if($.trim($(this).html()).length==0){
+				$(this).append("<div style='background-color:black;height:30%;width:100%'></div>");
+			}else{
+				$(this).empty();
+			}
+		});
 	}
 }
