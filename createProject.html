@@ -5,8 +5,9 @@
   <title>新建工程项目</title> 
   <link href="css/bootstrap.css" rel="stylesheet" /> 
   <link href="css/common.css" rel="stylesheet" /> 
-  <script src="js/jquery-1.7.2.min.js"></script> 
-  
+  <link rel="stylesheet" href="./css/zTreeStyle.css" type="text/css">
+<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./js/jquery.ztree.core.js"></script>
 
   <style>
 	.form-group{
@@ -89,7 +90,7 @@
 			<font size="4" face="Microsoft YaHei">项目列表</font>
 		</div>
 		<div class="tab-lists"  id="menu2" style="overflow-y:scroll;"> 
-		
+			<ul id="treeDemo" class="ztree"></ul>
 		</div> 		
 	</div>
 	<div class="right-main-content">
@@ -339,10 +340,12 @@
 			<li id="addtr" class="one-class"><img src="./images/icon/copy.png" />尾部插入行</li> 
 		</ul> 
 	</div> 
+	<!--右键菜单2-->
 
 <script>
-$(function(){
 
+
+$(function () {
 
 	var SERVER_ROOT;
 	const ipcRenderer = require('electron').ipcRenderer;
@@ -353,54 +356,50 @@ $(function(){
 		get_pros();
 	});
 
-
-	$(".fill-input").click(function(){
-		var tar_input=$(this).attr("for_input");
-		var input_val=$(this).val();
-		$("#mainForm input[name='"+tar_input+"']").val(input_val);
+	$(".fill-input").click(function () {
+		var tar_input = $(this).attr("for_input");
+		var input_val = $(this).val();
+		$("#mainForm input[name='" + tar_input + "']").val(input_val);
 	});
-	$("body").on('mousedown', '.tree-li',function(e){
-		var li_id=this.id;
-		var project_id=$(this).attr("project");
-		$(".tree-li").each(function(i,el){
-			if(el.id!=li_id){
-				$(el).removeClass("li-select");
-			}else{
-				$(el).addClass("li-select");
-			}		
-		});
+
+	function loadXiangMuToPannel(project_id) {
+
+		//
+
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/project/get_pro_info.action",
-			data:{'pro_id':project_id},
-			dataType:'text',
+			data : {
+				'pro_id' : project_id
+			},
+			dataType : 'text',
 			success : function (data) {
-				if(!isNaN(data)){
+				if (!isNaN(data)) {
 					$.alert({
-						title: '错误提示',
-						content: '执行错误代号：'+data,
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':{}
+						title : '错误提示',
+						content : '执行错误代号：' + data,
+						animation : 'none',
+						closeAnimation : 'scale',
+						buttons : {
+							'确定' : {}
 						}
-					});	
-				}else{
-					var pro_info=eval("(" + data + ")");
-					for( var k in pro_info){
-						if(k!='id' && k!='single_projects' && k!='kai_gong_ri_qi_' && k!='jun_gong_ri_qi_'){
-							$("#"+k).val(pro_info[k]);
+					});
+				} else {
+					var pro_info = eval("(" + data + ")");
+					for (var k in pro_info) {
+						if (k != 'id' && k != 'single_projects' && k != 'kai_gong_ri_qi_' && k != 'jun_gong_ri_qi_') {
+							$("#" + k).val(pro_info[k]);
 						}
-					} 
+					}
 					$("#kai_gong_ri_qi_").val(pro_info['kai_gong_ri_qi_'].split(" ")[0]);
 					$("#jun_gong_ri_qi_").val(pro_info['jun_gong_ri_qi_'].split(" ")[0]);
 					$("#xiang_mu_id_").val(pro_info['id']);
-					
-					var html='';
-					for(var p in pro_info['single_projects']){
-						html+='<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="'+pro_info['single_projects'][p].id+'" /><input class="td-input" name="dan_xiang_gong_cheng_" value="'+pro_info['single_projects'][p].dan_xiang_gong_cheng_+'" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="'+pro_info['single_projects'][p].gui_mo_mian_ji_+'" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="'+pro_info['single_projects'][p].gui_mo_chang_du_+'" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="'+pro_info['single_projects'][p].gui_mo_qi_ta_+'" /></td><td><input class="td-input" name="yan_gao_" value="'+pro_info['single_projects'][p].yan_gao_+'" /></td><td><input class="td-input" name="zong_gao_" value="'+pro_info['single_projects'][p].zong_gao_+'" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="'+pro_info['single_projects'][p].di_shang_di_xia_ceng_shu_+'" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="'+pro_info['single_projects'][p].gong_cheng_lei_bie_+'" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value="'+pro_info['single_projects'][p].jie_gou_lei_xing_+'"/></td><td><input class="td-input" name="ji_chu_jie_gou_" value="'+pro_info['single_projects'][p].ji_chu_jie_gou_+'"/></td></tr>';					
+
+					var html = '';
+					for (var p in pro_info['single_projects']) {
+						html += '<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="' + pro_info['single_projects'][p].id + '" /><input class="td-input" name="dan_xiang_gong_cheng_" value="' + pro_info['single_projects'][p].dan_xiang_gong_cheng_ + '" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="' + pro_info['single_projects'][p].gui_mo_mian_ji_ + '" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="' + pro_info['single_projects'][p].gui_mo_chang_du_ + '" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="' + pro_info['single_projects'][p].gui_mo_qi_ta_ + '" /></td><td><input class="td-input" name="yan_gao_" value="' + pro_info['single_projects'][p].yan_gao_ + '" /></td><td><input class="td-input" name="zong_gao_" value="' + pro_info['single_projects'][p].zong_gao_ + '" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="' + pro_info['single_projects'][p].di_shang_di_xia_ceng_shu_ + '" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="' + pro_info['single_projects'][p].gong_cheng_lei_bie_ + '" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value="' + pro_info['single_projects'][p].jie_gou_lei_xing_ + '"/></td><td><input class="td-input" name="ji_chu_jie_gou_" value="' + pro_info['single_projects'][p].ji_chu_jie_gou_ + '"/></td></tr>';
 					}
-						html+='<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="" /><input class="td-input" name="dan_xiang_gong_cheng_" value="" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="" /></td><td><input class="td-input" name="yan_gao_" value="" /></td><td><input class="td-input" name="zong_gao_" value="" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value=""/></td><td><input class="td-input" name="ji_chu_jie_gou_" value=""/></td></tr>';					
+					html += '<tr class="can-operate"><td><input type="hidden" class="td-input" name="gong_cheng_id_" value="" /><input class="td-input" name="dan_xiang_gong_cheng_" value="" /></td><td><input class="td-input" name="gui_mo_mian_ji_" value="" /></td><td><input class="td-input" name="gui_mo_chang_du_" value="" /></td><td><input class="td-input" name="gui_mo_qi_ta_" value="" /></td><td><input class="td-input" name="yan_gao_" value="" /></td><td><input class="td-input" name="zong_gao_" value="" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" value="" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" value="" /></td><td><input class="td-input" name="jie_gou_lei_xing_" value=""/></td><td><input class="td-input" name="ji_chu_jie_gou_" value=""/></td></tr>';
 
 					$(".can-operate").remove();
 					$("#project_info_tab").append(html);
@@ -409,34 +408,57 @@ $(function(){
 			error : function () {
 				console.log('cuowu');
 			}
-		});	
-	});
+		});
 
-	function get_pros(){
-		var html='<ul>';
+	}
+	//点击菜单后加载内容
+
+	function get_pros() {
+		var setting = {
+			view : {
+				showLine : true,
+				selectedMulti : false,
+				dblClickExpand : false
+			},
+			data : {
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				onNodeCreated : function () {},
+				beforeClick : function () {},
+				onClick : function (e, treeId, node) {
+					if ((typeof(node.xiangmuid) != "undefined") && (node.xiangmuid.length != 0)) {
+						//项目节点
+						loadXiangMuToPannel(node.xiangmuid);
+					} else {
+						//工程节点
+					}
+					console.log(node);
+				}
+			}
+		};
+
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT + "/project/get_pros.action",
+			url : SERVER_ROOT + "/project/get_project_menu.action",
 			success : function (data) {
-				var projects=eval("(" + data + ")");
-				for(var i in projects){
-					html+='<li id="li'+i+'" class="tree-li" project="'+projects[i].id+'">'+projects[i].xiang_mu_ming_chen_+'</li>';
-				}
-				html+='</ul>';
-				$("#menu2").html(html);
+				projects = eval("(" + data + ")");
+				$.fn.zTree.init($("#treeDemo"), setting, projects);
 			},
 			error : function () {
 				console.log('cuowu');
 			}
-		});	
+		});
+		
 	}
-	
-	
+
 	$(document).bind("contextmenu", function (e) {
 		return false;
 	});
 	$('body').on('mousedown', '.can-operate', function (e) {
-		var row_num=this.rowIndex;
+		var row_num = this.rowIndex;
 		if (3 == e.which) {
 			var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
 			var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
@@ -445,76 +467,79 @@ $(function(){
 				"left" : xx,
 				"top" : yy - 3
 			});
-			$("#deltr").attr("target",row_num);
-			$("#addtr").attr("target",row_num);
+			$("#deltr").attr("target", row_num);
+			$("#addtr").attr("target", row_num);
 			$('#youjicaidan').show();
 		}
 	})
 	$(document).click(function () {
 		$('#youjicaidan').hide();
 	});
-	$("#youjicaidan ul li").click(function(){
-		var id=this.id;
-		var op=$(this).attr('target');
-		var items_num=$(".can-operate").length;
+	$("#youjicaidan ul li").click(function () {
+		var id = this.id;
+		var op = $(this).attr('target');
+		var items_num = $(".can-operate").length;
 
-		if(id=="addtr"){
+		if (id == "addtr") {
 			add_tr("project_info_tab");
-		}else if(id=="deltr"){
-			if(items_num>1){
-				del_tr("project_info_tab",op);
-			}	
+		} else if (id == "deltr") {
+			if (items_num > 1) {
+				del_tr("project_info_tab", op);
+			}
 		}
 	});
-	
-	function del_tr(tab_id,index){  
-		var table = document.getElementById(tab_id);  
-		table.deleteRow(index);  
+
+	function del_tr(tab_id, index) {
+		var table = document.getElementById(tab_id);
+		table.deleteRow(index);
 	}
-	function add_tr(tab_id){
-		var str='<tr class="can-operate"><td><input class="td-input" name="gong_cheng_id_" type="hidden" /><input class="td-input" name="dan_xiang_gong_cheng_" /></td><td><input class="td-input" name="gui_mo_mian_ji_" /></td><td><input class="td-input" name="gui_mo_chang_du_" /></td><td><input class="td-input" name="gui_mo_qi_ta_" /></td><td><input class="td-input" name="yan_gao_" /></td><td><input class="td-input" name="zong_gao_" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" /></td><td><input class="td-input" name="jie_gou_lei_xing_" /></td><td><input class="td-input" name="ji_chu_jie_gou_" /></td></tr>';
-		$("#"+tab_id).append(str);
-	}	
-	$("#reset").click(function(){
+	function add_tr(tab_id) {
+		var str = '<tr class="can-operate"><td><input class="td-input" name="gong_cheng_id_" type="hidden" /><input class="td-input" name="dan_xiang_gong_cheng_" /></td><td><input class="td-input" name="gui_mo_mian_ji_" /></td><td><input class="td-input" name="gui_mo_chang_du_" /></td><td><input class="td-input" name="gui_mo_qi_ta_" /></td><td><input class="td-input" name="yan_gao_" /></td><td><input class="td-input" name="zong_gao_" /></td><td><input class="td-input" name="di_shang_di_xia_ceng_shu_" /></td><td><input class="td-input" name="gong_cheng_lei_bie_" /></td><td><input class="td-input" name="jie_gou_lei_xing_" /></td><td><input class="td-input" name="ji_chu_jie_gou_" /></td></tr>';
+		$("#" + tab_id).append(str);
+	}
+	$("#reset").click(function () {
 		$("#mainForm")[0].reset();
 	});
-	$("#addtr").click(function(){
+	$("#addtr").click(function () {
 		add_tr("project_info_tab");
 	});
-	$("#submit").click(function(){
-		var obj={};
-		
-		$(".form-control").each(function(){
-			obj[$(this).attr('name')]=$(this).val();
+	$("#submit").click(function () {
+		var obj = {};
+
+		$(".form-control").each(function () {
+			obj[$(this).attr('name')] = $(this).val();
 		});
-		
-		var parr=[];
-		$('.can-operate').each(function(){
-			var trobj={};
-			var em=false;
-			$(this).find('input').each(function(){
-				trobj[$(this).attr('name')]=$(this).val();
-				if($.trim($(this).val()).length!=0){
-					em=true;
+
+		var parr = [];
+		$('.can-operate').each(function () {
+			var trobj = {};
+			var em = false;
+			$(this).find('input').each(function () {
+				trobj[$(this).attr('name')] = $(this).val();
+				if ($.trim($(this).val()).length != 0) {
+					em = true;
 				}
 			})
-			if(em){
+			if (em) {
 				parr.push(trobj);
 			}
 		});
-		obj['trdata']=JSON.stringify(parr);
+		obj['trdata'] = JSON.stringify(parr);
 		console.log(JSON.stringify(obj));
-		obj.kai_gong_ri_qi_="1900-01-01";
-		obj.jun_gong_ri_qi_="1900-01-01";
+		obj.kai_gong_ri_qi_ = "1900-01-01";
+		obj.jun_gong_ri_qi_ = "1900-01-01";
 		$.ajax({
 			type : "POST",
 			url : SERVER_ROOT + "/project/new_project.action",
-			data : {'data':JSON.stringify(obj)},
+			data : {
+				'data' : JSON.stringify(obj)
+			},
 			success : function (data) {
-				if(data=='0'){
+				if (data == '0') {
 					window.close();
-				}else{
-					alert(data);
+				} else {
+					get_pros();
+					console.log("save_success");
 				}
 			},
 			error : function () {
@@ -524,9 +549,6 @@ $(function(){
 
 	});
 });
-	
-
-	
 
 
 </script>	

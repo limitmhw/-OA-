@@ -9,9 +9,7 @@
 	<script src="js/jquery-1.7.2.min.js"></script> 
 	<script src="js/jquery-confirm.js"></script>
 	<script src="js/tableconf.js"></script>
-	<script>
-	
-	</script>
+
 	<style>
 
 	.input-group{
@@ -190,12 +188,8 @@
 	
 	</div>
 </div>
-<!--<div class="add-object"><i class="glyphicon glyphicon-plus"></i></div>-->
 <div id="search_div" class="search_per_list" style="border:1px solid #ccc;"> 
-	<!--<ul style="margin-bottom:0px;"> 
-		<li id="delTag" class="second-bar"><i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;&nbsp;删除</li> 
-		<li id="renameTag" class="second-bar"><i class="glyphicon glyphicon-edit"></i>&nbsp;&nbsp;&nbsp;重命名</li>
-	</ul> -->
+
 </div>
 	
  </body>
@@ -260,8 +254,11 @@ $(function () {
 		
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT + "/project/get_pro_staffs.action",
-			data : {'pro_id' : pro_id},
+			url : SERVER_ROOT + "/project/get_match_staffs.action",
+			data : {
+			'pro_id' : pro_id,
+			'excelType':4
+			},
 			dataType : 'text',
 			success : function (data) {
 				if (typeof(data) == 'number') {

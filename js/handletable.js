@@ -44,11 +44,13 @@ class PagesModel {
 		this.head_ctx = '';
 		this.foot_ctx = '';
 		this.tr_head = '';
-		this.limit=0;
+		this.limit = 0;
 		this.initJQBinding();
 	}
 	run(model) {
 		this.margin = this.default_margin;
+		this.stdTr=golbal.BASEStatus.stdTr.clone();
+		this.StdTrHeight=golbal.BASEStatus.stdTrHeight;
 		if (model.length != 0) {
 			//单位换算的网站，windows标准DPI为96
 			//http://www.gaitubao.com/tools/pixel2cm.html
@@ -88,10 +90,9 @@ class PagesModel {
 			}
 			jq_obj.remove();
 			this.tr_head_height = tem_hh;
-		}
-		{
-			
-			this.limit=(this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height-this.tr_head_height);	
+		}{
+
+			this.limit = (this.hp - this.top_margin - this.buttom_margin - this.table_foot_height - this.table_head_height - this.tr_head_height);
 		}
 		//this.tr_head=tr_head_obj.html;
 		//this.tr_head_height=tr_head_obj.height;
@@ -214,14 +215,14 @@ class PagesModel {
 	formatTrHeight() {
 		$("tr[TableType='ctx']").height(this.StdTrHeight);
 		$("tr[TableType='ctx'] td").css({
-			'height':this.StdTrHeight,
-			'margin':0,
+			'height' : this.StdTrHeight,
+			'margin' : 0,
 		});
 	}
 	createTable() {
 		var table = $('<table  border="3" cellpadding="0" \
-																		cellspacing="0" style="border-top:none;border-collapse:\
-																		collapse;table-layout:fixed;margin-bottom:3px;">');
+																						cellspacing="0" style="border-top:none;border-collapse:\
+																						collapse;table-layout:fixed;margin-bottom:3px;">');
 		//这个地方可能有问题，先注释一下
 		table.width(this.tw);
 		//table.append(this.tr_head);
@@ -229,7 +230,7 @@ class PagesModel {
 	}
 	hideHeadFoot() {
 		//折叠页眉页脚，表头表脚
-		console.log("hideHeadFoot");{
+		console.log("hideHeadFoot"); {
 			this.arr_pages[0].page_foot.hide();
 			this.arr_pages[0].page_foot.height(0);
 			this.arr_pages[0].page_table_foot.hide();
@@ -417,9 +418,9 @@ class PagesModel {
 		});
 		/*
 		this.obj.css({
-			"padding-bottom":"1000px"
+		"padding-bottom":"1000px"
 		});
-		*/
+		 */
 
 		var tab = this.createTable();
 		//这里可以添加表格的表头
@@ -429,9 +430,9 @@ class PagesModel {
 		page_table_foot_real_ctx.append(this.page_table_foot_ctx);
 
 		var tab2 = $('<table  border="3" cellpadding="0" \
-																	width="' + this.tw + '" cellspacing="0" \
-																	style="border-bottom:none;\
-																	border-collapse:collapse;table-layout:fixed;">');
+																					width="' + this.tw + '" cellspacing="0" \
+																					style="border-bottom:none;\
+																					border-collapse:collapse;table-layout:fixed;">');
 		tab2.append(this.tr_head);
 		tab2.find('td').each(function () {
 			$(this).attr("ed", "false");
@@ -484,7 +485,7 @@ class PagesModel {
 		var mar = 0; //安全距离
 		var limit = (this.limit - mar);
 		//初始化高度应该为表头的高度
-		var sum =0;
+		var sum = 0;
 		var gid = 0;
 		var pthis = this;
 
@@ -492,7 +493,7 @@ class PagesModel {
 		for (var i = 0; i < sstr.length; i++) {
 			if ((sum + sstr.eq(i).height()) > limit) {
 				gid++;
-				sum =0;
+				sum = 0;
 			}
 			sum += sstr.eq(i).height();
 			sstr.eq(i).attr('groupid', gid);
@@ -597,14 +598,14 @@ class PagesModel {
 
 	listenTableChange() {
 		var pthis = this;
-					
+
 		var limit = (this.limit);
 		$(document).keydown(function (event) {
 			for (var i = 0; i < pthis.arr_pages.length; i++) {
 				var tt = pthis.arr_pages[i].table;
 				//console.log(tt.height());
 				//console.log(limit);
-				if ((tt.height() > limit)||(tt.height() < limit-30)) {
+				if ((tt.height() > limit) || (tt.height() < limit - 30)) {
 					pthis.onTableChange();
 					pthis.addPageToLayout(pthis.obj);
 					pthis.handlePageWithEmptyTr();
@@ -664,28 +665,39 @@ class PagesModel {
 			sum += trs.eq(i).height();
 		}
 		//默认一行高度是36
-		var lastNum = parseInt((limit - sum) / this.StdTrHeight);
+		var lastNum = parseInt((limit - sum) /this.StdTrHeight);
 		console.log(lastNum); {
-			var stdTr = trs.eq(0).clone();
+			var stdTr = this.stdTr.clone();
 			stdTr.height(this.StdTrHeight);
 			stdTr.removeAttr('tr_id');
-			stdTr.find('td').empty();
-			stdTr.find('td').attr("contentEditable", "true");
+			stdTr.removeAttr('trType');
+			stdTr.removeAttr('istitle');
+			stdTr.removeAttr('level');
+			stdTr.find('td').css({
+				'font-size' : '13.31px',
+				'font-weight' : '400'
+			});
+			stdTr.find('td').height(this.StdTrHeight).each(function(){
+				if($(this).attr('ed')!="false"){
+					$(this).attr("contentEditable", "true");
+				}
+			});
+			
 		}
 		for (var i = 0; i < lastNum; i++) {
 			this.arr_pages[idx].table.append(stdTr.clone());
 		}
 		this.updateTrGroup();
 	}
-	initJQBinding(){
-		$('body').on('click','td[gttable="gttable"]',function(){
+	initJQBinding() {
+		$('body').on('click', 'td[gttable="gttable"]', function () {
 			$(this).css({
-				'padding-right':0,
-				'padding-left':0
+				'padding-right' : 0,
+				'padding-left' : 0
 			})
-			if($.trim($(this).html()).length==0){
+			if ($.trim($(this).html()).length == 0) {
 				$(this).append("<div style='background-color:black;height:30%;width:100%'></div>");
-			}else{
+			} else {
 				$(this).empty();
 			}
 		});

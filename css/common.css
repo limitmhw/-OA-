@@ -152,6 +152,12 @@
 	padding:5px;
 	background-color:#fafafa;
 	z-index:10000;
+	
+	box-shadow:-3px 0px 3px #aaa,   /*左边阴影*/ 
+              0px -3px 3px #aaa,  /*上边阴影*/ 
+               3px 0px 3px #aaa,  /*右边阴影*/ 
+                0px 3px 3px #999;" /*下边阴影*/
+	border:1px solid #ccc;
 }
 .right-click-list ul{
 	line-height:30px;
