@@ -31,7 +31,7 @@
 	}
 	.form-control{
 		background-color:#fff;
-		color:#000;
+		color:#797979;
 		border:none;
 		border-radius: 0px;
 		outline:none;
@@ -318,17 +318,23 @@ $(function(){
 
 	$.ajax({
 		type : "POST",
-		url : SERVER_ROOT + "/user/get_com_info.action",
+		//url : SERVER_ROOT + "/user/get_com_info.action",
+		url : "http://localhost/user.php?oper=get_com_info",
 		dataType:'text',
 		success : function (data) {
 			if(data!='null'){
 				var form_json=eval("(" + data + ")");
 				var input_id=''; 
-				console.log(form_json);
-				$("#jing_ying_fan_wei_").val(form_json['jing_ying_fan_wei_']);
+				//console.log(form_json);
+				//$("#jing_ying_fan_wei_").val(form_json['jing_ying_fan_wei_']);
 				$("input").each(function(i,e){
-					$(e).val(form_json[$(e).attr('id')]);
+					if(form_json[$(e).attr('id')]!='null'){
+						$(e).val(form_json[$(e).attr('id')]);
+					}		
 				});
+				if(form_json['jing_ying_fan_wei_']!='null'){
+					$("#jing_ying_fan_wei_").val(form_json['jing_ying_fan_wei_']);
+				}
 			}
 		},
 		error : function () {
@@ -348,7 +354,8 @@ $(function(){
 		}
 		$.ajax({
 			type : "POST",
-			url : SERVER_ROOT + "/user/com_com_info.action",
+			//url : SERVER_ROOT + "/user/com_com_info.action",
+			url : "http://localhost/user.php?oper=com_com_info",
 			data : form,
 			cache: false,
 			processData: false,

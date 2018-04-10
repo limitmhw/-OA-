@@ -1644,8 +1644,8 @@ var menu=[{
 		"a3" : "JZ",
 		"a4" : "09",
 		"a5" : "159",
-		"a6" : "工程成本综合分析(1)",
-		"a7" : "gong_cheng_cheng_ben_zong_he_fen_xi_yi_",
+		"a6" : "工程成本责任分析",
+		"a7" : "gong_cheng_cheng_ben_ze_ren_fen_xi_",
 		"a8" : "164",
 		"a9" : "164"
 	}, {
@@ -1654,8 +1654,8 @@ var menu=[{
 		"a3" : "JZ",
 		"a4" : "10",
 		"a5" : "160",
-		"a6" : "工程成本综合分析(2)",
-		"a7" : "gong_cheng_cheng_ben_zong_he_fen_xi_er_",
+		"a6" : "工程成本综合分析",
+		"a7" : "gong_cheng_cheng_ben_zong_he_fen_xi_",
 		"a8" : "165",
 		"a9" : "165"
 	}, {

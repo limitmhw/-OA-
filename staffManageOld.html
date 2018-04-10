@@ -47,13 +47,10 @@
 		padding:0px !important;
 		color:#797979;*/
 	}
-	.td-nopadding{
-		padding: 0px !important;
-	}	
 	.td-input{
 		width:100%;
 		border:none;
-		height:35px;
+		height:30px;
 		color:#000;
 	}
  .certificate{
@@ -66,63 +63,12 @@
 	 padding-right: 8px;
 	 cursor: pointer;
  }
- .has-img{
-	 color: #428bca;
-	 cursor: pointer;
- }
-
- .has-no-img{
-	 color:#797979;
- }
- .has-no-img:hover{
-	 cursor:default;
-	 color:#797979 !important;
- }
- .glyphicon-folder-open{
-	 margin-left: 10px;
-	 cursor: pointer;
- }
- .glyphicon-list-alt{
-	 display: none;
-	 cursor: pointer;
-	 margin-right: 5px;
- }
- .certificate_content{
-	 width: 300px;
-	 border: 1px solid #ccc;
-	 background-color: #fff;
-	 line-height: 25px;
-	 position: absolute;
-	 top:15px;
-	 left:-285px;
-	 padding: 0px 0px 10px 0px;
-	 display: none;
- }
- .certificate-title{
-	 background-color: #66afe9;
-	 color: #fff !important;
-	 font-weight: bold;
-	 height: 30px;
-	 line-height: 30px;
-	 padding-left:10px;
-	 padding-right:10px;
- }
- .close{
-	 color:#000;
- }
- .input-list{
-	padding-left:10px;
-	 padding-right:10px;	 
- }
- .input-list img{
-	 max-width: 280px;
- }
 	</style>
  </head> 
  <body style="font-family:\5FAE\8F6F\96C5\9ED1;padding:20px;">
 	<div class="left-200px-menuebar bgc-white" style="padding-top:10px;padding-left:5px;padding-right:5px;overflow-x:hidden;">
 		<div class="form-lists">
-			<font size="4" face="Microsoft YaHei" id="company_name"></font>
+			<font size="4" face="Microsoft YaHei">单位部门列表</font>
 		</div>
 		<div class="tab-lists"  id="menu2" style="overflow-y:scroll;"> 
 		
@@ -161,54 +107,7 @@
 <script>
 var SERVER_ROOT = 'http://localhost:80';
 var com_tags_str='';
-var com_id='';
 $(function(){
-
-	$.ajax({
-		type	:"POST",
-		url 	: SERVER_ROOT + "/user.php?oper=get_com_tag_info",
-		dataType:"text",
-		success	:function(data){
-			console.log(data);
-			var com_info=eval("(" + data + ")");
-				com_id=com_info.id;
-			$("#company_name").empty();
-			$("#company_name").text(com_info.qi_ye_ming_cheng_);
-			var html='<ul>';
-			if(com_info.tags.length!=0){
-				for(var t in com_info.tags){
-					html+='<li id="tag'+t+'" tag-id="'+com_info.tags[t].id+'" class="second-Catalog-li">'+com_info.tags[t].biao_qian_ming_+'</li>';
-				}						
-				fetch_tag_per(com_info.tags[0].id);
-			}
-				html+='<a href="javascript:;" com-id="'+com_id+'" class="add-com-tag">添加标签</a>';
-				html+='</ul>';
-				$("#menu2").empty();
-				$("#menu2").html(html);
-		},
-		error	:function(){
-			console.log('cuowu');
-		}
-	});
-
-	$("body").on("click",".idcardView",function(){
-		var img_name=$(this).attr("idcard");
-		//var folder=$(this).attr("kind");
-		var html='<div class="container-fluid"><div class="row">';
-			html+='<div class="col-lg-12"><img src="'+SERVER_ROOT+'/images/idcard/'+img_name+'" /></div>';
-			html+='</div></div>';
-		$.alert({
-			title: '',
-			content: html,
-			columnClass: 'medium',
-			animation: 'none',
-			closeAnimation: 'scale',
-			buttons: {
-				'确定':function () {}
-			}
-		});	
-	});
-
 	$("body").on("click",".idcard-viewer",function(){
 		var z=$(this).attr("idcard-z");
 		var f=$(this).attr("idcard-f");
@@ -227,234 +126,8 @@ $(function(){
 			}
 		});	
 	});
-
-	function fetch_tag_per(tag_id){
-		$.ajax({
-			type : "POST",
-			url : SERVER_ROOT + "/user.php?oper=fetch_staff_tag",
-			data : {'tag_id':tag_id},
-			dataType:'text',
-			success : function (data) {
-				if(typeof(data)=='number'){
-					$.alert({
-						title: '错误提示',
-						content: '执行错误代号：'+data,
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':function () {}
-						}
-					});						
-				}else{
-					var pers=eval("(" + data + ")");
-					var html='<form id="mainForm">\
-							<input type="hidden" id="biao_qian_" name="biao_qian_" value="'+tag_id+'" />\
-							<input type="hidden" id="qi_ye_" name="qi_ye_" value="'+com_id+'" />\
-							<table id="pers_tab" class="table table-hover" style="border-bottom:1px solid #e6e6e6;"><tr><th class="text-center" width="50">序号</th><th  width="80">姓名</th><th width="50" class="text-center">性别</th><th class="text-center" width="70">民族</th><th>身份证号</th><th width="70" class="text-center">正</th><th width="70" class="text-center">反</th><th>家庭住址</th><th width="150">劳动合同</th><th width="200">证书</th><th>操作</th></tr>';
-					for(var p in pers){
-						html+='<tr><td align="center">'+(p*1+1)+'</td><td>'+pers[p].xing_ming_+'</td><td align="center">'+pers[p].xing_bie_+'</td><td align="center">'+pers[p].min_zu_+'</td>\
-						<td><a href="javascript:;" class="idcard-viewer" idcard-z="'+pers[p].shen_fen_zheng_zhao_zheng_+'" idcard-f="'+pers[p].shen_fen_zheng_zhao_fan_+'" >'+pers[p].shen_fen_zheng_hao_ma_+'</a></td>\
-						<td><a href="javascript:;" idcard="'+pers[p].shen_fen_zheng_zhao_zheng_+'" class="idcardView"><i class="glyphicon glyphicon-picture"></i></a></td>\
-						<td><a href="javascript:;" idcard="'+pers[p].shen_fen_zheng_zhao_fan_+'" class="idcardView"><i class="glyphicon glyphicon-picture"></i></a></td>\
-						<td>'+pers[p].jia_ting_zhu_zhi_+'</td><td>'+pers[p].lao_dong_he_tong_bian_hao_+'</td><td>查看</td><td><a href="javascript:;">编辑</a>&nbsp;<a href="javascript:;">删除</a></td></tr>';
-					}
-						html+='<tr><td align="center">'+(p*1+2)+'</td>\
-								<td class="td-nopadding"><input type="text" name="xing_ming_" id="xing_ming_" class="td-input"  /></td>\
-								<td class="td-nopadding"><input type="text" name="xing_bie_" id="xing_bie_" class="td-input" /></td>\
-								<td class="td-nopadding"><input type="text" name="min_zu_" id="min_zu_" class="td-input" /></td>\
-								<td class="td-nopadding"><input type="text" name="shen_fen_zheng_hao_ma_" id="shen_fen_zheng_hao_ma_" class="td-input" /></td>\
-								<td><input type="file" name="shen_fen_zheng_zhao_zheng_" id="shen_fen_zheng_zhao_zheng_" style="display:none;"/>\
-									<a href="javascript:;" idcard="" id="shen_fen_zheng_zhao_zheng_pre_" class="has-no-img"><i class="glyphicon glyphicon-picture"></i></a>\
-									<i class="glyphicon glyphicon-folder-open" onclick="$(\'input[id=shen_fen_zheng_zhao_zheng_]\').click();"></i></td>\
-								<td><input type="file" name="shen_fen_zheng_zhao_fan_" id="shen_fen_zheng_zhao_fan_" style="display:none;"/>\
-									<a href="javascript:;" idcard="" id="shen_fen_zheng_zhao_fan_pre_" class="has-no-img"><i class="glyphicon glyphicon-picture"></i></a>\
-									<i class="glyphicon glyphicon-folder-open" onclick="$(\'input[id=shen_fen_zheng_zhao_fan_]\').click();"></i></td>\
-								<td class="td-nopadding"><input type="text" name="jia_ting_zhu_zhi_" id="jia_ting_zhu_zhi_" class="td-input" /></td>\
-								<td class="td-nopadding"><input type="text" name="lao_dong_he_tong_bian_hao_" id="lao_dong_he_tong_bian_hao_" class="td-input" /></td>\
-								<td id="certificates_group"></td>\
-								<td><a href="javascript:;" class="add_certificate">添证</a>&nbsp;<a href="javascript:;" class="add-new-submit">创建</a></td>\
-								</tr>';
-						html+='</table></form>';
-					$("#table-data").empty();
-					$("#table-data").html(html);
-				}
-			},
-			error : function () {
-				console.log('cuowu');
-			}
-		});
-	}
-	$("body").on("click",".add_certificate",function(){
-		var cer_count=$("#certificates_group").children("i").length;
-		var last_certificate_id=$("#certificates_group").children("i:last-child").children('div[class="certificate_content"]').attr("id");
-		var last_count=0;
-		if(cer_count>0){
-			cer_count=last_certificate_id.substr(last_certificate_id.length-1,1)*1+1;
-		}
-		var new_certificate_id="certificate"+cer_count;
-
-		var certificate_str='<i id="certificate_id_'+cer_count+'" class="glyphicon glyphicon-list-alt"><div id="'+new_certificate_id+'" class="certificate_content">\
-							<div class="certificate-title">证书<span class="close">&times;</span></div>\
-							<div class="input-list"><input type="text" name="zheng_jian_ming_chen_[]" id="zheng_jian_ming_chen_'+cer_count+'" class="display-hide" />证件名称：<span id="zheng_jian_ming_chen_span_'+cer_count+'"></span></div>\
-							<div class="input-list"><input type="text" name="zheng_jian_hao_ma_[]" id="zheng_jian_hao_ma_'+cer_count+'" class="display-hide" />证件号码：<span id="zheng_jian_hao_ma_span_'+cer_count+'"></span></div>\
-							<div class="input-list"><input type="text" name="fa_zheng_ji_guan_[]" id="fa_zheng_ji_guan_'+cer_count+'" class="display-hide" />发证机关：<span id="fa_zheng_ji_guan_span_'+cer_count+'"></span></div>\
-							<div class="input-list"><input type="text" name="nian_shen_shi_jian_[]" id="nian_shen_shi_jian_'+cer_count+'" class="display-hide" />年审时间：<span id="nian_shen_shi_jian_span_'+cer_count+'"></span></div>\
-							<input type="file" class="certificate-img display-hide" name="zheng_jian_zhao_[]" target-pre="zheng_jian_zhao_pre_'+cer_count+'" target-pre2="zheng_jian_zhao_pre2_'+cer_count+'" id="zheng_jian_zhao_'+cer_count+'" style="display:none;" />\
-							<div class="input-list" id="zheng_jian_zhao_pre2_'+cer_count+'"></div>\
-							</div></i>';
-			$("#certificates_group").append(certificate_str);
-
-		var html='<div class="form-group" style="padding-bottom:5px;"><div class="input-group">\
-				<span class="input-group-addon">证件名称</span>\
-				<input type="text" class="form-control" id="zheng_jian_ming_chen_" name="zheng_jian_ming_chen_" autofocus="autofocus" >\
-				</div></div>';
-			html+='<div class="form-group" style="padding-bottom:5px;"><div class="input-group">\
-				<span class="input-group-addon">证件号码</span>\
-				<input type="text" class="form-control" id="zheng_jian_hao_ma_" name="zheng_jian_hao_ma_" autofocus="autofocus" >\
-				</div></div>';
-			html+='<div class="form-group" style="padding-bottom:5px;"><div class="input-group">\
-				<span class="input-group-addon">发证机关</span>\
-				<input type="text" class="form-control" id="fa_zheng_ji_guan_" name="fa_zheng_ji_guan_" autofocus="autofocus" >\
-				</div></div>';	
-			html+='<div class="form-group" style="padding-bottom:5px;"><div class="input-group">\
-				<span class="input-group-addon">年检时间</span>\
-				<input type="text" class="form-control" id="nian_shen_shi_jian_" name="nian_shen_shi_jian_" autofocus="autofocus" >\
-				</div></div>';						
-			html+='<div class="mark-content text-center" id="zheng_jian_zhao_pre_'+cer_count+'" onclick="$(\'#'+new_certificate_id+' input[type=file]\').click();"  style="margin-bottom:5px;">点击上传证书照片</div>';
-		$.confirm({
-			title: '添加证书',
-			content: html,
-			buttons: {
-				'确定': function () {
-					var zheng_jian_ming_chen_=$("#zheng_jian_ming_chen_").val();
-					var zheng_jian_hao_ma_=$("#zheng_jian_hao_ma_").val();
-					var fa_zheng_ji_guan_=$("#fa_zheng_ji_guan_").val();
-					var nian_shen_shi_jian_=$("#nian_shen_shi_jian_").val();
-					var zheng_jian_zhao_=$("#zheng_jian_zhao_"+cer_count).val();
-					if(zheng_jian_ming_chen_==""){
-						$("#certificate_id_"+cer_count).remove();
-					}
-					$("#zheng_jian_ming_chen_"+cer_count).val(zheng_jian_ming_chen_);
-					$("#zheng_jian_hao_ma_"+cer_count).val(zheng_jian_hao_ma_);
-					$("#fa_zheng_ji_guan_"+cer_count).val(fa_zheng_ji_guan_);
-					$("#nian_shen_shi_jian_"+cer_count).val(nian_shen_shi_jian_);
-
-					$("#zheng_jian_ming_chen_span_"+cer_count).text(zheng_jian_ming_chen_);
-					$("#zheng_jian_hao_ma_span_"+cer_count).text(zheng_jian_hao_ma_);
-					$("#fa_zheng_ji_guan_span_"+cer_count).text(fa_zheng_ji_guan_);
-					$("#nian_shen_shi_jian_span_"+cer_count).text(nian_shen_shi_jian_);	
-					$("#certificate_id_"+cer_count).css("display","inline");				
-				},
-				'取消': function () {$("#certificate_id_"+cer_count).remove();}
-			},
-			onAction:function(buttonName){},
-			onClose:function(){},
-			onDestroy:function(){}
-		});	
-	});
-
-	//新建人员提交处理
-	$("body").on("click",".add-new-submit",function(){
-		var form=new FormData($("#mainForm")[0]);
-		var xing_ming_=$("#xing_ming_").val();
-		var shen_fen_zheng_hao_ma_=$("#shen_fen_zheng_hao_ma_").val();	
-		if(xing_ming_=='' || shen_fen_zheng_hao_ma_==''){return false;}	
-		$.ajax({
-			type : "POST",
-			url : SERVER_ROOT + "/user.php?oper=cr_staff",
-			data : form,
-			async:false,
-			cache: false,
-			processData: false,
-			contentType: false,			
-			success : function (data) {
-				if(data!='0'){
-					$.alert({
-						title: '错误提示',
-						content: '执行错误代号：'+data,
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':{}
-						}
-					});
-					return false;
-				}else{
-					$.alert({
-						title: '操作提示',
-						content: '操作成功',
-						animation: 'none',
-						closeAnimation: 'scale',
-						buttons: {
-							'确定':function(){
-								window.location.reload();
-							}
-						}
-					});
-				}
-			},
-			error : function () {
-				console.log('cuowu');
-			}
-		});				
-	});
-
-	$("body").on("mouseenter",".glyphicon-list-alt",function(){
-		$(this).children('div[class="certificate_content"]').css("display","block");
-		$(this).mouseleave(function(){	
-			$(this).children('div[class="certificate_content"]').css("display","none");
-		});
-		$(this).children('div[class="certificate_content"]').find(".close").click(function(){
-			$(this).parent('div[class="certificate-title"]').parent('div[class="certificate_content"]').parent('i').remove();
-		});
-	});
-	$("body").on('change','.certificate-img',function(){
-		preImg(this.id, $(this).attr("target-pre"));
-		preImg(this.id, $(this).attr("target-pre2"));
-	});
-
-	$("body").on("click",".has-img",function(){
-		var tar_id=$(this).prev("input").attr("id");
-		var url=getFileUrl(tar_id);
-		var html='<div class="container-fluid"><div class="row">';
-			html+='<div class="col-lg-12"><img src="'+url+'" /></div>';
-			html+='</div></div>';
-		$.alert({
-			title: '',
-			content: html,
-			columnClass: 'medium',
-			animation: 'none',
-			closeAnimation: 'scale',
-			buttons: {
-				'确定':function () {}
-			}
-		});		
-	});
-
-	$("body").on("change","#shen_fen_zheng_zhao_fan_",function(){
-		var tar_obj=$("#shen_fen_zheng_zhao_fan_").val();
-		if(tar_obj!=''){
-			$("#shen_fen_zheng_zhao_fan_pre_").removeClass("has-no-img");
-			$("#shen_fen_zheng_zhao_fan_pre_").addClass("has-img");
-
-		}else{
-			$("#shen_fen_zheng_zhao_fan_pre_").removeClass("has-img");
-			$("#shen_fen_zheng_zhao_fan_pre_").addClass("has-no-img");			
-		}
-		//preImg('shen_fen_zheng_zhao_zheng_', 'id_card_positive_positive');
-	});
-
 	$("body").on("change","#shen_fen_zheng_zhao_zheng_",function(){
-		var tar_obj=$("#shen_fen_zheng_zhao_zheng_").val();
-		if(tar_obj!=''){
-			$("#shen_fen_zheng_zhao_zheng_pre_").removeClass("has-no-img");
-			$("#shen_fen_zheng_zhao_zheng_pre_").addClass("has-img");
-
-		}else{
-			$("#shen_fen_zheng_zhao_zheng_pre_").removeClass("has-img");
-			$("#shen_fen_zheng_zhao_zheng_pre_").addClass("has-no-img");			
-		}
-		//preImg('shen_fen_zheng_zhao_zheng_', 'id_card_positive_positive');
+		preImg('shen_fen_zheng_zhao_zheng_', 'id_card_positive_positive');
 	});
 	$("body").on("change","#shen_fen_zheng_zhao_fan_",function(){
 		preImg('shen_fen_zheng_zhao_fan_', 'id_card_positive_opposite');
@@ -575,7 +248,7 @@ $(function(){
 	/*$(".remove-certificate").click(function () {
 		$(this).parent().remove();
 	});*/
-	$("body").on("click",".remove-certificate",function () {	
+	$("body").on("click",".remove-certificate",function () {
 		$(this).parent(".certificate").remove();
 	});
 	function getFileUrl(sourceId) { 
@@ -640,16 +313,48 @@ $(function(){
 			}
 		});	
 	}
+	function fetch_tag_per(tag_id){
+		$.ajax({
+			type : "POST",
+			url : SERVER_ROOT + "/user.php?oper=fetch_staff_tag",
+			data : {tag_id:tag_id},
+			dataType:'text',
+			success : function (data) {
+				if(typeof(data)=='number'){
+					$.alert({
+						title: '错误提示',
+						content: '执行错误代号：'+data,
+						animation: 'none',
+						closeAnimation: 'scale',
+						buttons: {
+							'确定':function () {}
+						}
+					});						
+				}else{
+					var pers=eval("(" + data + ")");
+					var html='<table id="pers_tab" class="table table-hover" style="border-bottom:1px solid #e6e6e6;"><tr><th>序号</th><th>姓名</th><th>身份证号</th><th>家庭住址</th><th>劳动合同</th><th>证书</th><th>操作</th></tr>';
+					for(var p in pers){
+						html+='<tr><td>'+(p*1+1)+'</td><td>'+pers[p].xing_ming_+'</td><td><a href="javascript:;" class="idcard-viewer" idcard-z="'+pers[p].shen_fen_zheng_zhao_zheng_+'" idcard-f="'+pers[p].shen_fen_zheng_zhao_fan_+'" >'+pers[p].shen_fen_zheng_hao_ma_+'</a></td><td>'+pers[p].jia_ting_zhu_zhi_+'</td><td>'+pers[p].lao_dong_he_tong_bian_hao_+'</td><td>查看</td><td><a hre="javascript:;">编辑</a>&nbsp;<a hre="javascript:;">删除</a></td></tr>';
+					}
+						html+='</table>';
+					$("#table-data").empty();
+					$("#table-data").html(html);
+				}
+			},
+			error : function () {
+				console.log('cuowu');
+			}
+		});
+	}
 
-	//fetch_tags();
+	fetch_tags();
 	
 	$(document).bind("contextmenu", function (e) {
 		return false;
 	});	
-
-	$('body').on('mousedown', '.add-com-tag', function (e) {//second-Catalog
+	$('body').on('mousedown', '.first-Catalog-li-title', function (e) {//second-Catalog
 		var this_com_id=$(this).attr("com-id");
-		/*$(".first-Catalog-li-title").each(function(i,el){
+		$(".first-Catalog-li-title").each(function(i,el){
 			if($(el).attr("com-id")!=this_com_id){
 				$(el).removeClass("first-Catalog-li-title_select");
 			}else{
@@ -657,18 +362,16 @@ $(function(){
 			}		
 		});
 		if (3 == e.which) {
-
-		}*/
-		var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
-		var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
-		$('#youjicaidan').css({
-			"position" : 'fixed',
-			"left" : xx,
-			"top" : yy - 3
-		});
-		$("#addClass").attr("target-com",this_com_id);
-		$("#addClass").click();
-		//$('#youjicaidan').show();
+			var xx = e.originalEvent.x || e.originalEvent.layerX || 0;
+			var yy = e.originalEvent.y || e.originalEvent.layerY || 0;
+			$('#youjicaidan').css({
+				"position" : 'fixed',
+				"left" : xx,
+				"top" : yy - 3
+			});
+			$("#addClass").attr("target-com",this_com_id);
+			$('#youjicaidan').show();
+		}
 	})
 	$('body').on('mousedown', '.second-Catalog-li', function (e) {//second-Catalog
 		var t_id=this.id;
@@ -724,7 +427,7 @@ $(function(){
 				}
 			});		
 		}else if(oper_id=='renameTag'){
-			var html='<div class="form-group" style="margin-bottom:8px;"><input type="text" class="form-control" id="xin_biao_qian_ming_" name="xin_biao_qian_ming_" placeholder="*必填，输入标签名" value="'+li_text+'" /></div>';
+			var html='<div class="form-group"><input type="text" class="form-control" id="xin_biao_qian_ming_" name="xin_biao_qian_ming_" placeholder="*必填，输入标签名" value="'+li_text+'" /></div>';
 			$.confirm({
 				title: '重命名',
 				content: html,
@@ -734,7 +437,7 @@ $(function(){
 						$.ajax({
 							type : "POST",
 							url : SERVER_ROOT + "/user.php?oper=rename_tag",
-							data:{'id':tag_id,'biao_qian_ming_':new_tag_name,'com_id':com_id},
+							data:{'id':tag_id,'biao_qian_ming_':new_tag_name},
 							dataType:'text',
 							success : function (data) {
 								if(data!='0'){
@@ -794,7 +497,6 @@ $(function(){
 		$('#youjicaidan').hide();
 		$('#erjiyoujicaidan').hide();
 	})
-	//添加标签
 	$("#addClass").click(function(){
 		var com_id=$(this).attr("target-com");
 		var html='<div class="form-group"><input type="text" class="form-control" id="biao_qian_ming_" name="biao_qian_ming_" placeholder="*必填，输入标签名"></div><div class="form-group"><textarea class="form-control" id="bei_zhu_" name="bei_zhu_" placeholder="*选填，可以在此输入备注"></textarea></div>';

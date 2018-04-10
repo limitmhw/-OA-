@@ -107,6 +107,7 @@ golbal.BASEFunction = {
 	tableSaveBase : function () {
 
 		let ttObj = this.getTableData();
+		console.log(JSON.stringify(ttObj));
 		if (typeof(golbal.BASEStatus.getTableObj().tableId) == "undefined") {
 			alert("nothing to save");
 			console.log("nothing to save");
@@ -274,7 +275,6 @@ golbal.BASEFunction = {
 	},
 	saveTable : function () {
 		if (typeof(golbal.BASEStatus.getTableObj().tableType) != "undefined") {
-			//this.typeHandle(golbal.BASEStatus.getTableObj().tableType);
 			if (typeof(golbal.BASEStatus.getTableObj().tableId) == "undefined") {
 				this.saveNewTableAndExcel();
 				return;

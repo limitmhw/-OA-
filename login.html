@@ -55,10 +55,12 @@ $(function () {
 	ipcRenderer.on('getbaseinfo-reply', function (event, arg) {
 		var BASEINFO = eval("(" + arg + ")");
 		SERVER_ROOT = BASEINFO['SERVER_ROOT'];
+		//SERVER_ROOT="http://localhost:80";
 		$.ajax({
 			type : "POST",
 			async : false,
 			url : SERVER_ROOT + "/user/get_sup_user.action",
+			//url :"http://localhost:80/user.php?oper=get_sup_user",
 			success : function (data) {
 				if(data==0){
 					window.location.href="init.html";
